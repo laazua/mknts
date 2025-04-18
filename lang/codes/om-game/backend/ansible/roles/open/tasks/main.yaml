@@ -1,0 +1,30 @@
+---
+
+# 创建路径
+- name: "create game path"
+  file:
+    path: "{{game_path}}{{zone_name}}_{{item}}"
+    state: directory
+  with_items:  "{{zone_id}}"
+
+# 更新bin文件  
+- name: "update bin file"
+  copy:
+    src: "{{bin_file}}"
+    dest: "{{game_path}}{{zone_name}}_{{item}}"
+    mode: 0755
+  with_items: "{{zone_id}}"
+
+# 更新配置文件
+- name: "update con file"
+  subversion:
+    repo: "{{svn_addr}}"
+    username: "{{svn_user}}"
+    password: "{{svn_pass}}"
+    dest: "{{game_path}}{{zone_name}}_{{item}}"
+    export: yes
+    in_place: yes
+    force: yes
+  with_items: "{{zone_id}}"
+
+# 对比MD5值

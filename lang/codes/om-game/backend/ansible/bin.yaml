@@ -1,0 +1,9 @@
+---
+# 更新程序文件
+
+- name: update zone bin
+  hosts:
+    - bin
+  gather_facts: no
+  roles:
+    - bin

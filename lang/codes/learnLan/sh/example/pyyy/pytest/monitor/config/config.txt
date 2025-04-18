@@ -1,0 +1,10 @@
+[global]
+whilelist = []
+
+[Alarm]
+#硬盘使用在75%以上报警
+disk = 75
+#cpu负载在(cpu总物理核数*cpuload值)以上报警
+cpuload = 1
+#流量在50Mbps以上报警
+traffic = 50

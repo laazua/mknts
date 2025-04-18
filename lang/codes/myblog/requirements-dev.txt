@@ -1,0 +1,4 @@
+-i https://pypi.tuna.tsinghua.edu.cn/simple
+autopep8==2.0.0
+pycodestyle==2.9.1 ; python_version >= '3.6'
+tomli==2.0.1 ; python_version >= '3.7'

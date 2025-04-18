@@ -1,0 +1,8 @@
+---
+# test
+- hosts: proxy
+  remote_user: root
+  
+  tasks:
+    - name: test
+      command: ping 127.0.0.1 -c 3

@@ -1,0 +1,9 @@
+### grpc helloworld
+
+[环境]
+    *) ubuntu
+    *) apt update && apt install -y protobuf-compiler libprotobuf-dev libgrpc++-dev
+
+[使用]
+    *) make
+    *) make clean

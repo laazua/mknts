@@ -1,0 +1,5 @@
+### container
+
+[说明]
+    *) alpine-golang-3-19-1.tar 是容器运行的基础包
+    *) cat alpine-golang-3-19-1.tar|podman import - alpine-golang:3.19.3

@@ -1,0 +1,18 @@
+### manage
+
+描述:
+====
+    1) encoding/gob包使用示例
+
+
+结构:
+====
+    1) master处理web请求转发至servant服务.
+    2) servant在主机节点上处理master分发的任务.
+
+
+web:
+    1) vue-admin-template
+    2) volta进行node和npm管理
+    3) node@12.22.12
+    4) npm@6.14.16

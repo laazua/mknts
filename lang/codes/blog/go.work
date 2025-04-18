@@ -1,0 +1,12 @@
+go 1.23.2
+
+use (
+	./app
+	./controller
+	./env
+	./main
+	./middleware
+	./schema
+	./storage
+	./utils
+)

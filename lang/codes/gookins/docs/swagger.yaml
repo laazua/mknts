@@ -1,0 +1,422 @@
+basePath: /
+definitions:
+  model.ApiRespone:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  model.LoginForm:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - name
+    - password
+    type: object
+  model.LoginRespon:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      token:
+        type: string
+    type: object
+  model.TaskForm:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      pipeline:
+        type: string
+    required:
+    - description
+    - name
+    - pipeline
+    type: object
+  model.UserForm:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - name
+    - password
+    type: object
+host: 192.168.165.88:8084
+info:
+  contact:
+    email: 1323212038@qq.com
+    name: API Support
+    url: http://192.168.165.88:8084/support
+  description: gookins server web api.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://192.168.165.88:8084/terms/
+  title: gookins web api
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录接口
+      parameters:
+      - description: 登录请求参数
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回Token
+          schema:
+            $ref: '#/definitions/model.LoginRespon'
+        "500":
+          description: 无效的凭据
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      summary: 用户登录
+      tags:
+      - 用户
+  /task/add:
+    post:
+      consumes:
+      - application/json
+      description: 任务创建接口
+      parameters:
+      - description: 创建任务请求参数
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建任务成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 创建任务失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建任务
+      tags:
+      - 任务
+  /task/cancel/{name}:
+    post:
+      consumes:
+      - application/json
+      description: 任务禁用接口
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 取消任务成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 取消任务失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用任务
+      tags:
+      - 任务
+  /task/del/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 任务删除接口
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除任务成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 删除任务失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除任务
+      tags:
+      - 任务
+  /task/hook:
+    post:
+      consumes:
+      - application/json
+      description: hook运行任务接口
+      parameters:
+      - description: hook添加任务请求参数
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: hook添加任务到任务池成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "401":
+          description: hook添加任务到任务池失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: hook运行任务
+      tags:
+      - 任务
+  /task/list:
+    get:
+      consumes:
+      - application/json
+      description: 任务列表接口
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取任务成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 获取任务失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 任务列表
+      tags:
+      - 任务
+  /task/run:
+    post:
+      consumes:
+      - application/json
+      description: 运行任务接口
+      parameters:
+      - description: 添加务请求参数
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 添加任务到任务池成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 添加任务到任务池失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 运行任务
+      tags:
+      - 任务
+  /task/state/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 任务状态接口
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取任务状态成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "401":
+          description: 获取任务状态失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 任务状态
+      tags:
+      - 任务
+  /task/upt/{id}:
+    put:
+      consumes:
+      - application/json
+      description: 任务更新接口
+      parameters:
+      - description: 更新任务请求参数
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新任务成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 更新任务失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新任务
+      tags:
+      - 任务
+  /user/add:
+    post:
+      consumes:
+      - application/json
+      description: 用户创建接口
+      parameters:
+      - description: 创建用户请求参数
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建用户成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 创建用户失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建用户
+      tags:
+      - 用户
+  /user/del/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 用户删除接口
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除用户成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 删除用户失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户
+      tags:
+      - 用户
+  /user/list:
+    get:
+      consumes:
+      - application/json
+      description: 用户列表接口
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户列表成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 获取用户列表失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户列表
+      tags:
+      - 用户
+  /user/upt/{id}:
+    put:
+      consumes:
+      - application/json
+      description: 用户更新接口
+      parameters:
+      - description: 更新用户请求参数
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新用户成功
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+        "500":
+          description: 更新用户失败
+          schema:
+            $ref: '#/definitions/model.ApiRespone'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户
+      tags:
+      - 用户
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

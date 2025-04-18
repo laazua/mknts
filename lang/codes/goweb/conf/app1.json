@@ -1,0 +1,16 @@
+{
+    "App": {
+        "Ip": "0.0.0.0",
+        "Port": 8866,
+        "KeyWord": "gweb123456abcdef",
+        "RemotePort": 8888
+
+    },
+    "Mysql": {
+        "Host": "127.0.0.1",
+        "Port": 3306,
+        "Dbname": "ywops",
+        "Username": "bnos",
+        "Password": "bnos123"
+    }
+}

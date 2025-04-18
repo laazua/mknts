@@ -1,0 +1,665 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "gookins server web api.",
+        "title": "gookins web api",
+        "termsOfService": "http://192.168.165.88:8084/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://192.168.165.88:8084/support",
+            "email": "1323212038@qq.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "192.168.165.88:8084",
+    "basePath": "/",
+    "paths": {
+        "/login": {
+            "post": {
+                "description": "用户登录接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录请求参数",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功返回Token",
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginRespon"
+                        }
+                    },
+                    "500": {
+                        "description": "无效的凭据",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务创建接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "创建任务",
+                "parameters": [
+                    {
+                        "description": "创建任务请求参数",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TaskForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建任务成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "创建任务失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/cancel/{name}": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务禁用接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "禁用任务",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "取消任务成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "取消任务失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/del/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务删除接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "删除任务",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除任务成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "删除任务失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/hook": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "hook运行任务接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "hook运行任务",
+                "parameters": [
+                    {
+                        "description": "hook添加任务请求参数",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TaskForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "hook添加任务到任务池成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "401": {
+                        "description": "hook添加任务到任务池失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务列表接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "任务列表",
+                "responses": {
+                    "200": {
+                        "description": "获取任务成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "获取任务失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/run": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "运行任务接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "运行任务",
+                "parameters": [
+                    {
+                        "description": "添加务请求参数",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TaskForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "添加任务到任务池成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "添加任务到任务池失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/state/{name}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务状态接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "任务状态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取任务状态成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "401": {
+                        "description": "获取任务状态失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/upt/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "任务更新接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "任务"
+                ],
+                "summary": "更新任务",
+                "parameters": [
+                    {
+                        "description": "更新任务请求参数",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TaskForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新任务成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "更新任务失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "用户创建接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "创建用户",
+                "parameters": [
+                    {
+                        "description": "创建用户请求参数",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建用户成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "创建用户失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/del/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "用户删除接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "删除用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除用户成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "删除用户失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "用户列表接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户列表",
+                "responses": {
+                    "200": {
+                        "description": "获取用户列表成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "获取用户列表失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/upt/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "用户更新接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "更新用户",
+                "parameters": [
+                    {
+                        "description": "更新用户请求参数",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新用户成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    },
+                    "500": {
+                        "description": "更新用户失败",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiRespone"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ApiRespone": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.LoginForm": {
+            "type": "object",
+            "required": [
+                "name",
+                "password"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.LoginRespon": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TaskForm": {
+            "type": "object",
+            "required": [
+                "description",
+                "name",
+                "pipeline"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "pipeline": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UserForm": {
+            "type": "object",
+            "required": [
+                "name",
+                "password"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

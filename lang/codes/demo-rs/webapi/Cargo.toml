@@ -1,0 +1,10 @@
+[package]
+name = "webapi"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.39.3", features = ["full"] }
+axum = "0.7.5"
+serde = { version = "1.0.208", features = ["derive"] }
+

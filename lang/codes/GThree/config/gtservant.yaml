@@ -1,0 +1,26 @@
+---
+## gtservant的配置文件
+
+# app以守护进程运行[true|false]
+app_daemon: false
+# app监听地址
+app_addr: 0.0.0.0:8887
+# app证书
+app_ca_pem: ./cert/ca.pem
+app_pem_file: ./cert/server.pem
+app_key_file: ./cert/server.key
+
+#svn配置
+svn_address: http://127.0.0.1/test
+svn_username: username
+svn_password: password
+
+#区服配置
+zone_path: /data/game/
+zone_script: game_opt.sh
+
+# redis配置
+rds_url: 172.16.9.127:6379
+rds_user: username
+rds_pass: password
+rds_db: DB0

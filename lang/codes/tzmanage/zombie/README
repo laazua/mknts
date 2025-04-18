@@ -1,0 +1,6 @@
+### zombie
+
+[说明]
+    *) 打包: make
+    *) 运行: pip install 
+    *) 清理: make clean

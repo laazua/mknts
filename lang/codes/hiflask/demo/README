@@ -1,0 +1,9 @@
+### zipapp
+
+[说明]
+  *) python标准库zipapp打包python项目
+  *) 要求目标机器有对应版本的python解释器
+  *) 将打包后的文件上传到目标机器直接运行
+     python demo.pyz
+  *) 构建: make(或者make build)
+  *) 清理: make clean

@@ -1,0 +1,9 @@
+### 接口
+
+[测试]
+  *) cd interface && cargo test
+
+
+[trait bound]
+  *) trait 结构体字段限制
+  *) trait 函数参数和返回值限制

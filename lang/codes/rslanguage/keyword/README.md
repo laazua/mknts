@@ -1,0 +1,61 @@
+### keyword
+
+- 严格关键字：
+1. as
+2. break
+3. const
+4. continue
+5. crate
+6. else
+7. enum
+8. extern
+9. false
+10. fn
+11. for
+12. if
+13. impl
+14. in
+15. let
+16. loop
+17. match
+18. mod
+19. move
+20. mut
+21. pub
+22. ref
+23. return
+24. self (value)
+25. Self (type)
+26. static
+27. struct
+28. supper
+29. trait
+30. true
+31. type
+32. unsafe
+33. use
+34. where
+35. while
+36. async
+37. await
+38. dyn
+
+- 保留关键字
+1. abstract
+2. become
+3. box
+4. do
+5. final
+6. macro
+7. override
+8. priv
+9. typeof
+10. unsized
+11. virtual
+12. yield
+13. try
+
+- 弱关键字
+1. macro_rules
+2. union
+3. 'static

@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: petclinic
+spec:
+  replicas: 3  # 副本数量
+  template:
+    metadata:
+      labels:
+        app: petclinic # 与service中的version字段对应
+    spec:
+      containers:
+        - name: petclinic
+          image: spring2go/spring-petclinic:1.0.0.RELEASE

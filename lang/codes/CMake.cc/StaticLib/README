@@ -1,0 +1,7 @@
+
+MAKE STATICLIB
+
+static lib:
+==========
+  name: lib + name + .a
+  demo: libtest.a

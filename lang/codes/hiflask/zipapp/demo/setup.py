@@ -1,0 +1,17 @@
+from setuptools import setup, find_packages
+
+
+setup(
+    name="demo",
+    version="0.0.1",
+    description="示例项目",
+    maintainer="confucuis",
+    author="confucuis",
+    url="github.com/confucuis",
+    packages=find_packages("src"),
+    package_dir={"": "src"},
+    entry_points={"console_scripts": ["demo = demo.main:main"]},
+    package_data={"": [".env", ".env.demo"]},
+    include_package_data=True,
+    install_requires=["python-dotenv==1.0.1"],
+)

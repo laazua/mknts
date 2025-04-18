@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+// host service definiton
+service Host {
+    rpc host_option(HostRequest) returns (HostReply) {}
+}
+
+message HostRequest {
+
+}
+
+message HostReply {
+
+}

@@ -1,0 +1,223 @@
+2022-09-19 21:47:03,324 p=87806 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:47:03,376 p=87806 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:47:03,415 p=87806 u=gamecpp n=ansible | fatal: [172.16.9.128]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'game_path' is undefined\n\nThe error appears to be in '/data/codes/OmGame/backend/ansible/roles/open/tasks/main.yaml': line 4, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# 创建路径\n- name: \"create game path\"\n  ^ here\n"}
+2022-09-19 21:47:03,420 p=87806 u=gamecpp n=ansible | fatal: [172.16.9.129]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'game_path' is undefined\n\nThe error appears to be in '/data/codes/OmGame/backend/ansible/roles/open/tasks/main.yaml': line 4, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# 创建路径\n- name: \"create game path\"\n  ^ here\n"}
+2022-09-19 21:47:03,421 p=87806 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:47:03,421 p=87806 u=gamecpp n=ansible | 172.16.9.128               : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:47:03,421 p=87806 u=gamecpp n=ansible | 172.16.9.129               : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:47:31,821 p=87931 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:47:31,844 p=87931 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:47:31,866 p=87931 u=gamecpp n=ansible | fatal: [172.16.9.128]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'game_path' is undefined\n\nThe error appears to be in '/data/codes/OmGame/backend/ansible/roles/open/tasks/main.yaml': line 4, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# 创建路径\n- name: \"create game path\"\n  ^ here\n"}
+2022-09-19 21:47:31,874 p=87931 u=gamecpp n=ansible | fatal: [172.16.9.129]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'game_path' is undefined\n\nThe error appears to be in '/data/codes/OmGame/backend/ansible/roles/open/tasks/main.yaml': line 4, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# 创建路径\n- name: \"create game path\"\n  ^ here\n"}
+2022-09-19 21:47:31,875 p=87931 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:47:31,875 p=87931 u=gamecpp n=ansible | 172.16.9.128               : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:47:31,875 p=87931 u=gamecpp n=ansible | 172.16.9.129               : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:48:07,106 p=88132 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:48:07,133 p=88132 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:48:08,220 p=88132 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:48:08,370 p=88132 u=gamecpp n=ansible | ok: [172.16.9.128]
+2022-09-19 21:48:08,379 p=88132 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 21:48:08,496 p=88132 u=gamecpp n=ansible | An exception occurred during task execution. To see the full traceback, use -vvv. The error was: If you are using a module and expect the file to exist on the remote, see the remote_src option
+2022-09-19 21:48:08,496 p=88132 u=gamecpp n=ansible | fatal: [172.16.9.128]: FAILED! => {"changed": false, "msg": "Could not find or access '/data/binfile' on the Ansible Controller.\nIf you are using a module and expect the file to exist on the remote, see the remote_src option"}
+2022-09-19 21:48:08,513 p=88132 u=gamecpp n=ansible | An exception occurred during task execution. To see the full traceback, use -vvv. The error was: If you are using a module and expect the file to exist on the remote, see the remote_src option
+2022-09-19 21:48:08,513 p=88132 u=gamecpp n=ansible | fatal: [172.16.9.129]: FAILED! => {"changed": false, "msg": "Could not find or access '/data/binfile' on the Ansible Controller.\nIf you are using a module and expect the file to exist on the remote, see the remote_src option"}
+2022-09-19 21:48:08,516 p=88132 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:48:08,516 p=88132 u=gamecpp n=ansible | 172.16.9.128               : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:48:08,516 p=88132 u=gamecpp n=ansible | 172.16.9.129               : ok=1    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:49:13,781 p=88528 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:49:13,805 p=88528 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:49:14,689 p=88528 u=gamecpp n=ansible | ok: [172.16.9.129]
+2022-09-19 21:49:14,724 p=88528 u=gamecpp n=ansible | ok: [172.16.9.128]
+2022-09-19 21:49:14,732 p=88528 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 21:49:15,782 p=88528 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:49:15,791 p=88528 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:49:15,829 p=88528 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 21:49:25,655 p=88528 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 21:49:25,656 p=88528 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:49:25,695 p=88528 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:49:25,726 p=88528 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:49:25,726 p=88528 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:49:25,726 p=88528 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:51:50,412 p=89149 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:51:50,437 p=89149 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:51:51,302 p=89149 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:51:51,338 p=89149 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:51:51,346 p=89149 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 21:51:52,360 p=89149 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:51:52,366 p=89149 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:51:52,378 p=89149 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 21:52:01,454 p=89149 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 21:52:01,455 p=89149 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:52:01,474 p=89149 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:52:01,513 p=89149 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:52:01,514 p=89149 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:52:01,514 p=89149 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:52:33,787 p=89473 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 21:52:33,850 p=89473 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 21:52:34,359 p=89473 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:52:34,394 p=89473 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:52:34,403 p=89473 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 21:52:35,373 p=89473 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:52:35,382 p=89473 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:52:35,396 p=89473 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 21:52:44,478 p=89473 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 21:52:44,478 p=89473 u=gamecpp n=ansible | changed: [172.16.9.129]
+2022-09-19 21:52:44,523 p=89473 u=gamecpp n=ansible | changed: [172.16.9.128]
+2022-09-19 21:52:44,555 p=89473 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 21:52:44,556 p=89473 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 21:52:44,556 p=89473 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 22:01:17,108 p=90928 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 22:01:17,137 p=90928 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 22:01:18,070 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=3)
+2022-09-19 22:01:18,155 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=1)
+2022-09-19 22:01:18,361 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:01:18,492 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=2)
+2022-09-19 22:01:18,503 p=90928 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 22:01:19,495 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=3)
+2022-09-19 22:01:19,521 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=1)
+2022-09-19 22:01:20,190 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:01:20,286 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=2)
+2022-09-19 22:01:20,296 p=90928 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 22:01:29,360 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=3)
+2022-09-19 22:01:29,398 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=1)
+2022-09-19 22:01:38,948 p=90928 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:01:38,950 p=90928 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 22:01:39,065 p=90928 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=2)
+2022-09-19 22:01:39,099 p=90928 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 22:01:39,099 p=90928 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 22:01:39,100 p=90928 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 22:18:03,230 p=94917 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:18:03,381 p=94917 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:18:03,381 p=94917 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:18:03,381 p=94917 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:18:12,040 p=94976 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:18:12,160 p=94976 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:18:12,160 p=94976 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:18:12,160 p=94976 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:18:25,373 p=95129 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:18:25,481 p=95129 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:18:25,481 p=95129 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:18:25,481 p=95129 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:19:05,530 p=95305 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:19:05,641 p=95305 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:19:05,641 p=95305 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:19:05,642 p=95305 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:23:36,625 p=96406 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:23:36,743 p=96406 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:23:36,743 p=96406 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:23:36,744 p=96406 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:23:47,204 p=96487 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:23:47,317 p=96487 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:23:47,318 p=96487 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:23:47,318 p=96487 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:30:50,930 p=97729 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:30:51,040 p=97729 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:30:51,040 p=97729 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:30:51,040 p=97729 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:32:26,175 p=98189 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:32:26,289 p=98189 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:32:26,289 p=98189 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:32:26,289 p=98189 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:36:53,588 p=98930 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 22:36:53,616 p=98930 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 22:36:54,549 p=98930 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:36:54,613 p=98930 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 22:36:54,624 p=98930 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 22:36:55,599 p=98930 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:36:55,609 p=98930 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 22:36:55,622 p=98930 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 22:37:04,679 p=98930 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 22:37:04,680 p=98930 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 22:37:04,696 p=98930 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 22:37:04,734 p=98930 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 22:37:04,735 p=98930 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 22:37:04,735 p=98930 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 22:41:26,251 p=99888 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:41:26,385 p=99888 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:41:26,385 p=99888 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:41:26,385 p=99888 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:42:02,371 p=100043 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:42:02,480 p=100043 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:42:02,480 p=100043 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:42:02,480 p=100043 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:45:07,387 p=100560 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:45:07,508 p=100560 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:45:07,508 p=100560 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:45:07,508 p=100560 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:48:08,529 p=101097 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:48:08,653 p=101097 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:48:08,653 p=101097 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:48:08,653 p=101097 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:51:01,997 p=101985 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:51:02,103 p=101985 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:51:02,103 p=101985 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:51:02,103 p=101985 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 22:52:13,765 p=102264 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-09-19 22:52:13,873 p=102264 u=gamecpp n=ansible | PLAY [open zone] ***************************************************************
+2022-09-19 22:52:13,873 p=102264 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 22:52:13,874 p=102264 u=gamecpp n=ansible | PLAY RECAP *********************************************************************
+2022-09-19 23:02:58,552 p=103758 u=gamecpp n=ansible | [WARNING]:  * Failed to parse /data/codes/OmGame/backend/ansible/hosts with yaml plugin: We were unable to read either as JSON nor YAML, these are the errors we got from each:
+JSON: Expecting value: line 1 column 2 (char 1)  Syntax Error while loading YAML.   did not find expected <document start>  The error appears to be in
+'/data/codes/OmGame/backend/ansible/hosts': line 2, column 1, but may be elsewhere in the file depending on the exact syntax problem.  The offending line appears to be:  [open]
+node1 172.16.9.128 zone_name=test_syf zone_id=1 ^ here
+
+2022-09-19 23:02:58,553 p=103758 u=gamecpp n=ansible | [WARNING]:  * Failed to parse /data/codes/OmGame/backend/ansible/hosts with ini plugin: /data/codes/OmGame/backend/ansible/hosts:2: Expected key=value host variable assignment,
+got: 172.16.9.128
+
+2022-09-19 23:02:58,553 p=103758 u=gamecpp n=ansible | [WARNING]: Unable to parse /data/codes/OmGame/backend/ansible/hosts as an inventory source
+
+2022-09-19 23:02:58,553 p=103758 u=gamecpp n=ansible | [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2022-09-19 23:02:58,558 p=103758 u=gamecpp n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+
+2022-09-19 23:02:58,660 p=103758 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 23:02:58,660 p=103758 u=gamecpp n=ansible | skipping: no hosts matched
+2022-09-19 23:02:58,661 p=103758 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 23:04:22,345 p=103991 u=gamecpp n=ansible | PLAY [open zone] *******************************************************************************************************************************************************************
+2022-09-19 23:04:22,373 p=103991 u=gamecpp n=ansible | TASK [open : create game path] *****************************************************************************************************************************************************
+2022-09-19 23:04:23,256 p=103991 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 23:04:23,297 p=103991 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 23:04:23,306 p=103991 u=gamecpp n=ansible | TASK [open : update bin file] ******************************************************************************************************************************************************
+2022-09-19 23:04:24,270 p=103991 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 23:04:24,287 p=103991 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 23:04:24,297 p=103991 u=gamecpp n=ansible | TASK [open : update con file] ******************************************************************************************************************************************************
+2022-09-19 23:04:33,404 p=103991 u=gamecpp n=ansible | changed: [172.16.9.129] => (item=4)
+2022-09-19 23:04:33,405 p=103991 u=gamecpp n=ansible | [WARNING]: The authentication provided will be used on the svn command line and is not secure. To securely pass credentials, upgrade svn to version 1.10.0 or greater.
+
+2022-09-19 23:04:33,419 p=103991 u=gamecpp n=ansible | changed: [172.16.9.128] => (item=3)
+2022-09-19 23:04:33,460 p=103991 u=gamecpp n=ansible | PLAY RECAP *************************************************************************************************************************************************************************
+2022-09-19 23:04:33,460 p=103991 u=gamecpp n=ansible | 172.16.9.128               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-09-19 23:04:33,460 p=103991 u=gamecpp n=ansible | 172.16.9.129               : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

@@ -1,0 +1,43 @@
+<div class="sidebar">
+    <div class="list-group">
+        <a href="/dashboard" class="list-group-item list-group-item-action" aria-current="true">
+            主页
+        </a>
+        <a href="/api/user/list" class="list-group-item list-group-item-action" aria-current="true">用户管理</a>
+        <a href="/api/task/list" class="list-group-item list-group-item-action" aria-current="true">任务管理</a>
+    </div>
+</div>
+
+<script>
+    // 获取当前页面的 URL
+    const currentUrl = window.location.pathname;
+    // 获取所有的链接
+    const links = document.querySelectorAll('.list-group-item');
+    // 遍历链接并添加 active 类
+    links.forEach(link => {
+        if (link.getAttribute('href') === currentUrl) {
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'true');
+        }
+    });
+</script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .sidebar {
+        background-color: #8d8d8d; /* 灰色背景 */
+        height: 100vh; /* 使侧边栏撑满整个视口高度 */
+        padding: 20px; /* 内边距 */
+        width: 250px;
+        a {
+            background-color: #8d8d8d;
+        }
+    }
+    .list-group-item {
+        margin: 1px 0; /* 列表项之间的间距 */
+        padding: 10px;
+    }
+</style>

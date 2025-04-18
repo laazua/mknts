@@ -1,0 +1,7 @@
+
+MAKE SHAREDLIB
+
+shared lib:
+==========
+  name: lib + name + .so
+  demo: libtest.a

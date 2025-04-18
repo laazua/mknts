@@ -1,0 +1,33 @@
+# app 配置
+app:
+  # release or debug
+  mode:  release
+  # app 监听地址
+  addr: 0.0.0.0:8880
+  # jwt key
+  securekey: abc123456789
+  # 白名单放行
+  whiteip: 
+    - 127.0.0.1 
+    - 172.16.9.126
+    - 172.16.9.127
+
+# 远程调用配置
+rpc:
+  port: ':8888'
+  token: "bnzt test123456"
+
+# 数据库配置
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  name: bnzt
+  user: test
+  pass: test123
+
+# elk config
+es:
+  # url: 
+  url: http://127.0.0.1:9200
+  user: 'xxxxxx'
+  pass: 'xxxxxx'

@@ -1,0 +1,10 @@
+---
+
+# 区服配置
+game_path: /data/game/
+bin_file: /data/codes/OmGame/backend/ansible/binfile/gameserv
+
+# svn配置
+svn_user: wupan
+svn_pass: wupanwupan
+svn_addr: http://159.75.220.163:8080/svn/syfdata/3ce

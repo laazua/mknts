@@ -1,0 +1,6 @@
+### c代码中调用c++
+
+
+g++ -c test.cc   # 编译C++文件
+gcc -c main.c        # 编译C文件
+g++ -o main test.o main.o  # 链接生成可执行文件

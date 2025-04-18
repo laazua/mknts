@@ -1,0 +1,10 @@
+---
+
+- name: "update bin file"
+  copy:
+    src: "{{bin_file}}"
+    dest: "{{game_path}}{{zone_name}}_{{zone_id}}"
+    mode: 0755
+
+# 对比MD5值
+#- name: "check bin md5"

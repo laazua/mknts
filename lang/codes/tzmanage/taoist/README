@@ -1,0 +1,16 @@
+### taoist
+
+[说明]
+    *) 准备: 
+             python -m venv .venv
+             source .venv/bin/activate
+             pip install -r requirements.txt
+    *) 打包: 
+             make
+    *) 安装: 
+             mkdir /opt/taoist
+             pip install taoist-0.0.1-py3-none-any.whl -t /opt/taoist
+    *) 运行:
+             bash manage.sh up
+    *) 清理: 
+             make clean

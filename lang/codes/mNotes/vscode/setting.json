@@ -1,0 +1,33 @@
+{
+    "remote.SSH.remotePlatform": {
+        "101.132.245.153": "linux",
+        "172.16.0.119": "linux",
+        "172.16.9.127": "linux"
+    },
+    "git.ignoreLegacyWarning": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "settingsSync.ignoredSettings": [
+        "-php.validate.executablePath"
+    ],
+    "files.exclude": {
+        "**/.vscode": true
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.productIconTheme": "material-product-icons",
+    "cmake.configureOnOpen": true,
+    "go.toolsManagement.autoUpdate": true,
+    "bracketPairColorizer.depreciation-notice": false,
+    "git.confirmSync": false,
+    "gopls": {
+        "experimentalWorkspaceModule": true
+    },
+    "editor.fontSize": 16,
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": false,
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "editor.fontWeight": "bold",
+    "[vue]": {
+        "editor.defaultFormatter": "octref.vetur"
+    },
+    "terminal.integrated.fontFamily": "monospace",
+}

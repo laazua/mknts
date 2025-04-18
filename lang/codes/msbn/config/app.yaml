@@ -1,0 +1,24 @@
+
+# app config
+app:
+  addr: 0.0.0.0
+  port: 8888
+  securekey: abc123456789
+  whiteip: 
+    - 127.0.0.1 
+    - 172.16.9.126
+
+# mysql config
+mysql:
+  host: 101.132.245.153
+  port: 3306
+  name: msbn
+  user: test
+  pass: test123
+
+# elk config
+es:
+  # url: https://es-3p6sw8v4.public.tencentelasticsearch.com:9200
+  url: http://139.196.103.88:9200
+  user: elastic
+  pass: '@Gameelk123'

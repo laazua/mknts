@@ -1,0 +1,12 @@
+# 应用基本配置
+APP_DEBUG  = True
+APP_ADDR   = 0.0.0.0
+APP_PORT   = 8888
+APP_RELOAD = True
+APP_ALLOW  = 127.0.0.1, 172.16.9.128
+APP_KEY    = omtest
+
+# 数据库配置
+DB_URL     = mongodb://127.0.0.1:27017/om
+DB_USER    = username
+DB_PASS    = password

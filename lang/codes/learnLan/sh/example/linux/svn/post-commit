@@ -1,0 +1,15 @@
+#!/bin/bash
+
+REPOS="$1"
+REV="$2"
+
+export LANG=en_US.UTF-8
+
+SVN=/usr/bin/svn
+#客户端目录,注意改目录需要有相应的读写权限
+DIR=/data/client/yyzb/yyzb/
+START_TIME=$(date  +"%Y-%m-%d %H:%M:%S")
+
+echo "Code Deployed at ${START_TIME} current version: ${REV}" >> /data/testSvn/hooks/deploy.log
+
+$SVN update $DIR --username user --password passwd --no-auth-cache

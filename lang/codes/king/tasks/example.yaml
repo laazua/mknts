@@ -1,0 +1,24 @@
+---
+# 这是task文件的模板
+
+vars:
+  username: ""
+  password: ""
+
+
+stages:
+  - stage:
+    name: "第一阶段"
+    steps:
+      - step:
+        commands:
+          - echo "stages.stage.steps.step.one"
+          - echo "end"
+
+  - stage:
+    name: "第二阶段"
+    steps:
+      - step:
+        commands:
+          - echo "stages.stage.steps.step.tow"
+          - echo "end"

@@ -1,0 +1,8 @@
+---
+# 更新配置文件
+
+- name: update zone con
+  hosts:
+    - con
+  gather_facts:
+    - con

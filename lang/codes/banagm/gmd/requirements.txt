@@ -1,0 +1,14 @@
+aiocontextvars==0.2.2
+certifi==2021.10.8
+charset-normalizer==2.0.7
+contextvars==2.4
+idna==3.3
+immutables==0.16
+loguru==0.5.3
+psutil==5.8.0
+pyasn1==0.4.8
+requests==2.26.0
+rsa==4.7.2
+schedule==1.1.0
+typing-extensions==3.10.0.2
+urllib3==1.26.7

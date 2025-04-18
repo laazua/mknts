@@ -1,0 +1,84 @@
+#!/bin/bash
+# 远程执行脚本,机器需要做免登陆
+# 该脚本用于执行远程相关的操作
+# chmod +x reop
+
+#加载配置变量
+[ -f reop.cnf ] && source reop.cnf
+
+Help()
+{
+    echo "reop是一个用于远程操作主机的工具,用shell语言完成."
+    echo "usage: ./reop [选项]... [参数]..."
+    echo "  -h             打印此工具的帮助信息."
+    echo "  -c 'command'   在远程主机上执行命令."
+    echo "  -s  script     在远程主机上执行脚本."
+    echo "  -i 'ip'        被操作的主机ip."
+    echo "  当不指定-i参数时,在配置文件中的所有主机都要被执行."
+    exit 0
+}
+
+# 配置文件中,数组iplist中的机器全部执行传入的命令
+allHostCmd()
+{
+    for ip in $(echo ${iplist[*]})
+    do
+        echo -e "\033[32mIP: ${ip} 被执行命令: ${cmd}\033[0m"
+        ssh $ip "sudo ${cmd}"
+    done 
+    exit 0
+}
+
+# 命令行传入的主机将执行传入的命令
+someHostCmd()
+{
+    for ip in ${host}
+    do
+        echo -e "\033[32mIP: ${ip} 被执行命令: ${cmd}\033[0m"
+        ssh $ip "sudo ${cmd}"
+    done
+    exit 0
+}
+
+# 配置文件中,数组iplist中的全部机器执行传入的脚本
+allHostScript()
+{
+    for ip in $(echo ${iplist[*]})
+    do
+        echo -e "\033[32mIP: ${ip} 执行脚本: ${spt}\033[0m"
+        scp ${spt} ${ip}:~
+        ssh ${ip} "sudo sh ${remote_dir}/${spt}"
+    done
+    exit 0
+}
+
+# 命令行传入的主机将执行传入的脚本
+someHostScript()
+{
+    echo "dd"
+        echo -e "\033[32mIP: ${ip} 被执行脚本: ${spt}\033[0m"
+    exit 0
+}
+
+# 传入命令行参数
+if [[ "$1" == "-h" ]];then
+    Help
+elif [[ "$1" == "-c" ]] && [[ $# -eq 2 ]];then
+    cmd=$2
+    allHostCmd
+elif [[ "$1" == "-s" ]] && [[ $# -eq 2 ]];then
+    spt=$2
+    allHostScript
+elif [[ "$1" == "-c" ]] && [[ "$3" == "-i" ]] && [[ $# -eq 4 ]];then
+    cmd=$2
+    host=$4
+    echo $cmd  $host
+   # someHostCmd
+elif [[ "$1" == "-s" ]] && [[ "$3" == "-i" ]] && [[ $# -eq 4 ]];then
+    spt=$2
+    host=$4
+    echo $spt  $host
+   # someHostScript
+else
+    Help     
+fi

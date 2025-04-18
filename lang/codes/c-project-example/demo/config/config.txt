@@ -1,0 +1,3 @@
+# config file
+name=zhangsan
+address=chengdu

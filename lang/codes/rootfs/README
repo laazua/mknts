@@ -1,0 +1,43 @@
+### linux filesystem
+
+[alpine]
+    *) 到以下地址下载文件系统:
+       https://alpinelinux.org/releases/
+    *) cat alpine-minirootfs-3.20.0-x86_64.tar.gz|podman import - alpine:3.20.0
+
+[ubuntu]
+    *) 使用debootstrap工具获取(sudo apt install debootstrap):
+    *) mkdir ubuntu-minimal && cd ubuntu-minimal
+    *) sudo debootstrap --arch=amd64 focal . http://archive.ubuntu.com/ubuntu
+    *) sudo chroot ./  (使用chroot进入文件系统进行修改定制,如果不需要可省略)
+    *) cd .. && sudo tar czvf ubuntu-minimal.tar.gz ubuntu-minimal
+    *) cat ubuntu-minimal.tar.gz|podman import - jammy:22.04.LTS
+    *) 注: 或者直接 https://partner-images.canonical.com/core/jammy/current/ 去下载(jammy可替换focal或者其他)
+
+[debian]
+    *) 使用debootstrap工具获取(sudo apt install debootstrap):
+    *) mkdir debian-minimal && cd debian-minimal
+    *) sudo debootstrap bullseye . http://deb.debian.org/debian
+    *) sudo chroot ./  (使用chroot进入文件系统进行修改定制,如果不需要可省略)
+    *) cd .. && sudo tar czvf debian-minimal.tar.gz debian-minimal
+    *) cat debian-minimal.tar.gz|podman import - bullseys:11.9.0
+    *) 注: 或者直接 https://cloud.debian.org/images/cloud/ 这里去下载对应的版本
+
+[另外说明]
+    *) debootstrap使用:
+       debootstrap --arch ARCH SUITE TARGETDIR [MIRROR]
+       ARCH: amd64, 1386等
+       SUITE:
+           - debian: stable, bookworm, oldstable, bullseye, sid, buster
+           - ubuntu: trusty, xenial, bionic, focal, jammy
+       TARGETDIR: 在哪个目录中进行
+       MIRROR(可选):
+           - debian: https://deb.debian.org
+           - ubuntu: http://archive.ubuntu.com/ubuntu
+       --exclude=A,B,C: 不安装A,B,C包, 例如:
+           rsyslog,perl-base,nano
+       --include=A,B,C: 需要安装A,B,C包
+
+[备注]
+    *) scratch: 是一个什么都没有的空基础镜像.
+       可以使用scratch作为静态打包的二进制程序的基础镜像

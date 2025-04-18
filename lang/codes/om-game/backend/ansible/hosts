@@ -1,0 +1,5 @@
+[open]
+172.16.9.128 zone_name=test_syf zone_id=1
+172.16.9.129 zone_name=test_syf zone_id=2
+172.16.9.128 zone_name=test_syf zone_id=3
+172.16.9.129 zone_name=test_syf zone_id=4

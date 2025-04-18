@@ -1,0 +1,18 @@
+---
+## this is slaver's config
+
+# app debug
+app_debug: false
+
+# app listen address
+app_url: 0.0.0.0:8886
+
+# app http read timeout
+app_read_timeout: 10
+
+# app http write timeout
+app_write_timeout: 10
+
+# white ips
+white_ips:
+  - 172.16.9.127

@@ -1,0 +1,13 @@
+## manage.sh的配置文件
+
+#做过免密登陆的主机
+ip_list=(
+  47.103.47.78
+)
+
+game_user="gamecpp"
+remote_script="/home/gamecpp/.bana/"
+
+# shc.x86_64 shell加密工具
+# yum install -y shc.x86_64
+# shc -r -f script_name -o output_name

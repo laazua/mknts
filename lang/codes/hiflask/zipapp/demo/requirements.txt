@@ -1,0 +1,3 @@
+# Editable install with no version control (demo==0.0.1)
+-e /home/huheng/codes/demo/src
+python-dotenv==1.0.1

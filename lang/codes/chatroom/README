@@ -1,0 +1,16 @@
+### chatroom
+
+[描述]
+    *) Go语言项目
+    *) 简单的聊天室服务器(学习Go)
+
+[测试]
+    *) go test ./...
+
+[打包]
+    *) 运行: make
+
+[运行]
+    *) ./chatroom --config filename
+    *) ./chatclient --config filename
+

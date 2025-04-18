@@ -1,0 +1,252 @@
+2021-12-01 17:01:44.130 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:01:44.137 | INFO     | gmcom.log:writelog:23 - load 15: 0.05
+2021-12-01 17:01:44.144 | INFO     | gmcom.log:writelog:23 - mem percent: 97.3
+2021-12-01 17:01:44.154 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:02:45.222 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:02:45.229 | INFO     | gmcom.log:writelog:23 - load 15: 0.05
+2021-12-01 17:02:45.236 | INFO     | gmcom.log:writelog:23 - mem percent: 97.4
+2021-12-01 17:02:45.243 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:04:01.678 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:04:01.687 | INFO     | gmcom.log:writelog:23 - load 15: 0.05
+2021-12-01 17:04:01.694 | INFO     | gmcom.log:writelog:23 - mem percent: 97.4
+2021-12-01 17:04:01.702 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:05:02.889 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:05:02.906 | INFO     | gmcom.log:writelog:23 - load 15: 0.07
+2021-12-01 17:05:02.914 | INFO     | gmcom.log:writelog:23 - mem percent: 97.3
+2021-12-01 17:05:02.922 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:06:04.473 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:06:04.481 | INFO     | gmcom.log:writelog:23 - load 15: 0.11
+2021-12-01 17:06:04.493 | INFO     | gmcom.log:writelog:23 - mem percent: 87.9
+2021-12-01 17:06:04.505 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:06:29.645 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "22", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!"}
+2021-12-01 17:06:29.662 | INFO     | gmcom.log:writelog:23 - 执行命令:
+2021-12-01 17:06:29.744 | INFO     | gmcom.log:writelog:23 - find: ‘/home/gamecpp/codes/banagm/gmd/svndata’: 没有那个文件或目录
+chmod: "700" 后缺少操作数
+Try 'chmod --help' for more information.
+2021-12-01 17:06:29.753 | INFO     | gmcom.log:writelog:23 - 
+2021-12-01 17:06:29.762 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "22", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!", "status": "ChmodError"}
+2021-12-01 17:07:06.222 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:07:06.231 | INFO     | gmcom.log:writelog:23 - load 15: 0.16
+2021-12-01 17:07:06.238 | INFO     | gmcom.log:writelog:23 - mem percent: 88.6
+2021-12-01 17:07:06.247 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:08:07.309 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:08:07.316 | INFO     | gmcom.log:writelog:23 - load 15: 0.15
+2021-12-01 17:08:07.323 | INFO     | gmcom.log:writelog:23 - mem percent: 88.9
+2021-12-01 17:08:07.330 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:08:37.639 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "23", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!"}
+2021-12-01 17:08:37.659 | INFO     | gmcom.log:writelog:23 - 执行命令:
+2021-12-01 17:08:37.808 | INFO     | gmcom.log:writelog:23 - find: ‘/home/gamecpp/codes/banagm/gmd/svndata’: 没有那个文件或目录
+chmod: "700" 后缺少操作数
+Try 'chmod --help' for more information.
+2021-12-01 17:08:37.815 | INFO     | gmcom.log:writelog:23 - 
+2021-12-01 17:08:37.822 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "23", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!", "status": "ChmodError"}
+2021-12-01 17:09:08.395 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:09:08.402 | INFO     | gmcom.log:writelog:23 - load 15: 0.14
+2021-12-01 17:09:08.409 | INFO     | gmcom.log:writelog:23 - mem percent: 88.9
+2021-12-01 17:09:08.417 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:09:46.319 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "24", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!"}
+2021-12-01 17:09:46.396 | INFO     | gmcom.log:writelog:23 - 执行命令:
+2021-12-01 17:09:46.798 | INFO     | gmcom.log:writelog:23 - chmod: "600" 后缺少操作数
+Try 'chmod --help' for more information.
+2021-12-01 17:09:46.805 | INFO     | gmcom.log:writelog:23 - 
+2021-12-01 17:09:46.812 | INFO     | gmcom.log:writelog:23 - {"cmd": "open", "serverName": "gameyisi", "serverId": "24", "IP": "127.0.0.1", "retStatus": "\u5f00\u670d\u6210\u529f!", "status": "ChmodError"}
+2021-12-01 17:10:09.740 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:10:09.749 | INFO     | gmcom.log:writelog:23 - load 15: 0.17
+2021-12-01 17:10:09.757 | INFO     | gmcom.log:writelog:23 - mem percent: 89.1
+2021-12-01 17:10:09.765 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:11:10.831 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:11:10.838 | INFO     | gmcom.log:writelog:23 - load 15: 0.16
+2021-12-01 17:11:10.845 | INFO     | gmcom.log:writelog:23 - mem percent: 89.1
+2021-12-01 17:11:10.852 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:12:11.915 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:12:11.922 | INFO     | gmcom.log:writelog:23 - load 15: 0.15
+2021-12-01 17:12:11.929 | INFO     | gmcom.log:writelog:23 - mem percent: 91.4
+2021-12-01 17:12:11.936 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:13:55.301 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:13:55.309 | INFO     | gmcom.log:writelog:23 - load 15: 0.18
+2021-12-01 17:13:55.317 | INFO     | gmcom.log:writelog:23 - mem percent: 90.7
+2021-12-01 17:13:55.325 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:14:56.410 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:14:56.421 | INFO     | gmcom.log:writelog:23 - load 15: 0.17
+2021-12-01 17:14:56.428 | INFO     | gmcom.log:writelog:23 - mem percent: 92.7
+2021-12-01 17:14:56.516 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:15:58.190 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:15:58.208 | INFO     | gmcom.log:writelog:23 - load 15: 0.21
+2021-12-01 17:15:58.215 | INFO     | gmcom.log:writelog:23 - mem percent: 91.6
+2021-12-01 17:15:58.223 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:16:59.287 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:16:59.294 | INFO     | gmcom.log:writelog:23 - load 15: 0.2
+2021-12-01 17:16:59.301 | INFO     | gmcom.log:writelog:23 - mem percent: 93.0
+2021-12-01 17:16:59.308 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:18:00.378 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:18:00.384 | INFO     | gmcom.log:writelog:23 - load 15: 0.21
+2021-12-01 17:18:00.391 | INFO     | gmcom.log:writelog:23 - mem percent: 96.0
+2021-12-01 17:18:00.399 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:19:01.472 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:19:01.479 | INFO     | gmcom.log:writelog:23 - load 15: 0.2
+2021-12-01 17:19:01.487 | INFO     | gmcom.log:writelog:23 - mem percent: 93.7
+2021-12-01 17:19:01.494 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:20:02.560 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:20:02.567 | INFO     | gmcom.log:writelog:23 - load 15: 0.2
+2021-12-01 17:20:02.574 | INFO     | gmcom.log:writelog:23 - mem percent: 95.2
+2021-12-01 17:20:02.581 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:21:03.657 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:21:03.664 | INFO     | gmcom.log:writelog:23 - load 15: 0.18
+2021-12-01 17:21:03.671 | INFO     | gmcom.log:writelog:23 - mem percent: 94.9
+2021-12-01 17:21:03.678 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:22:05.539 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:22:05.546 | INFO     | gmcom.log:writelog:23 - load 15: 0.35
+2021-12-01 17:22:05.553 | INFO     | gmcom.log:writelog:23 - mem percent: 93.9
+2021-12-01 17:22:05.561 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:23:06.628 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:23:06.635 | INFO     | gmcom.log:writelog:23 - load 15: 0.37
+2021-12-01 17:23:06.642 | INFO     | gmcom.log:writelog:23 - mem percent: 92.3
+2021-12-01 17:23:06.650 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:24:07.984 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:24:07.999 | INFO     | gmcom.log:writelog:23 - load 15: 0.48
+2021-12-01 17:24:08.007 | INFO     | gmcom.log:writelog:23 - mem percent: 91.9
+2021-12-01 17:24:08.015 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:25:09.072 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:25:09.079 | INFO     | gmcom.log:writelog:23 - load 15: 0.45
+2021-12-01 17:25:09.086 | INFO     | gmcom.log:writelog:23 - mem percent: 96.6
+2021-12-01 17:25:09.097 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:26:10.552 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:26:10.560 | INFO     | gmcom.log:writelog:23 - load 15: 0.45
+2021-12-01 17:26:10.567 | INFO     | gmcom.log:writelog:23 - mem percent: 91.9
+2021-12-01 17:26:10.574 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:27:11.639 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:27:11.646 | INFO     | gmcom.log:writelog:23 - load 15: 0.42
+2021-12-01 17:27:11.653 | INFO     | gmcom.log:writelog:23 - mem percent: 92.8
+2021-12-01 17:27:11.660 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:28:12.726 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:28:12.733 | INFO     | gmcom.log:writelog:23 - load 15: 0.4
+2021-12-01 17:28:12.740 | INFO     | gmcom.log:writelog:23 - mem percent: 92.9
+2021-12-01 17:28:12.747 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:29:13.808 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:29:13.815 | INFO     | gmcom.log:writelog:23 - load 15: 0.37
+2021-12-01 17:29:13.823 | INFO     | gmcom.log:writelog:23 - mem percent: 92.8
+2021-12-01 17:29:13.830 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:30:14.892 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:30:14.902 | INFO     | gmcom.log:writelog:23 - load 15: 0.35
+2021-12-01 17:30:14.911 | INFO     | gmcom.log:writelog:23 - mem percent: 92.8
+2021-12-01 17:30:14.919 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:31:16.171 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:31:16.180 | INFO     | gmcom.log:writelog:23 - load 15: 0.43
+2021-12-01 17:31:16.187 | INFO     | gmcom.log:writelog:23 - mem percent: 92.6
+2021-12-01 17:31:16.195 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:32:17.260 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:32:17.267 | INFO     | gmcom.log:writelog:23 - load 15: 0.4
+2021-12-01 17:32:17.274 | INFO     | gmcom.log:writelog:23 - mem percent: 92.6
+2021-12-01 17:32:17.281 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:33:18.345 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:33:18.352 | INFO     | gmcom.log:writelog:23 - load 15: 0.38
+2021-12-01 17:33:18.360 | INFO     | gmcom.log:writelog:23 - mem percent: 92.8
+2021-12-01 17:33:18.367 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:34:19.432 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:34:19.439 | INFO     | gmcom.log:writelog:23 - load 15: 0.36
+2021-12-01 17:34:19.446 | INFO     | gmcom.log:writelog:23 - mem percent: 92.7
+2021-12-01 17:34:19.454 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:35:20.519 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:35:20.526 | INFO     | gmcom.log:writelog:23 - load 15: 0.33
+2021-12-01 17:35:20.533 | INFO     | gmcom.log:writelog:23 - mem percent: 92.7
+2021-12-01 17:35:20.540 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:36:21.602 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:36:21.609 | INFO     | gmcom.log:writelog:23 - load 15: 0.31
+2021-12-01 17:36:21.617 | INFO     | gmcom.log:writelog:23 - mem percent: 92.7
+2021-12-01 17:36:21.625 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:37:23.124 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:37:23.141 | INFO     | gmcom.log:writelog:23 - load 15: 0.46
+2021-12-01 17:37:23.148 | INFO     | gmcom.log:writelog:23 - mem percent: 92.7
+2021-12-01 17:37:23.156 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:38:24.720 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:38:24.737 | INFO     | gmcom.log:writelog:23 - load 15: 0.48
+2021-12-01 17:38:24.744 | INFO     | gmcom.log:writelog:23 - mem percent: 92.9
+2021-12-01 17:38:24.752 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:39:25.818 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:39:25.826 | INFO     | gmcom.log:writelog:23 - load 15: 0.44
+2021-12-01 17:39:25.834 | INFO     | gmcom.log:writelog:23 - mem percent: 93.6
+2021-12-01 17:39:25.842 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:40:26.909 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:40:26.916 | INFO     | gmcom.log:writelog:23 - load 15: 0.41
+2021-12-01 17:40:26.924 | INFO     | gmcom.log:writelog:23 - mem percent: 93.5
+2021-12-01 17:40:26.931 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:41:27.995 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:41:28.002 | INFO     | gmcom.log:writelog:23 - load 15: 0.39
+2021-12-01 17:41:28.009 | INFO     | gmcom.log:writelog:23 - mem percent: 93.6
+2021-12-01 17:41:28.016 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:42:29.080 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:42:29.087 | INFO     | gmcom.log:writelog:23 - load 15: 0.37
+2021-12-01 17:42:29.095 | INFO     | gmcom.log:writelog:23 - mem percent: 93.5
+2021-12-01 17:42:29.103 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:43:30.166 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:43:30.173 | INFO     | gmcom.log:writelog:23 - load 15: 0.37
+2021-12-01 17:43:30.180 | INFO     | gmcom.log:writelog:23 - mem percent: 93.1
+2021-12-01 17:43:30.187 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:44:31.251 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:44:31.258 | INFO     | gmcom.log:writelog:23 - load 15: 0.34
+2021-12-01 17:44:31.265 | INFO     | gmcom.log:writelog:23 - mem percent: 93.2
+2021-12-01 17:44:31.273 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:45:32.335 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:45:32.342 | INFO     | gmcom.log:writelog:23 - load 15: 0.32
+2021-12-01 17:45:32.349 | INFO     | gmcom.log:writelog:23 - mem percent: 93.2
+2021-12-01 17:45:32.356 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:46:33.432 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:46:33.439 | INFO     | gmcom.log:writelog:23 - load 15: 0.3
+2021-12-01 17:46:33.446 | INFO     | gmcom.log:writelog:23 - mem percent: 93.6
+2021-12-01 17:46:33.453 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:47:34.516 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:47:34.524 | INFO     | gmcom.log:writelog:23 - load 15: 0.28
+2021-12-01 17:47:34.532 | INFO     | gmcom.log:writelog:23 - mem percent: 93.5
+2021-12-01 17:47:34.539 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:48:35.605 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:48:35.611 | INFO     | gmcom.log:writelog:23 - load 15: 0.27
+2021-12-01 17:48:35.618 | INFO     | gmcom.log:writelog:23 - mem percent: 93.6
+2021-12-01 17:48:35.626 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:49:36.685 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:49:36.693 | INFO     | gmcom.log:writelog:23 - load 15: 0.25
+2021-12-01 17:49:36.700 | INFO     | gmcom.log:writelog:23 - mem percent: 93.8
+2021-12-01 17:49:36.707 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:50:37.769 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:50:37.776 | INFO     | gmcom.log:writelog:23 - load 15: 0.24
+2021-12-01 17:50:37.784 | INFO     | gmcom.log:writelog:23 - mem percent: 93.8
+2021-12-01 17:50:37.791 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:51:38.854 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:51:38.863 | INFO     | gmcom.log:writelog:23 - load 15: 0.22
+2021-12-01 17:51:38.870 | INFO     | gmcom.log:writelog:23 - mem percent: 93.7
+2021-12-01 17:51:38.878 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:52:39.946 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:52:39.954 | INFO     | gmcom.log:writelog:23 - load 15: 0.21
+2021-12-01 17:52:39.962 | INFO     | gmcom.log:writelog:23 - mem percent: 93.8
+2021-12-01 17:52:39.970 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:53:41.037 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:53:41.045 | INFO     | gmcom.log:writelog:23 - load 15: 0.2
+2021-12-01 17:53:41.054 | INFO     | gmcom.log:writelog:23 - mem percent: 93.8
+2021-12-01 17:53:41.064 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:54:42.127 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:54:42.134 | INFO     | gmcom.log:writelog:23 - load 15: 0.19
+2021-12-01 17:54:42.141 | INFO     | gmcom.log:writelog:23 - mem percent: 94.1
+2021-12-01 17:54:42.149 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:55:43.218 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:55:43.225 | INFO     | gmcom.log:writelog:23 - load 15: 0.18
+2021-12-01 17:55:43.232 | INFO     | gmcom.log:writelog:23 - mem percent: 95.5
+2021-12-01 17:55:43.239 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:56:44.302 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:56:44.310 | INFO     | gmcom.log:writelog:23 - load 15: 0.17
+2021-12-01 17:56:44.317 | INFO     | gmcom.log:writelog:23 - mem percent: 93.9
+2021-12-01 17:56:44.325 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:57:45.385 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:57:45.392 | INFO     | gmcom.log:writelog:23 - load 15: 0.16
+2021-12-01 17:57:45.400 | INFO     | gmcom.log:writelog:23 - mem percent: 93.8
+2021-12-01 17:57:45.407 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:58:46.935 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:58:46.945 | INFO     | gmcom.log:writelog:23 - load 15: 0.19
+2021-12-01 17:58:46.953 | INFO     | gmcom.log:writelog:23 - mem percent: 72.8
+2021-12-01 17:58:46.961 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 17:59:48.029 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 17:59:48.037 | INFO     | gmcom.log:writelog:23 - load 15: 0.18
+2021-12-01 17:59:48.044 | INFO     | gmcom.log:writelog:23 - mem percent: 72.9
+2021-12-01 17:59:48.051 | INFO     | gmcom.log:writelog:23 - process monitor!!!
+2021-12-01 18:00:49.116 | INFO     | gmcom.log:writelog:23 - disk percent: 23.8
+2021-12-01 18:00:49.123 | INFO     | gmcom.log:writelog:23 - load 15: 0.17
+2021-12-01 18:00:49.131 | INFO     | gmcom.log:writelog:23 - mem percent: 72.6
+2021-12-01 18:00:49.138 | INFO     | gmcom.log:writelog:23 - process monitor!!!

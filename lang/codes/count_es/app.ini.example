@@ -1,0 +1,19 @@
+## config file
+
+[app]
+loglevel  = debug
+logstdout = True
+xlsxpath  = /tmp/xlsxs
+backpath  = /tmp/back
+
+[es]
+user   = zhangsan
+passwd = 12345678
+addr   = http://ip:port
+
+[email]
+username  = zhangsan@xxx.com
+password  = 12345678
+port      = 465
+address   = smtp.feishu.cn
+receivers = zhangsan,lisi,wangwu,zhuliu

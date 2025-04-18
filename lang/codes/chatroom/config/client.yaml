@@ -1,0 +1,5 @@
+---
+# 客户端配置
+
+server:
+  addr: localhost:8000

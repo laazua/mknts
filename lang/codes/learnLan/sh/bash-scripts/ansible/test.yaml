@@ -1,0 +1,14 @@
+--- yaml 文件的开始
+# 注释
+
+# test
+name: test
+job: test
+foods:
+  - apple
+  - orange
+  - mango
+languages:
+  - python
+  - golang
+  - shell

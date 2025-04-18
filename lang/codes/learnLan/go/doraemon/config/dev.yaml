@@ -1,0 +1,8 @@
+server:
+  port: ":8080"
+db:
+  hostname: 39.108.102.49
+  port: 5849
+  username: test
+  password: 123456
+  dbname: test

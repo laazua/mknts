@@ -1,0 +1,19 @@
+---
+version: '0.1'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    # restart跟随docker启动
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://172.16.9.128:6666'
+        gitlab_rails['gitlab_shell_ssh_port'] = 7777
+  ports:
+    - 6666:6666
+    - 7777:7777
+  volumes:
+    - './config:/etc/gitlab'
+    - './logs:/var/log/gitlab'
+    - './data:/var/opt/gitlab'

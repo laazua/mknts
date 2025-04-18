@@ -1,0 +1,31 @@
+---
+- hosts: group
+  remote_user: root
+  vars:
+    - user: test
+  tasks:
+    ## 创建apache用户
+    - name: craete user use variable
+      user: user=test state=present
+
+    ## 安装httpd
+    - name: install httpd server
+      yum: name={{item}} state=latest    # yum模块
+      with_items:
+        - httpd
+        - httpd-devel
+
+    ## 服务启动管理
+    - name: start httpd service
+      service: name=httpd state=started enabled=yes    #service模块
+
+    ## copy配置文件,初始化
+    - name: copy httpd.conf to group:/etc/httpd/conf/
+      copy: src=/etc/ansible/playbook/web/httpd.conf dest=httpd/conf    # copy模块
+      notify:
+        - restart httpd service
+
+## 触发重启httpd
+- handlers:
+  - name: restart httpd service
+  - service: name=httpd state=restarted

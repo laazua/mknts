@@ -1,0 +1,6 @@
+## 在此文件中指定项目打包包含或者排除的文件
+
+# include pat1 pat2 ...
+include ./requirements.txt
+
+# exclude pat1 pat2 ...

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message ZoneRequest {
+    string name = 1;
+    string number = 2;
+    string ip = 3;
+    string target = 4;
+    string svnversion = 5;
+}
+
+message ZoneResponse {
+    string name = 1;
+    string number = 2;
+    string ip = 3;
+    string target = 4;
+    string result = 5;
+}
+
+service Zone {
+    rpc option(ZoneRequest) returns (ZoneResponse) {}
+}

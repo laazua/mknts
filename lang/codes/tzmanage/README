@@ -1,0 +1,6 @@
+### tzmanage
+
+[说明]
+    *) tzmanage: 游戏运维管理系统.
+    *) taoist: 获取用户请求, 并下达命令给zombie.
+    *) zombie: 执行taoist下达的各种命令.

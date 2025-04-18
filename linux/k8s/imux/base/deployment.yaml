@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imux-deployment
+  labels:
+    app: imux
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: imux
+  template:
+    metadata:
+      labels:
+        app: imux
+    spec:
+      containers:
+      - name: imux
+        image: harbor.xxxxxxx.com/hh/imux@sha256:ff8fc26a38672b4e4dd4ca1d777650307f7e649201b21dd5ad6d466c7fc1566d
+        ports:
+        - containerPort: 9990
+

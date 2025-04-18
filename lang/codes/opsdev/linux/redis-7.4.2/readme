@@ -1,0 +1,3 @@
+deps: sudo apt -y install build-essential tcl
+build: make && make test
+target: src/redis-server, src/redis-cli, src/redis-sentinel ...

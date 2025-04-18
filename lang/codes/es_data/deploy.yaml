@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: es-data
+  labels:
+    app: es-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: es-data
+  template:
+    metadata:
+      labels:
+        app: es-data
+    spec:
+      containers:
+      - name: es
+        image: web-harbor.xxxxxx-test.com/hh/es_data@sha256:exsdf1817dad33ef3e5efe59114f87e87ebbaba505544c0ad65ee656b163b1fc12
+        ports:
+        - containerPort: 9888
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: es-data
+spec:
+  selector:
+    app: es-data
+  ports:
+    - name: es-data
+      protocol: TCP
+      targetPort: 9888
+      port: 8888
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: es-data-ingress
+spec:
+  ingressClassName: es-data-ingress
+  rules:
+    - host: es-data-example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: es-data
+                port:
+                  number: 8888

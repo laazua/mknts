@@ -1,0 +1,13 @@
+---
+
+# 被监控的程序名称
+# 和程序的运行路径
+programs:
+  - name: promethues
+    path: /app/prometheus
+  
+  - name: node_exporter
+    path: /app/node_exporter
+
+  - name: jenkins
+    path: /app/jenkins

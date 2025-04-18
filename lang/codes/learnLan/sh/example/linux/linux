@@ -1,0 +1,109 @@
+shell-script 学习: https://tldp.org/LDP/abs/html
+advanced-bash-scripting-guide: https://linuxstory.gitbook.io/advanced-bash-scripting-guide-in-chinese/zheng-wen/part1
+
+linux启动过程
+    post加电质检-->加载BIOS-->读取MBR-->GRUB引导-->加载kernel-->rc0-rc6(启动级别)-->加载内核模块-->加载rc.sysint-->inittab-->运行级别-->读取rc.local-->login shell
+
+raid(独立磁盘冗余阵列):
+    raid0:
+        最少需要两块磁盘，数据条带式分布，没有冗余，性能最佳(不存储镜像，校验信息)，不能用于对数据安全性要求高的场合
+    raid1:
+        最少两块磁盘，提供数据块冗余，性能好
+    raid5:
+        最少3块磁盘，数据以条带形式分布，以奇偶校验做冗余，适合多读少写的情景，是性能与数据冗余最佳的折中方案
+    raid10:
+        最少4块磁盘，先按raid0分成两组，再分别对两组按raid1方式镜像，兼顾冗余和性能，在实际应用中较为常用
+
+
+缓存：内存中的一小块区域,用于数据转移。
+
+串行：计算机cpu执行完了一个程序的指令在执行另一个程序的指令(单核)
+并发：计算机cpu分时执行不同程序的指令,即一会儿执行一个程序的指令一会儿执行另一个程序的指令,来回切换(单核)
+并行：多核计算机，不同cpu分别执行程序指令
+
+进程：是操作系统基础上的多任务机制
+调度：操作系统控制处理器在多个程序之间切换称之为调度。传统多任务操作系统是以进程为单位进行调度的。
+进程：程序执行过程所形成的实例。在这个过程中会生成出当前进程的一些状态信息，又称进程的上下文。
+多进程缺点：系统开销大(进程切换要保存进程的状态信息), 进程间通信不方便(进程之间是隔离的，都有自己的地址空间)
+
+线程：程序中的一个代码片段，它构成程序中一个相对独立的执行单元。由此可以从一个程序中分出多个单元来执行多个任务，及线程是程序内部的多任务机制。
+同一进程中的线程共享内存地址和进程的上下文信息。因此同一进程下的线程之间通信方便.
+在单核处理器中，各个线程分时抢占或者根据线程自身情况实现线程的并发执行。多核处理器，各个处理器都可以执行线程，实现并行执行。
+
+
+#########################################################
+https://zhuanlan.zhihu.com/p/116919692
+一.Linux磁盘分区操作步骤
+1.umount /dev/vdb
+2.fdisk /dev/vdb
+输入n,新建分区
+输入p,新建主分区
+输入分区号，然后输入分区大小，比如+10G
+。。。。。。
+3.输入w保存
+4.刷新分区partx -a /dev/vda
+
+二.加密Linux分区
+
+1.cryptsetup luksFormat /dev/vdb1,输入大写YES，然后输入密码
+
+2.解密加密分区cryptsetup luksOpen /dev/vdb1 program
+
+3.对加密分区格式化mkfs.ext4 /dev/mapper/program
+
+4.挂载加密分区mkdir /program ,mount /dev/mapper/program /program
+
+5.永久挂载分区
+
+修改fstab
+
+/dev/mapper/program / ** *** **
+
+6.如果不想输入密码
+
+#vi /etc/crypttab
+
+program /dev/vda* /root/program
+
+# echo 密码 >/root/program
+
+# chown root /roo/program
+
+# chmod 600 /root/program
+
+# cryptsetup luksAddKey /dev/vda* /root/program
+
+注意(program与前面命名有关系)
+
+要求输入密码
+
+完成
+
+7.如果输入密码
+
+编辑/etc/crypttab
+
+vi /etc/crypttab
+
+name /dev/vda* 这样子开机会要求输入密码
+
+8.当用完我们的加密分区后，就可以卸载它然后再锁住，这样数据就又会保护起来，我们要先卸载我们挂上去的分区，然后再锁住，如果不能锁住，可以尝试下把挂载目录删了
+
+umount /dev/mapper/program
+
+cryptsetup luksClose burvis
+
+如果下次先再用，就重复luksOpen就可以了
+############################################################
+
+sshd 免密登陆
+
+server端机器root生成ssh私钥和公钥  ssh-keygen -t rsa
+
+客户端新建普通用户 useradd aNsiBle  && echo "123456" | passwd aNsiBle --stdin
+cp 公钥到客户端机器的/home/aNsiBle/.ssh目录下&&改名字为authorized_keys
+(客户机普通用户有相应的权限)
+
+chmod 700 /home/aNsiBle/.ssh && chown -R aNsiBle.aNsiBle /home/aNsiBle/.ssh
+
+server端主机vim /root/.ssh/config && 写入Port 2222 和 User aNsiBLe

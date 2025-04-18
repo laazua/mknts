@@ -1,0 +1,29 @@
+[tool.pdm]
+
+# 自定义命令
+[tool.pdm.scripts]
+start = "bash manage.sh start"
+stop = "bash manage.sh stop"
+check = "bash manage.sh check"
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Sseve", email = "719283952@qq.com"},
+]
+dependencies = [
+    "fastapi[all]>=0.88.0",
+    "mongoengine>=0.24.2",
+    "aioredis>=2.0.1",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "grpcio>=1.51.1",
+    "grpcio-tools>=1.51.1",
+    "celery[redis]>=5.2.7",
+    "eventlet>=0.33.2",
+    "gevent>=22.10.2",
+]
+requires-python = ">=3.9"
+license = {text = "MIT"}

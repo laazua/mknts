@@ -1,0 +1,1949 @@
+1、安装虚拟环境
+安装Flask最方便的方法就是使用虚拟环境。虚拟环境是在Python解释器上的一个私有复制，你可以在一个隔绝的环境下安装packages，不会影响到你系统中全局的Python解释器。
+虚拟环境非常有用，因为它可以防止系统出现包管理混乱和版本冲突的问题。为每个应用程序创建一个虚拟环境可以确保应用程序只能访问它们自己使用的包，从而全局解释器只作为一个源且依然整洁干净，更多的虚拟环境可以被创建。
+另一个好处是，虚拟环境不需要管理员权限。
+
+虚拟环境由第三方程序virtualenv创建。检查在你的系统中是否已经安装，可以输入以下命令：
+$ virtualenv --version
+如果你得到一个错误，你需要安装该程序。
+注：Python 3.3增加了本地支持的虚拟环境通过venv模块和pyvenv命令。pyenv可以用来代替virtualenv，但是注意通过pyvenv创建的虚拟环境不包含pip，需要手动安装。这个限制会在Python 3.4中移除，
+到时候pyvenv可以当作完整的virtualenv替代品。
+
+大多数Linux发行版都提供一个virtualenv包。例如，Ubuntu用户就可以使用以下命令进行安装：
+$ sudo apt-get install python-virtualenv
+如果你使用的是Mac OSX，你可以使用easy_install安装virtualenv：
+$ sudo easy_install virtualenv
+
+如果你使用的是Microsoft Windows或者是任何没有提供官方virtualenv包的操作系统，接下来你会有一个稍微复杂的安装过程。
+使用你的web浏览器，导航到https://bitbucket.org/pypa/setuptools，setuptools安装程序的主页，找到链接下载一个叫ez_setup.py安装程序脚本。保存这个文件到你电脑的临时文件夹中，然后在那个目录下运行以下命令：
+$ python ez_setup.py
+$ easy_install virtualenv
+注：前一个命令必须由管理员权限的账户发出。在Microsoft Windows，以管理员身份选项运行命令提示符窗口。在基于Unix的系统中，两个安装命令前面必须加上sudo或作为root用户执行。一旦安装完毕，virtualenv程序可以通过普通账户执行。
+现在你需要创建文件夹用来组织从GitHub仓库中获取的示例代码。在十三页中《如何使用示例代码》讨论的那样，最方便的方法就是使用Git客户端直接从Github中检出代码。下面的命令从GitHub中下载示例代码并初始化应用程序文件目录为“1a”版本，
+初始版本的应用程序：
+
+$ git clone https://github.com/miguelgrinberg/flasky.git
+$ cd flasky
+$ git checkout 1a
+下一步就是使用virtualenv命令创建Python虚拟环境到flasky文件夹中。这个命令有一个需要的参数：虚拟环境的名称。一个指定名称的文件夹和在里面的、与虚拟环境相关的所有文件会在当前目录下被创建。一般给虚拟环境约定命名为venv：
+
+$ virtualenv venv
+New python executable in venv/bin/python2.7
+Also creating executable in venv/bin/python
+Installing setuptools............done.
+Installing pip...............done.
+现在你有一个venv文件夹在flasky文件夹里面和一个全新的虚拟环境，包含一个私有的Python解释器。使用虚拟环境的时候，你必须“激活”它。如果你是使用bash命令行工具(Linux和Mac OSX用户)，你可以使用这个命令激活虚拟环境：
+
+$ source venv/bin/activate
+如果你是使用Microsoft Windows，激活命令是：
+
+$ venv\Scripts\activate
+当虚拟环境被激活了，Python解释器的位置会被添加到PATH中，但是这个改动并不是永久的；它只影响当前命令会话。提醒一下，你激活了虚拟环境，该激活命令会将环境的名称包含在命令提示符里面：
+
+(venv)$
+当你在虚拟环境中完成工作并想回到全局Python解释器，在命令提示符中输入deactivate就可以了。
+
+2、使用pip安装python包
+大多数的Python包是通过pip程序安装的，在创建虚拟环境的时候virtualenv会自动添加进去。当一个虚拟环境被激活后，pip程序的位置会被添加到PATH中。
+
+注：如果你使用pyvenv创建虚拟环境在Python 3.3中，则必须手动安装pip。安装指令在pip网站上可以找到。在Python 3.4下，pyvenv会自动安装pip。
+
+安装Flask到虚拟环境中，使用下面的命令：
+
+(venv)$ pip install flask
+通过这个命令，Flask和它的依赖集都会安装到虚拟环境中。你可以验证Flask是否正确安装通过启动Python解释器并试着导入它：
+
+(venv)$ python
+>>> import flask
+>>>
+如果需要安装的包比较多的时候，这样做会比较繁琐，我们还有一键安装的方法。首先新建一个文本文件，如：requirements.txt，然后将你需要安装的包名保存到该文件中(根据自己的需要)，如下：
+
+Babel==1.3
+Flask==0.10.1
+Flask-Login==0.2.7
+Flask-SQLAlchemy==1.0
+Flask-WTF==0.9.3
+Jinja2==2.7.1
+SQLAlchemy==0.8.2
+WTForms==1.0.5
+Werkzeug==0.9.4
+psycopg2==2.5.1
+...
+最后你只需要输入以下命令，所有需要的包就可以全部安装好了：
+
+pip install -r requirements.txt
+
+
+===========================================================================================================================================================================
+
+
+1、初始化
+在这章，你将学到Flask应用程序的不同部分。同时，你将编写和运行你的第一个Flask web应用程序。
+
+所有的Flask应用程序都必须创建一个 应用程序实例 。使用web服务器网关接口协议将所有从客户端接收的请求传递给这个对象处理。这个应用程序实例就是Flask类的一个对象，通常使用下面的方式创建：
+
+from flask import Flask
+app = Flask(__name__)
+Flask类构造函数唯一需要的参数就是应用程序的主模块或包。对于大多数应用程序，Python的__name__变量就是那个正确的、你需要传递的值。
+
+注：对于Flask开发者来说，传给Flask应用程序构造函数的name参数是比较容易弄混淆的。Flask使用这个参数来确定应用程序的根目录，这样以后可以相对这个路径来找到资源文件。
+
+稍后你可以看到更复杂的应用程序实例初始化，但是对于简单应用程序这些已经足够了。
+
+2、路由和视图函数
+客户端例如web浏览器发送 请求 给web服务，进而将它们发送给Flask应用程序实例。应用程序实例需要知道对于各个URL请求需要运行哪些代码，所以它给Python函数建立了一个URLs映射。这些在URL和函数之间建立联系的操作被称之为 路由 。
+
+在Flask应程序中定义路由的最便捷的方式是通过显示定义在应用程序实例之上的app.route装饰器，注册被装饰的函数来作为一个路由。下面的例子会演示怎样使用装饰器来申明一个路由：
+
+@app.route('/')
+def index():
+    return '<h1>Hello World!</h1>'
+注：装饰器是Python语言的标准特性；它们可以以不同方式改变函数的行为。一个常见的模式是使用装饰器来注册函数作为一个事件处理程序。
+
+在上一个示例给应用程序的根URL注册index()函数作为事件的处理程序。如果这个应用程序被部署在服务器上并绑定了 www.example.com 域名，然后在你的浏览器地址栏中输入 http://www.example.com 将触发index()来运行服务。客户端接收到的这个函数的返回值被称为 响应 。如果客户端是web浏览器，响应则是显示给用户的文档。
+
+类似于index()的函数被称作 视图函数 。通过视图返回的响应可以是简单的HTML内容的字符串，但它也可以市更复杂的形式，正如您将看到的。
+
+注：响应字符串嵌入在Python代码中导致代码难以掌控，在此只是介绍响应的概念。你将在第三章学习正确的方法来生成响应。
+
+如果你注意到你每天使用的一些网站URLs如何形成的，你将会发现很多都有变量。例如，你的Facebook个人信息页的URL是 http://www.facebook.com/<username> ，所以你的用户名是它的一部分。Flask在路由装饰器中使用特殊的语法支持这些类型的URLs。下面的示例定义了一个拥有动态名称组件的路由：
+
+@app.route('/user/<name>')
+def user(name):
+    return '<h1>Hello, %s!</h1>' % name
+用尖括号括起来的部分是动态的部分，所以任何URLs匹配到静态部分都将映射到这个路由。当视图函数被调用，Flask发送动态组件作为一个参数。在前面的示例的视图函数中，这个参数是用于生成一个个性的问候作为响应。
+
+在路由中动态组件默认为字符串，但是可以定义为其他类型。例如，路由/user/<int:id>只匹配有一个整数在id动态段的URLs。Flask路由支持int、float和path。path同样是字符串类型，但并不认为斜杠是分隔符，而认为它们是动态组件的一部分。
+
+3、服务启动
+应用程序实例有一个run方法用于启动Flask集成的web服务：
+
+if __name__ == '__main__':
+    app.run(debug=True)
+__name__ == '__main__'在此处使用是用于确保web服务已经启动当脚本被立即执行。当脚本被另一个脚本导入，它被看做父脚本将启动不同的服务，所以app.run()调用会被跳过。
+
+一旦服务启动，它将进入循环等待请求并为之服务。这个循环持续到应用程序停止，例如通过按下Ctrl-C。
+
+有几个选项参数可以给app.run()配置web服务的操作模式。在开发期间，可以很方便的开启debug模式，将激活 debugger 和 reloader 。这样做是通过传递debug为True来实现的。
+
+注：Flask提供的web服务并不用于生产环境。你将在十七章学习生产环境的web服务。
+
+4、一个完整的应用程序
+在上一节，你学习了Flask web应用程序的不同部分，现在是时候写一个了。整个 hello.py 应用程序脚本只不过将前面描述的三个部分结合在一个文件中。应用程序示例2-1所示。
+
+示例2-1 hello.py：一个完整的Flask应用程序
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return '<h1>Hello World!</h1>'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 2a来切换到这个版本的应用程序。
+
+运行应用程序之前，请确保你在之前创建的虚拟环境已经是激活状态且已安装Flask。现在打开你的web浏览器并在地址栏输入 http://127.0.0.1:5000/ 。图像2-1显示连接到应用程序后的web浏览器。
+
+
+
+图像2-1 hello.py Flask应用程序
+
+然后输入以下命令启动应用程序： (venv) $ python hello.py * Running on http://127.0.0.1:5000/ * Restarting with reloader
+
+如果你输入任何其他URL，应用程序将不知道如何操作它并且将返回错误代码404给浏览器——当你访问一个不存在的网页也会得到该错误。
+
+
+
+示例2-2所示应用程序的增强版添加了第二个动态路由。当你访问这个URI，你应该可以看到一个个性的问候。
+
+示例2-2 hello.py：带有动态路由的Flask应用程序
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return '<h1>Hello World!</h1>'
+
+@app.route('/user/<name>')
+def user(name):
+    return '<h1>Hello, %s!</h1>' % name
+
+if __name__ == '__main__':
+    app.run(debug=True)
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 2b来切换到这个版本的应用程序。
+
+测试动态路由，确保服务正在运行随后访问 http://localhost:5000/user/Dave 。生成的应用程序会使用动态参数名响应一个定制的问候。尝试不同的名称，看看视图函数总是生成响应基于给定的名称。图像2-2展示的一个示例。
+
+
+5、请求-响应循环
+现在你已经玩过一个基本的Flask应用程序，你也许想要知道更多关于Flask如何施展魔力。下面章节描述了一些框架设计方面的特点。
+
+5.1、应用程序Context和请求Context
+
+当Flask从客户端收到一个请求，它需要提供几个可用对象给视图函数处理。request对象是个不错的例子，它封装了客户端发送的HTTP请求。
+
+Flask视图函数访问request对象的最好方式，就是作为一个参数发送它，但这需要每个单一视图函数在应用程序中有一个额外的参数。考虑一下，如果request对象不是唯一一个视图函数需要访问完成请求的对象，事情将会变得更加复杂。
+
+为了避免弄乱视图函数那些可能需要或不需要的参数，Flask使用context来临时确定可访问的全局对象。也多亏了context，视图函数可以写成下面这样：
+
+from flask import request
+
+@app.route('/')
+def index():
+    user_agent = request.headers.get('User-Agent')
+    return '<p>Your browser is %s</p>' % user_agent
+注意，在这个视图函数中，request是如何被作为一个全局变量来使用的。现实中，request是不能作为全局变量的，如果是多线程服务器，同一时间线程作用于不同客户端的不同请求，所以每一个线程需要看到request中的不同对象。contexts使得Flask确定可访问的全局变量而不干扰其他线程。
+
+注：线程是可以独立管理的最小指令序列。一个进程中有多个活动的线程是非常常见的，有时分享内存或文件句柄资源。多线程web服务器会启动一个线程池并从池中选择一个线程来处理每个传入的请求。
+
+Flask有两类context： 应用级context 和 请求级context 。表2-1展示了这些context提供的变量。
+
+表2-1. Flask全局context
+
+
+
+Flask激活（或压栈）应用级context和请求级context在调度请求之前，然后删除他们当请求被处理后。当应用程序context被压入栈，线程中current_app和g变量变得可用；同样的，当请求级context被压入栈，request和session变量也同样变得可用。如果这些变量中的任何一个不是由激活的应用级或请求级context访问，会产生错误。在后面的章节会详细讨论四个context变量，所以不要担心你不理解它们的用处。
+
+下面的Python shell会话演示了应用级context是如何工作的：
+
+>>> from hello import app
+>>> from flask import current_app
+>>> current_app.name
+Traceback (most recent call last):
+...
+RuntimeError: working outside of the application context
+>>> app_ctx = app.app_context()
+>>> app_ctx.push()
+>>> current_app.name
+'hello'
+>>> app_ctx.pop()
+在这个示例中，当应用级context没有激活，但是却作为有效的context被压入栈中，current_app.name报错。注意在应用程序实例中一个应用级context是如何通过调用app.app_context()来获得的。
+
+5.2、请求调度
+
+当一个应用程序收到客户端的请求，它需要找到响应的视图函数为之服务。对于这个任务，Flask会在应用程序的URL映射中查找请求的URL，该映射包含URLs和操作它们的视图函数。Flask通过app.route装饰器或非装饰器版本app.add_url_rule()来建立这个映射。
+
+看一下Flask应用程序中URL映射是怎样的，你可以在Python shell中检查hello.py创建的映射。测试中，请确保你的虚拟环境是激活状态：
+
+(venv) % python
+>>> from hello import app
+>>> app.url_map
+Map([<Rule '/' (HEAD, OPTIONS, GET) -> index>,
+  <Rule '/static/<filename>' (HEAD, OPTIONS, GET) -> static>,
+  <Rule '/user/<name>' (HEAD, OPTIONS, GET) -> user>])
+/和/user/<name>路由是由应用程序中的app.route所定义。/static/<filename>路由是由Flask添加，用于访问静态文件的一个特殊路由。你将在第三章学习更多关于静态文件的内容。
+
+URL映射中所示的HEAD、OPTIONS、GET元素为request方法，由路由处理。Flask连接方法到每个路由，这样不同的请求方法发送到相同的URL可以被不同的视图函数处理。HEAD和OPTIONS方法由Flask自动管理，所以实际上可以说，在这个应用程序中URL映射的三个路由都连接到GET方法了。在第四章你将学习为路由指定不同的请求方法。
+
+5.3、请求Hooks
+
+有些时候在每个请求处理之前或之后执行代码是非常有用的。例如，在开始每一个请求前可能有必要创建数据库连接，或对用户请求进行验证。为了避免复制处理这些操作的代码到每一个视图函数中，Flask给你选择注册相同函数来调用，在请求被分配给视图函数之前或之后。
+
+请求hooks由装饰器实现。下面是四个Flask支持的hooks：
+
+before_first_request：在第一个请求被处理前注册一个函数运行。
+before_request：在每一个请求前注册一个函数运行。
+after_request：如果没有未处理的异常发生，在每一个请求后注册一个函数运行。
+teardown_request：即使未处理的异常发生，在每一个请求后注册一个函数运行。
+在请求hook函数和视图函数之间共享数据的惯用方法就是使用g全局context。例如，before_request处理程序可以从数据库加载已登录的用户并保存在g.user中。之后，当视图函数被调用，可以从那访问用户。
+
+请求hooks的示例会在未来的章节中展示给大家，所以不用担心，
+
+5.4、响应
+
+当Flask调用一个视图函数，并期望它的返回值去响应该请求。大多数的响应是将简单字符串构成的HTML页面发回给客户端。
+
+但是HTTP协议需要比字符串更多的信息作为请求的响应。一个HTTP响应中非常重要的部分是状态码，Flask默认设置200来指示请求已经成功处理。
+
+当视图函数需要用不同的状态码响应，可以在响应文本后添加数字码作为第二个返回值。例如，下面的视图函数返回400错误状态码的请求：
+
+@app.route('/')
+def index():
+    return '<h1>Bad Request</h1>', 400
+视图函数返回的响应还可以携带第三个参数，添加一个头部字典给HTTP响应。通常很少用到，但是你可以在第十四章看到示例。
+
+除了返回一个、两个或三个值的元组，Flask视图函数可以选择返回response对象。make_response()函数可携带一个、两个或三个参数，和视图函数返回的值一样，并返回一个response对象。有时候在视图函数中执行这个转换是非常有用的，然后使用response对象中的方法进一步配置响应。下面的示例创建response对象并设置cookie：
+
+from flask import make_response
+
+@app.route('/')
+def index():
+    response = make_response('<h1>This document carries a cookie!</h1>')
+    response.set_cookie('answer', '42')
+    return response
+有一类特殊的响应称作重定向。这类响应不包含页面文档；只是给浏览器一个新的URL去加载新的页面。重定向通常和web表单一起使用，你将在第四章学习。
+
+重定向通常由302响应状态码注明并且重定向的URL由头部的Location给出。重定向响应可以使用三个值的返回生成，也可通过响应对象生成，但是鉴于它频繁的使用，Flask提供redirect()函数来创建这样的响应：
+
+from flask import redirect
+
+@app.route('/')
+def index():
+    return redirect('http://www.example.com')
+另一个具有中断功能的特殊响应用来错误处理。下面的示例，当URL给出的id动态参数不是一个合法的用户时返回状态码404：
+
+from flask import abort
+
+@app.route('/user/<id>')
+def get_user(id):
+    user = load_user(id)
+    if not user:
+        abort(404)
+    return '<h1>Hello, %s</h1>' % user.name
+注意终止不是指将控制权返回给调用它的函数，而是指通过抛出异常将控制权返回给web服务。
+
+6、Flask扩展
+Flask是可扩展的。它故意腾出地给重要的功能，例如数据库和用户授权，给你自由去选择最适合你的应用程序的包，或写一个自己想要的。
+
+社区开发了非常多的扩展用于各种用途，如果这还不够，可以使用任何Python标准包和库。为了让你了解一个扩展是如何并入一个应用程序的，下面的章节给hello.py添加一个扩展，增加应用程序的命令行参数。
+
+6.1、Flask-Script命令行选项
+
+Flask开发，其web服务器支持一系列的启动配置选项，但是配置它们的唯一方式只有在脚本中传递参数给app.run()并调用。这不是非常的方便，理想方法是通过命令行参数传递配置选项。
+
+Flask-Script是给你的Flask应用程序添加命令行解释的扩展。它打包了一组通用的选项，还支持自定义命令。
+
+使用pip安装扩展：
+
+(venv) $ pip install flask-script
+示例2-3展示了在 hello.py 应用程序中添加命令行解释的变化。
+
+示例2-3. hello.py：使用Flask-Script
+
+from flask.ext.script import Manager
+
+manager = Manager(app)
+
+# ...
+
+if __name__ == '__main__':
+    manager.run()
+专为Flask开发的扩展暴露在flask.ext命名空间下。Flask-Script从flask.ext.script中导出一个名为Manager的类。
+
+初始化这个扩展的方法和其他许多扩展一样：主类实例的初始化是通过将应用程序实例作为参数传递给构造函数实现的。创建的对象适当的用于每一个扩展。在这个示例中，服务器启动通过manager.run()来路由，且命令行在这被解析。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 2c来切换到这个版本的应用程序。
+
+因为这些变化，应用程序获得一组基本的命令行选项。运行hello.py显示可用信息：
+
+$ python hello.py
+usage: hello.py [-h] {shell, runserver} ...
+
+positional arguments:
+  {shell, runserver}
+    shell           在Flask应用程序上下文的内部运行一个Python Shell。
+    runserver       运行Flask开发服务器，例如：app.run()
+
+optional arguments:
+  -h, --help        显示这个帮助信息并退出
+shell命令用于在应用程序上下文中启动一个Python shell会话。你可以使用这个会话去运行维护任务，或测试，或调试错误。
+
+runserver命令，就像它的名称一样，启动web服务。运行python hello.py runserver在调试模式下启动web服务，还有更多的选项：
+
+(venv) $ python hello.py runserver --help
+usage: hello.py runserver [-h] [-t HOST] [-p PORT] [--threaded]
+                          [--processes PROCESSES] [--passthrough-errors] [-d]
+                          [-r]
+
+运行Flask开发服务器，例如：app.run()
+
+optional arguments:
+  -h, --help             显示这个帮助信息并退出
+  -t HOST, --host HOST
+  -p PORT, --port PORT
+  --threaded
+  --processes PROCESSES
+  --passthrough-errors
+  -d, --no-debug
+  -r, --no-reload
+--host参数是一个非常有用的选项，因为它能告诉web服务器监听哪个网络接口的客户端连接。默认，Flask开发的web服务器监听localhost的连接，所以只有来自内部计算机运行的服务器可以接收。下面的命令使得web服务器监听公网接口，其他网络上的计算机可以连接：
+
+(venv) $ python hello.py runserver --host 0.0.0.0
+ * Running on http://0.0.0.0:5000/
+ * Restarting with reload
+现在web服务器应该可以从网络中的任何一台计算机访问 http://a.b.c.d:5000 ，“a.b.c.d”是运行服务的计算机的外部IP地址。
+
+这一章介绍了请求响应的概念，但说的更多的是响应。Flask使用模板为生成响应提供非常好的支持，这是非常重要的话题，下一章会重点讲它。
+
+
+==============================================================================================================================================
+
+写代码最关键的是要易于维护且结构清晰整洁。目前为止，你看到的例子都过于简单从而没有做这方面的要求。Flask视图函数希望将两个应该完全独立的任务一并处理，两个任务有两种代码，一并处理势必会引发问题。
+
+明摆着的任务就是生成响应，就像你在第二章看到的示例那样。对于最简单的请求确实已经足够，但是一般而言一个请求会触发应用程序的状态发生改变，而视图函数就是产生这个改变的地方。
+
+例如，用户在网站上注册一个新的账户。用户输入邮箱地址和密码到表单并点击提交按钮。一个包含数据的请求从用户到服务器，Flask将其派发给视图函数去处理这个注册请求。这个视图函数需要告诉数据库添加新的用户并生成一个响应发回给浏览器。这两类任务通常被称作业务逻辑和显示逻辑。
+
+混合业务逻辑和显示逻辑会导致代码非常的难以理解和维护。想象一下，将从数据库获取的数据和必要的HTML字符串文字进行连接，生成一堆的HTML代码是多么蛋疼的一件事情。而如果将显示逻辑移到模板中去，则势必极大提高应用程序的可维护性。
+
+模板就是包含响应文本的文件，带有占位符变量的动态部分只在请求上下文中被知道。用真实的值替换变量并返回最终响应字符串，这个过程称为渲染。对于渲染模板任务，Flask使用强大的模板引擎Jinja2。
+
+1、Jinja2模板引擎
+Jinja2模板最简单的形式就是一个包含响应文本的文件。示例3-1展示了Jinja2模板匹配示例2-1中index()视图函数响应。
+
+示例3-1. templates/index.html：Jinja2模板
+
+<h1>Hello World!</h1>
+示例2-2中视图函数user()返回的响应有一个动态部分，该部分由一个变量代表。示例3-2展示模板实现该响应。
+
+示例3-2. templates/user.html：Jinja2模板
+
+<h1>Hello, !</h1>
+1.1、渲染模板
+
+Flask默认会在应用程序的templates子目录中寻找模板。下个版本的hello.py，你需要将之前定义的index.html和user.html模板存放到新的templates文件夹下。
+
+应用程序中的视图函数需要修改来渲染这些模板。示例3-3中会展示这些变化。
+
+示例3-3. hello.py：渲染模板
+
+from flask import Flask, render_template
+
+# ...
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/user/<name>')
+def user(name):
+    return render_template('user.html', name=name)
+render_template函数由集成Jinja2模板引擎的Flask提供。这个函数将模板的文件名作为它的第一个参数。任何附加的参数都是一个键/值对，分别对应被模板引用的变量和真实值。在这个示例中，第二个模板收到name变量。
+
+类似于name=name的关键字参数在前面的示例中是非常常见的，但如果你不使用就很容易混淆且非常难理解。左边的“name”代表参数名称，一般在模板中用于占位符。右边的“name”在当前范围内是一个变量，为同名的参数提供真实的值。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 3a来切换到这个版本的应用程序。
+
+1.2、变量
+
+示例3-2的模板中的``结构引用一个变量，特殊的占位符告诉模板引擎，那个地方的值应该从模板被渲染时提供的数据中获取。
+
+Jinja2识别任何类型的变量，包括复杂的列表、字典和对象。下面是一些模板中使用变量的示例：
+
+<p>A value from a dictionary: .</p>
+<p>A value from a list: .</p>
+<p>A value from a list, with a variable index: .</p>
+<p>A value from an object's method: .</p>
+变量可以通过filters来修改，以|为分隔符添加在变量名后。例如，下面的模板展示变量大写：
+
+Hello,
+表格3-1列出一些常用的Jinja2过滤器。
+
+表格3-1. Jinja2变量过滤器
+
+
+
+safe是比较有趣的一个过滤器。出于安全考虑，默认情况下，Jinja2会转义所有变量。例如，如果设置变量的值为'<h1>Hello</h1>'，Jinja2将渲染字符串为'&lt;h1&gt;Hello&lt;/h1&gt;'，这将使得h1元素显示出来且不能被浏览器解释。很多时候有必要显示存储在变量中的HTML代码，对于这些情况就可以使用safe过滤器。
+
+警告：永远不要在不信任的值中使用safe过滤器，例如用户在web表单中输入的文本。
+
+完整的过滤器列表可以从Jinja2官方文档中获取。
+
+1.3、控制结构
+
+Jinja2提供一些控制结构用于改变模板流。这一节用简单例子来介绍一些最有用的。
+
+下面的示例展示条件语句是怎样在模板中使用的：
+
+{ % if user %}
+    Hello, !
+{ % else %}
+    Hello, Stranger!
+{ % endif %}
+渲染一列元素在模板中是经常用到的。这个示例展示如何使用for循环做到这些：
+
+<ul>
+    { % for comment in comments %}
+        <li></li>
+    { % endfor %}
+</ul>
+Jinja2同样支持宏，这和Python代码中的函数很像。例如：
+
+{ % macro render_comment(comment) %}
+    <li></li>
+{ % endmacro %}
+
+<ul>
+
+</ul>
+为了提高宏的复用性，可以将它们保存为单独的文件，然后在所有需要的地方导入即可：
+
+{ % import 'macros.html' as macros %}
+
+<ul>
+    { % for comment in comments %}
+
+    { % endfor %}
+</ul>
+需要在一些地方重复使用的模板代码可以保存为一个单独的文件，所有模板都可以include它来避免重复：
+
+{ % include 'common.html' %}
+另一个强大的复用方式是通过模板继承，这类似于Python代码中类的继承。首先创建一个名为base.html的基础模板：
+
+<html>
+<head>
+    { % block head %}
+    <title>{ % block title %}{ % endblock %} - My Application</title>
+    { % endblock %}
+</head>
+<body>
+    { % block body %}
+    { % endblock %}
+</body>
+</html>
+这里block标签定义的派生模板是可变的。在这个示例中，有head、title、body块；注意title包含在head中。下面的示例是一个基础模块的派生模块：
+
+{ % extends "base.html" %}
+{ % block title %}Index{ % endblock %}
+{ % block head %}
+    { { super() }}
+    <style>
+    </style>
+{ % endblock %}
+{ % block body %}
+<h1>Hello, World!</h1>
+{ % endblock %}
+extends指令定义这个模板由base.html派生。紧随这个指令之后的是三个在基础模板中定义的块，它们将在合适的位置插入。注意在基础模板中新定义的head块是不为空的，所以使用super() 保留原来的内容。
+
+本节呈现的所有控制结构的实际运用将在后面展示，你会有机会看到它们是怎样工作的。
+
+2、集成Twitter Bootstrap的Flask-Bootstrap
+Bootstrap是Twitter的一个开源框架，提供用户交互组件来创建一个清新且有吸引力的web页面，并兼容所有现代web浏览器。
+
+Bootstrap是一个客户端框架，服务端不直接参与。服务端需要做的就是提供HTML响应，引用层叠样式表（CSS）和JavaScript文件并通过HTML、CSS、和JavaScript代码来实例化需要的组件。模板是做这些的理想地方。
+
+集成Bootstrap到应用程序最好的方式是在模板中做一些必要的改变。一个简单点的途径就是使用Flask-Bootstrap扩展去简化集成工作。可以通过pip来安装Flask-Bootstrap：
+
+(venv) $ pip install flask-bootstrap
+Flask扩展通常在应用程序实例被创建的时候初始化。示例3-4展示Flask-Bootstrap的初始化。
+
+示例3-4. hello.py：Flask-Bootstrap初始化
+
+from flask.ext.bootstrap import Bootstrap
+# ...
+bootstrap = Bootstrap(app)
+和第二章的Flask-Script一样，Flask-Bootstrap从flask.ext命名空间导入并通过传递应用程序实例到构造函数来初始化。
+
+一旦Flask-Bootstrap被初始化，一个包含所有Bootstrap文件的基础模板就可供应用程序使用了。这个模板利用Jinja2的模板继承，应用程序则可以扩展一个拥有通用页面结构，且包含Bootstrap导入的元素的基础模板。示例3-5展示作为派生模板的新版user.html。
+
+_示例3-5. templates/user.html： 使用Flask-Bootstrap的模板
+
+{ % extends "bootstrap/base.html" %}
+{ % block title %}Flasky{ % endblock %}
+{ % block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle"
+        data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Flasky</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{ % endblock %}
+
+{ % block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Hello, !</h1>
+  </div>
+</div>
+{ % endblock %}
+Jinja2的extends指令通过从Flask-Bootstrap引用bootstrap/base.html来实现模板的继承。Flask-Bootstrap的基础模板提供一个包含Bootstrap CSS和JavaScript文件的web页面骨架。
+
+基础模板定义了一些可以被派生模板重写的block。block和endblock指令定义了被添加到基础模板中block的内容。
+
+上面的user.html模板定义了三个block，分别命名为title、navbar和content。基础模板里的这些block输出派生模板定义的内容。title块比较简单；它的内容将出现在<title>标签内，然后被渲染在HTML文档的头部 。navbar和content块则是为页面保留的导航栏和主内容。
+
+在这个模板中，navbar块使用Bootstrap组件定义了一个简单的导航栏。content块有个名为container的<div>，里面嵌套了名为page-header的<div>。图3-1展示这些操作后应用程序长成啥样了。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 3b来切换到这个版本的应用程序。Bootstrap官方文档 是一个非常强大的学习资料，完全可以复制粘贴使用那些示例。
+
+
+
+图片3-1. Twitter Bootstrap模板
+
+Flask-Bootstrap的base.html模板定义了一些其他可供派生模板使用的block。表格3-2展示了完整的可用block列表。
+
+表格3-2. Flask-Bootstrap基础模板中的block
+
+
+
+表格3-2中的许多块用于Flask-Bootstrap自身，所以直接重写它们会引发问题。例如，styles和scripts块是Bootstrap定义文件的地方。如果应用程序需要新增自己的内容到已经有一些内容的块中，则必须使用Jinja2的super()。例如，如何在派生模板中写scripts块，来给文档增加新的JavaScript文件：
+
+{ % block scripts %}
+{ { super() }}
+<script type="text/javascript" src="my-script.js"></script>
+{ % endblock %}
+3、自定义错误页面
+当你输入错误路径在你的浏览器地址栏，你会得到404错误代码页面。目前的错误页面很普通也没有吸引力，且没有一致的使用Bootstrap页面。
+
+Flask允许应用程序自定义基于模板的错误页面，就像常规的路由。两个最常见的错误代码，404是在客户端请求的页面或路径不存在的时候触发；500是当存在未处理的异常时触发。示例3-6展示如何为这两个错误提供自定义处理。
+
+示例3-6. hello.py：自定义错误页面
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+错误处理返回响应，和视图函数一样。同时返回相应错误的数字状态码。
+
+在错误处理中引用的模板需要自己去写。这些模板需要和常规的页面一样的布局，所以在这个示例中需要导航栏和页面头部显示错误信息。
+
+编写这些模板的简单方式是复制templates/user.html到templates/404.html和templates/500.html，然后改变这两个新文件的页面头部元素来给出相应的错误信息，但这会产生很多副本。
+
+Jinja2的模板继承可以帮助我们解决这个问题。Flask-Bootstrap提供了一个带有基本布局页面的基础模板，应用程序可以定义自己的、带有完整页面布局的基础模板，包括导航栏和定义在派生模板中的页面内容。示例3-7展示了templates/base.html，它是一个继承自bootstrap/base.html的新模板且定义了导航栏，但对于其他模板则是一个基础模板，例如templates/user.html、templates/404.html和templates/500.html。
+
+_示例3-7. templates/base.html：带有导航栏的基础应用程序模板
+
+{ % extends "bootstrap/base.html" %}
+{ % block title %}Flasky{ % endblock %}
+{ % block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle"
+        data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Flasky</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{ % endblock %}
+
+{ % block content %}
+<div class="container">
+  { % block page_content %}{ % endblock %}
+</div>
+{ % endblock %}
+这个模板中的content块中只是一个名为container的<div>元素，它包含了在派生模板中定义的名为page_content的空block。
+
+应用程序的模板将从该模板继承而不是直接从Flask-Bootstrap继承。示例3-8展示了从templates/base.html继承来构造一个自定义404错误页面是如此的简单。
+
+示例3-8. templates/404.html：使用模板继承自定义404错误页面
+
+{ % extends "base.html" %}
+{ % block title %}Flasky - Page Not Found{ % endblock %}
+{ % block page_content %}
+<div class="page-header">
+  <h1>Not Found</h1>
+</div>
+{ % endblock %}
+图片3-2展示在浏览器中错误页面是怎样的。
+
+
+
+图片3-2. 自定义404错误页面
+
+现在templates/user.html模板可以通过继承基础模板来简化它，就像示例3-9展示的这样。
+
+示例3-9. templates/user.html：使用模板继承简化页面模板
+
+{ % extends "base.html" %}
+{ % block title %}Flasky{ % endblock %}
+{ % block page_content %}
+<div class="page-header">
+  <h1>Hello, !</h1>
+</div>
+{ % endblock %}
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 3c来切换到这个版本的应用程序。
+
+4、链接
+任何应用程序都有多个路由，必然需要包含链接来连接不同的页面，例如导航栏。
+
+在模板中，对于简单的路由直接写URLs做链接是非常琐碎麻烦的，而给带有变量部分的动态路由建立正确的URLs会变得更加复杂。此外，在代码中显式的写URLs会在路由上造成不必要的依赖。如果路由重组，模板中的链接将被打断而变得无法访问。
+
+为了避免这些问题，Flask提供url_for()函数，它会根据存放在应用程序中的URL映射信息来生成URLs。
+
+其最简单的用法，这个函数传入视图函数名（或通过app.add_url_route()定义的路由endpoint名）作为它的参数，然后返回它的URL。例如，在当前版本的hello.py调用url_for('index')将返回/。调用url_for('index', _external=True)将返回一个绝对URL，在该示例中为http://localhost:5000/。
+
+注：相对URLs足以满足生成链接来连接应用程序不同的路由。绝对URLs只有在链接被用于web浏览器的外部才是必须的，例如通过邮件发送链接。
+
+可以使用url_for()并传递动态部分作为关键字参数来生成动态URLs。例如，url_for('user', name='join', external=True)会返回http://localhost:5000/user/john。
+
+url_for()可以不限参数的使用动态路由。函数会增加扩展参数给查询字符串。例如url_for('index', page=2)会返回/?page=2。
+
+5、静态文件
+Web应用程序不仅仅是由Python代码和模板组成。大部分的应用程序会使用静态文件，例如从HTML代码中引用的图片、JavaScript源文件和CSS。
+
+你可能需要回忆一下，在第二章中检查hello.py应用程序的URL映射时，有一个static入口在里面。这也是为什么引用定义成/static/<filename>的静态文件会被当作特殊路由来对待。例如，一个url_for('static', filename='css/style.css', _external=True)调用会返回http://localhost:5000/static/css/styles.css。
+
+在它的默认配置中，Flask会在位于应用程序根目录下名为static的子目录中寻找静态文件。可以在这个目录下的子目录组织管理文件。当服务器收到来自之前示例的URL，它会产生一个响应包含static/css/styles.css的文件内容。
+
+示例3-10展示应用程序如何在基础模板中包含favicon.icon图标并让浏览器将其显示在地址栏。
+
+示例3-10. templates/base.html：favicon定义
+
+{ % block head %}
+{ { super() }}
+<link rel="shortcut icon" href="{ { url_for('static', filename = 'favicon.ico') }}"
+type="image/x-icon">
+<link rel="icon" href="{ { url_for('static', filename = 'favicon.ico') }}"
+type="image/x-icon">
+{ % endblock %}
+图标定义被插入在head块里的最下面。注意super()是如何保留定义在基础模板中块的原始内容的。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 3d来切换到这个版本的应用程序。
+
+6、Flask-Moment中的本地化日期和时间
+当用户工作在世界各个不同的地方，在web应用程序中处理日期和时间就变成了一个比较重要的问题。
+
+服务器使用统一的时间单位，和每个用户的位置无关，所以使用世界标准时间（UTC）。对于用户，看到UTC格式的时间肯定会感到困惑，用户总是希望看到根据当地习惯显示的日期和时间。
+
+一个优雅的解决方案是允许服务器只发送UTC时间给web浏览器，由浏览器转为当地时间并渲染。Web浏览器在这个问题上做的更好，因为他们可以访问用户电脑的所在的时区和地区设置。
+
+有一个优秀的客户端开源库moment.js，用JavaScript编写的，用于在浏览器上渲染日期和时间。Flask-Moment是一个集成moment.js到Jinja2模板的Flask扩展。可以通过pip来安装：
+
+(venv) $ pip install flask-moment
+示例3-11展示扩展初始化。
+
+示例3-11. hello.py：初始化Flask-Moment
+
+from flask.ext.moment import Moment
+moment = Moment(app)
+Flask-Moment除了依赖moment.js外，还依赖jquery.js。这两个库需要直接包含在HTML文档，这种情况下你可以选择使用什么版本，或通过扩展提供的帮助函数来引用内容分发网络（CDN）的测试版本库。因为Bootstrap已经包含了jquery.js，所以只需要将moment.js增加到这个示例中。示例3-12展示这个库是如何被加载到基础模板scripts中的。
+
+示例3-12. templates/base.html：导入moment.js库
+
+{ % block scripts %}
+{ { super() }}
+{ { moment.include_moment() }}
+{ % endblock %}
+为了可以使用时间戳，Flask-Moment创建moment类给模板使用。示例3-13传递current_time变量给模板去渲染。
+
+示例3-13. hello.py：增加datetime变量
+
+from datetime import datetime
+
+@app.route('/')
+def index():
+    return render_template('index.html', current_time=datetime.utcnow())
+示例3-14展示如何在模板中渲染current_time。
+
+示例3-14. templates/index.html：使用Flask-Moment渲染时间戳
+
+<p>The local date and time is { { moment(current_time).format('LLL') }}.</p>
+<p>That was { { moment(current_time).fromNow(refresh=True) }}</p>
+format('LLL')根据客户端电脑的时区和地区设置来格式化显示日期和时间。参数决定了渲染的样式，从L到LLL对应不同的详细级别。format()函数还可以接受自定义的格式说明符。
+
+fromNow()渲染样式显示在第二行，渲染一个相对时间戳并随着时间的推移自动刷新它。最初这个时间戳将显示为“几秒钟前”，但随着时间的流逝刷新选项将保持更新，所以如果你离开已打开几分钟的页面你会看到文本变为“一分钟前”，然后“两分钟前”，等等。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 3e来切换到这个版本的应用程序。
+
+Flask-Moment通过moment.js实现了format()，fromNow()，fromTime()， calendar()，valueOf()和unix()方法。查阅文档，了解提供的所有格式化选项。
+
+注：Flask-Moment假定时间戳由服务端应用程序中表示成UTC格式的“naive”datetime对象来处理。参阅标准库datetime包文档关于date和time对象的navie和aware信息。
+
+Flask-Moment渲染的时间戳可以本地化成多种语言。在模板中通过传递语言代码到lang()函数来选择语言：
+
+{ { moment.lang('es') }}
+学完本章中讨论的所有技术，您应该能够为您的应用程序构建现代、用户友好的网页。下一章涉及模板没有讨论的一个方面：如何通过web表单与用户进行交互。
+====================================================================================================================================================
+
+
+第二章中介绍的request对象公开了所有客户端发送的请求信息。特别是request.form可以访问POST请求提交的表单数据。
+
+尽管Flask的request对象提供的支持足以处理web表单，但依然有许多任务会变得单调且重复。表单的HTML代码生成和验证提交的表单数据就是两个很好的例子。
+
+Flask-WTF扩展使得处理web表单能获得更愉快的体验。该扩展是一个封装了与框架无关的WTForms包的Flask集成。
+
+Flask-WTF和它的依赖集可以通过pip来安装：
+
+(venv) $ pip install flask-wtf
+1、跨站请求伪造（CSRF）保护
+默认情况下，Flask-WTF保护各种形式对跨站请求伪造（CSRF）攻击。一个CSRF攻击发生在一个恶意网站发送请求给受害者登录的其他网站。
+
+为了实现CSRF保护，Flask-WTF需要应用程序去配置一个加密密钥。Flask-WTF使用这个密钥去生成加密令牌用于验证请求表单数据的真实性。示例4-1展示如何配置加密密钥。
+
+示例4-1. hello.py：Flask-WTF配置
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hard to guess string'
+app.config字典通常是框架、扩展或应用程序自身存放配置变量的地方，可以使用标准字典语法添加配置值到app.config中。配置对象提供方法来从文件或环境导入配置值。
+
+SECRET_KEY配置变量作为Flask和一些第三方扩展的通用加密密钥。加密的强度取决于这个变量的值。给你构建的每个应用程序选择不同的密钥，并确保这个字符串不被其他任何人知道。
+
+注：为了提高安全性，密钥应该存储在一个环境变量中，而不是嵌入到代码中。这个会在第7章中描述。
+
+2、表单类
+使用Flask-WTF时，每个web表单是由继承自Form类的子类来展现的。该类在表单中定义了一组表单域，每个都表示为一个对象。每个表单域都可以连接到一个或多个validators；validators是一个用于检查用户提交的输入是否合法的函数。
+
+示例4-2展示了一个拥有文本框和提交按钮的简单web表单。
+
+示例4-2. hello.py：表单类定义
+
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField
+from wtforms.validators import Required
+
+class NameForm(Form):
+    name = StringField('What is your name?', validators=[Required()])
+    submit = SubmitField('Submit')
+表单中的域被定义为类的变量，且每个类的变量都指定一个表单域类型对象。在上一个示例中，NameForm表单有一个name文本框和submit提交按钮。StringField类表示一个type="text"属性的<input>标签。SubmitField类表示一个type="submit"属性的<input>标签。表单域构造函数的第一个参数是一个label，在渲染表单到HTML时会使用。
+
+StringField构造函数包含可选参数validators，它定义了一组检查来验证用户提交的数据。Required()验证确保提交的表单域不为空。
+
+注：Flask-WTF扩展定义了表单基类，所以它从flask.ext.wtf导入。表单域、验证都是直接从WTForms包中导入。
+
+表格4-1展示了一组WTForms支持的标准表单域。
+
+表格4-1. WTForms标准HTML表单域
+
+
+
+表格4-2展示了一组WTForms内建验证。
+
+表格4-2. WTForms验证
+
+
+
+3、HTML渲染的表单
+表单域是可调用的，调用时从模板渲染它们到HTML。假设视图函数传递一个参数名为form的NameForm实例给模板，模板就会生成一个简单的HTML表单，如下所示：
+
+<form method="POST">
+    { { form.name.label }} { { form.name() }}
+    { { form.submit() }}
+</form>
+当然，结果是什么都没有。为了改变表单的外观显示，任何发送给该表单域的参数会被转换为HTML表单域属性；例如，你可以给定表单域id或class属性，然后定义CSS样式：
+
+<form method="POST">
+    { { form.name.label }} { { form.name(id='my-text-field') }}
+    { { form.submit() }}
+</form>
+即使有HTML属性，努力用这种方式渲染表单是非常重要的，所以最好是尽可能的使用Bootstrap自带的一系列表单样式。Flask-Bootstrap使用Bootstrap的预定义表单样式来提供高级的帮助函数来渲染整个Flask-WTF表单，这些操作都只需要一个调用即可完成。使用Flask-Bootstrap，上一个表单可以像下面这样来渲染：
+
+{ % import "bootstrap/wtf.html" as wtf %}
+    { { wtf.quick_form(form) }}
+import指令和常规的Python脚本一样的作用并且允许模板元素被导入并在许多模板中使用。被导入的bootstrap/wtf.html文件，定义了帮助函数使用Bootstrap来渲染Flask-WTF表单。wtf.quick_form()函数传入Flask-WTF表单对象并使用默认Bootstrap样式渲染它。示例4-3展示了完整的hello.py模板。
+
+示例4-3. templates/index.html：使用Flask-WTF和Flask-Bootstrap渲染表单
+
+{ % extends "base.html" %}
+{ % import "bootstrap/wtf.html" as wtf %}
+
+{ % block title %}Flasky{ % endblock %}
+
+{ % block page_content %}
+<div class="page-header">
+    <h1>Hello, { % if name %}{ { name }}{ % else %}Stranger{ % endif %}!</h1>
+</div>
+{ { wtf.quick_form(form) }}
+{ % endblock %}
+目前模板的内容区有两块。第一块是类为page-header的div输出一个问候语。这里使用了模板条件判断语句。在Jinja2中格式为{ % if variable %}...{ % else %}...{ % endif %}。如果判断条件为True则渲染if和else之间的内容。如果判断条件为False则渲染else和endif之间的内容。示例模板会渲染字符串“Hello, Stranger!”当name模板参数未定义的时候。第二块内容使用wtf.quick_form()函数渲染NameForm对象。
+
+4、视图函数中的表单操作
+在新版本的hello.py中，index()视图函数渲染表单并接收其数据。示例4-4展示更新后的index()视图函数。
+
+示例4-4. hello.py：路由方法
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    name = None
+    form = NameForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ''
+    return render_template('index.html', form=form, name=name)
+methods参数被添加到app.route装饰器中，目的是让Flask注册视图函数为GET和POST请求处理程序到URL映射中。若methods参数未给出，视图函数将只注册为GET请求。
+
+添加POST到方法列表中是有必要的，因为表单提交使用POST请求操作会更方便。使用GET请求提交表单也行，只是GET请求没有body部分，数据是追加到URL上作为返回字符串且可以在浏览器的地址栏中看到。由于这个和其他一些原因，表单提交通常使用POST请求。
+
+局部变量name用于保存从表单中接收到的名字，初始化时变量为None。视图函数创建一个NameForm实例来表示一个表单。表单的validate_on_submit()方法会在表单被提交且数据通过了所有验证的时候返回True。其他情况下validate_on_submit()返回False。该方法的返回值有效的决定了表单是需要渲染还是其他处理。
+
+当用户第一次访问应用程序，服务器会收到一个没有表单数据的GET请求，这个时候validate_on_submit()会返回False。if语句中的代码将被略过直接进行渲染模板处理，这个时候render_template()函数将获取表单对象和已经被设置为None的name变量作为参数。用户则可以在浏览器上看到表单的显示。
+
+当用户提交表单，服务器会收到一个带有数据的POST请求。validate_on_submit()调用Required()验证程序验证相应的表单域。如果name不为空，验证程序接收它同时validate_on_submit()返回True。现在用户输入的名字已经是作为表单域可访问的数据属性。在if语句中，这个名字被赋值给局部变量name且表单域的数据属性通过赋值为空字符串而被清除。调用最后一行的render_template()来渲染模板，但是这次name参数包含了来自表单的名字，所以可以看到一个个性化的打招呼页面。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 4a来切换到这个版本的应用程序。
+
+图像4-1展示用户初次进入网站在浏览器窗口看到的表单是怎样的。当用户提交名字，应用程序收到一个个性化的打招呼响应。下面的表单仍然出现，所以只要愿意用户可以提交一个新的名字。图像4-2展示用户输入名字后的状态。
+
+
+
+图像4-1. Flask-WTF的web表单
+
+如果用户提交一个空名字的表单，Required()验证程序捕捉到错误，就像图像4-3那样。注意这些功能都是自动提供的。这是一个很好的例子，精心设计的Flask-WTF和Flask-Bootstrap扩展能让您的应用程序更强大。
+
+
+
+图像4-2. 提交后的web表单
+
+
+
+图像4-3. 验证错误后的web表单
+
+5、重定向和用户会话
+上个版本的hello.py有个问题。如果你输入你的名字并提交它，然后单击浏览器中刷新按钮，你将得到一个警告要求再次确认之前提交的表单。因为请求刷新页面的时候浏览器重复了上一次发送的请求。当上一次发送的是一个带有表单数据的POST请求，刷新页面会导致重复的表单提交，事实上这些并不是我们想看到的。
+
+许多用户不能理解来自浏览器的这些警告。出于这个原因，对web应用程序来说，一种不错的方法是永远不将POST请求作为浏览器最后发送的请求。
+
+
+这个方法可以使用redirect响应POST请求来代替常规的响应来实现。重定向是一个特殊类型的响应，使用URL来代替HTML代码字符串。当浏览器收到这个响应，它就会给重定向URL发出一个GET请求，然后显示页面。页面也许需要几毫秒的时间来加载，因为需要发送第二个请求给服务器，除此之外用户不会看到任何不同。现在最后一次请求为GET，所以刷新会像预期的那样。这个方法被称为Post/Redirect/Get模式。
+
+但是这个方法带来了第二个问题。当应用程序处理POST请求，需要访问用户输入并保存在form.name.data中的名字，但是一旦该请求结束表单数据就会丢失。因为POST请求是通过重定向来处理，应用程序需要存储名字，以便重定向后的请求可以得到它并使用它来创建真实的响应。
+
+应用程序可以“记住”一些变量从一个请求到另一个请求通过将变量保存到用户会话中，对于每一个连接过来的客户端它都是一个私有存储区域。作为一个与请求上下文关联的变量之一，用户会话已经在第二章中介绍过了。它被称为会话并可以像Python标准字典那样访问。
+
+注：默认情况下，用户会话被存放于客户端的cookies，使用配置的SECRET_KEY来加密签名。任何篡改cookie内容将会使签名无效，从而使会话失效。
+
+示例4-5展示实现重定向和用户会话的index()视图函数。
+
+示例4-5. hello.py：重定向和用户会话
+
+from flask import Flask, render_template, session, redirect, url_for
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        session['name'] = form.name.data
+        return redirect(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'))
+在上一个版本中，局部变量name用于保存用户在表单中输入的姓名。这个变量位于用户会话中的session['name']中，因此可以保存很长时间。
+
+现在请求来自表单的合法数据都会以redirect()调用来结束，生成HTTP重定向响应。redirect()函数把URL作为重定向的参数。这个例子中使用的重定向URL是一个根URL，所以响应可以写成redirect('/')这样简洁，但是我们通常使用Flask的URL生成器函数url_for()来代替。我们鼓励使用url_for()函数来生成URLs，因为该函数使用URL映射来生成URLs，所以生成的URLs保证与定义的路由兼容，并且使用这个函数任何路由名发生变化都会自动变得有效，路由功能不受影响。
+
+
+
+url_for()唯一必须的参数就是endpoint名，也是每个路由的内部名。默认情况下，路由的endpoint是一个附加到视图函数的名称。在这个示例中，处理根URL的视图函数为index()，所以给url_for()的名称为index。
+
+最后一个改动是在render_template()函数中，使用session.get('name')从会话中获取name参数。和使用普通字典一样，使用get()去请求字典key来避免发生找不到key异常，因为对于没有的keyget()返回默认值None。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 4b来切换到这个版本的应用程序。
+
+这个版本的应用程序，你可以在你的浏览器中刷新页面看到你预期的行为。
+
+6、消息提示
+有时候在请求完成后给用户一个提示消息是非常有用的。可以是一个确认消息、警告消息或错误消息。典型的示例就是当你在网站提交登录表单出现错误的时候服务器响应渲染登录表单并伴随一条消息，告知你的用户名或密码无效。
+
+作为核心特性Flask具有这样的功能。示例4-6展示如何使用flash()函数来实现这一目的。
+
+示例4-6. hello.py：消息提示
+
+from flask import Flask, render_template, session, redirect, url_for, flash
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('Looks like you have changed your name!')
+        session['name'] = form.name.data
+        form.name.data = ''
+        return redirect(url_for('index'))
+    return render_template('index.html',
+        form = form, name = session.get('name'))
+在这个示例中，每次提交一个名字都会和用户会话中保存的名字进行比较。如果两个名字不一样，flash()函数会被调用，消息会在下一次发回客户端的响应中显示。
+
+调用flash()还不能获取并显示消息；应用程序使用的模板需要渲染这些消息。渲染消息最好的地方是在基础模板中，因为这可以使得所有页面都可以使用这些消息。Flask提供get_flashed_messages()函数给模板去接收消息并渲染它们，就像4-7展示的那样。
+
+示例4-7. templates/base.html：消息渲染
+
+{ % block content %}
+<div class="container">
+  { % for message in get_flashed_messages() %}
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    { { message }}
+  </div>
+  { % endfor %}
+
+  { % block page_content %}{ % endblock %}
+</div>
+{ % endblock %}
+在这个示例中，使用Bootstrap的警告CSS样式做警告消息渲染（展示在图像4-4中就是之一）。
+
+
+
+图像4-4. 消息提示
+
+这里需要使用循环因为可能会有多个消息排队显示，在前面的请求周期中每次都会调用flash()。
+
+从get_flashed_messages()中检索到的消息在下次调用这个函数时是不会返回的。所以消息只显示一次然后丢弃。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 4c来切换到这个版本的应用程序。
+
+能够接收用户通过web表单发送的数据是大多数应用程序的基本功能，同样将数据到永久存储到媒介上也是必须的。下一章的主题是Flask和数据库的使用。
+
+
+==============================================================================================================================
+
+数据库就是有组织的存储应用程序数据，然后查询检索指定需要的那部分。大部分web应用程序都采用基于关系模型的数据库，也称作结构化查询语言（SQL）数据库。但是最近几年面向文档数据库和键值数据库（通常称作NoSQL数据库），成为非常流行的替代者。个人推荐《七周七数据库》这本书，它对各种类型的数据库、应用场景和多种不同类型数据库配合使用有比较好的讲解。
+
+1、SQL数据库
+关系数据库将数据保存在表中来模拟应用程序中不同的实体。例如，一个订单管理应用程序数据库可能会有customers、products和orders表。
+
+一个表有一个固定数量的列和一个可变的行数。列定义了数据表所代表的实体的属性。例如，customers表会有name、address、phone等列。表中的每一行定义了由所有列的值组成的实际数据元素。
+
+表有种特殊列称作主键，它持有一个惟一的标识符为表中存储的每一行。表也可以有外键，用于引用其他表的主键。这些行之间的连接称作关系，也是关系数据库模型的基础。
+
+图像5-1展示了存储users和roles表的简单数据库图。连接两个表的线代表两个表之间的关系。
+
+
+
+图像5-1. 关系数据库示例
+
+在这个数据库表中，roles表存储了一组所有可能的用户角色，每一个都被定义为唯一id值——也是表的主键。users表包含一组用户，同样每一个都有唯一id值。除了主键id，roles表还有name列，而users表还有username和password列。在users表中的role_id列是一个引用role表中id列的外键，以这种方式确立分配给每个用户的角色。
+
+就像这个示例中看到的那样，关系数据库存储数据高效且避免重复。重命名用户角色在这个数据库中会变得异常简单，因为角色名保存在单独的地方。当roles表中的角色名发生改变，所有用户持有的role_id引用的角色会立即看到这些变化。
+
+而另一方面，将数据拆分到多个表中则会变得更加复杂。生成一组用户及其角色会产生一个小问题，因为用户和用户角色需要从两张表中读，且只有连接后才能一起出现。当需要的时候关系数据库引擎会提供支持来执行两个表的连接操作。
+
+2、NoSQL数据库
+与上一节描述相反的、非关系模型的数据库被统称为NoSQL数据库。NoSQL数据库常见的组织方式是使用collections代替表、documents代替记录。NoSQL数据库的设计方式使得连接会很复杂，所以大部分都不支持这个操作。图像5-1如果用NoSQL数据库结构来表达则是这样的：列出用户及他们的角色，需要应用程序自己通过读取每个用户的role_id字段去执行连接操作，然后查找roles表。
+
+图像5-2展示了更接近NoSQL数据库的设计思想。这个操作运用了一个被称为反模式的思想，减少了表的数量却增加了重复数据。
+
+
+
+图像5-2. NoSQL数据库示例
+
+这种结构的数据库为每个用户显式的存储用户角色名。重命名角色名绝对是一项昂贵的操作，可能需要更新大量的文档。
+
+但对于NoSQL数据库这并不都是坏消息。虽然有重复的数据，但是查询速度快，因为不需要连接，可以直接列出用户和他们的角色。
+
+3、SQL还是NoSQL
+SQL数据库擅长以高效、紧凑的形式存储结构化数据。这些数据库竭尽全力保持一致性。NoSQL数据库会放低一些一致性要求，因此在性能上有更大的优势。
+
+全面分析和比较数据库类型已经超出了本教程的范围。对于中小型应用程序SQL数据库和NoSQL数据库完全可以胜任，且性能几乎差不多。
+
+4、Python数据库框架
+Python有大部分的数据库引擎包，包括开源的和商业的。Flask在可使用的数据库包上没有限制，所以你可以使用MySQL、Postgres、SQLite、Redis、MongoDB或者CouchDB中你喜欢的任何一个。
+
+如果这些还不够，也有大量的数据库抽象层包，如SQLAlchemy或MongoEngine让你像操作常规Python对象那样，而不是数据库实体表、文档或查询语句。
+
+在选择数据库框架的时候需要评估许多因素：
+
+易用性
+
+如果直接比较数据库引擎和数据库抽象层，第二者明显胜出。抽象层又称作对象关系映射（ORM）或对象文档映射（ODM），提供从高级面向对象操作到底层数据库指令的透明转换。
+
+性能
+
+ORM和ODM的转化需要从对象域转化为数据库域，所以会有一些开销。大多数情况下，性能损耗是微不足道的，但总有例外。一般来说，ORM和ODM获得的生产力远远超过了性能下降的那部分，所以这不是一个有效的论点来完全抛弃ORM和ODM。应该关心的是选择怎样的数据库抽象层，提供可访问底层数据库中特定操作，就像本地数据库指令那样实现的抽象层最佳。
+
+可移植性
+
+数据库的选择必须考虑开发和生产平台。例如，如果你计划在云主机上托管应用程序，那么你应该找出提供该服务的数据库。
+
+另一方面ORM和ODM的可移植性不错。尽管一些框架只为单个数据库引擎提供抽象层，有些抽象层更高级，可以选择哪种数据库引擎且访问使用的是同一个面向对象的接口。最好的例子就是SQLAlchemy ORM，支持一组关系数据库引擎，包括流行的MySQL、Postgres和SQLite。
+
+Flask集成
+
+选择一个集成了Flask的框架并不是必须的，但是可以不用自己写集成代码。Flask集成可以简化配置和操作，所以应该优先使用专门设计的Flask扩展包。
+
+基于这些目的，Flask-SQLAlchemy将是本书示例中应该选择的数据库框架，它对SQLAlchemy进行了封装。
+
+5、使用Flask-SQLAlchemy管理数据库
+Flask-SQLAlchemy是一个Flask扩展，它简化了在Flask应用程序中对SQLAlchemy的使用。SQLAlchemy是一个强大的关系数据库框架，支持一些数据库后端。提供高级的ORM和底层访问数据库的本地SQL功能。
+
+和其他扩展一样，通过pip安装Flask-SQLAlchemy：
+
+(venv) $ pip install flask-sqlalchemy
+在Flask-SQLAlchemy，数据库被指定为URL。表格5-1列出三个最受欢迎的数据库引擎url的格式。
+
+
+
+表格5-1. Flask-SQLAlchemy数据URLs
+
+在这些URL中，hostname是指托管MySQL服务的服务器，可能是本地（localhost）又或是远程服务器。数据库服务器可以托管多个数据库，所以database指出要使用的数据库名。数据库需要身份验证，username和password是数据库用户凭证。
+
+注：> SQLite数据库没有服务，所以hostname、username和password可以缺省且数据库是一个磁盘文件名。
+
+应用程序数据库URL必须在Flask配置对象中的SQLALCHEMY_DATABASE_URI键中进行配置。另一个有用的选项是SQLALCHEMY_COMMIT_ON_TEARDOWN，可以设置为True来启用自动提交数据库更改在每个请求中。查阅Flask-SQLAlchemy文档获取更多其他配置选项。示例5-1展示如何初始化并配置简单的SQLite数据库。
+
+示例5-1. hello.py：数据库配置
+
+from flask.ext.sqlalchemy import SQLAlchemy
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+
+db = SQLAlchemy(app)
+由SQLAlchemy实例化的db对象表示数据库且提供访问Flask-SQLAlchemy的所有功能。
+
+6、模型定义
+模型是指由应用程序使用的持久化实体。在ORM的背景下，一个模型通常是一个带有属性的Python类，其属性与数据库表的列相匹配对应。Flask-SQLAlchemy数据库实例提供了一个基类以及一组辅助类和函数用于定义它的结构。表格5-1中的roles表和users表可以定义为Role模型和User模型如示例5-2所示。
+
+示例5-2.hello.py：Role模型和User模型定义
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+
+def __repr__(self):
+    return '<User %r>' % self.username
+__tablename__类变量定义数据库中表的名称。如果__tablename__缺省Flask-SQLAlchemy会指定默认的表名，但是这些缺省名称不遵守使用复数命名的约定，所以最好是显式命名表名。其余的变量是模型的属性，被定义为db.Column类的实例。
+
+传给db.Column构造函数的第一个参数是数据库列的类型也就是模型属性的数据类型。表格5-2列出一些可用的列的类型，也是用于模型中的Python类型。
+
+
+
+表格5-2. 最常见的SQLAlchemy列类型
+
+db.Column剩余的参数为每个属性指定了配置选项。表格5-3列出一些可用的选项。
+
+
+
+表格5-3. 最常见的SQLAlchemy列选项
+
+注：Flask-SQLAlchemy需要给所有的模型定义主键列，通常命名为id。
+
+两个模型都包含了repr()方法来给它们显示一个可读字符串，虽然不是完全必要，不过用于调试和测试还是很不错的。
+
+7、关系
+关系数据库通过使用关系在不同的表中建立连接。图像5-1的关系图表达了用户和用户角色之间的简单关系。这个角色和用户是一对多关系，因为一个角色可以从属于多个用户，而一个用户只能拥有一个角色。
+
+示例5-3的模型类展示了图像5-1中表达的一对多关系。
+
+示例5-3. hello.py：关系
+
+class Role(db.Model):
+    # ...
+    users = db.relationship('User', backref='role')
+
+class User(db.Model):
+    # ...
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+就像图像5-1中看到的那样，关系通过使用外键来连接两行。添加给User模型的role_id列被定义为外键，且建立关系。db.ForeignKey()的参数roles.id指定的列应该理解为在roles表的行中持有id值的列。
+
+添加到Role模型的users属性表现了关系的面向对象的观点。给定Role类的实例，users属性会返回一组连接到该角色的用户。指定给db.relationship()的第一个参数表明模型中关系的另一边。如果类还未定义，这个模型可以作为字符串提供。
+
+注意：之前在segmentdefault中遇到的问题，后来粗略阅读了SQLAlchemy的源码。ForeignKey类的column接收三种类型的参数，一种是“模型名.属性名”；一种是“表名.列名”，最后一种没看明白，下次试着用一下。
+
+db.relationship()的backref参数通过给User模型增加role属性来定义反向关系。这个属性可以替代role_id访问Role模型，是作为对象而不是外键。
+
+大多数情况下db.relationship()可以定位自己的外键关系，但是有时候不能确定哪个列被用作外键。例如，如果User模型有两个或更多列被定义为Role的外键，SQLAlchemy将不知道使用两个中的哪一个。每当外键配置模棱两可的时候，就必须使用额外参数db.relationship()。表格5-4列出一些常用配置选项用于定义关系。
+
+表格5-4. 常用SQLAlchemy关系选项
+
+
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 5a来切换到这个版本的应用程序。
+
+除了一对多关系还有其他种类关系。一对一关系可以表述为前面描述的一对多关系，只要将db.relationship()中的uselist选项设置为False，“多”就变为“一”了。多对一关系也可表示为将表反转后的一对多关系，或表示为外键和db.relationship()定义在“多”那边。最复杂的关系类型，多对多，需要一个被称作关联表的额外表。你将在第十二章学习多对多关系。
+
+8、数据库操作
+根据图像5-1的数据库图，模型已经完全配置完且准备好使用。学习怎样使用模型的最好方式就是使用Python shell。以下部分将介绍最常见的数据库操作。
+
+8.1、创建表
+
+首先要做的第一件事情就是指示Flask-SQLAlchemy基于模型类创建数据库。db.create_all()函数会完成这些：
+
+(venv) $ python hello.py shell
+>>> from hello import db
+>>> db.create_all()
+如果你检查应用程序目录，你会发现名为data.sqlite的新文件，SQLite数据库名在配置中给出。如果数据库已存在db.create_all()函数不会重新创建或更新数据库表。这会非常的不方便当模型被修改且更改需要应用到现有的数据库时。更新现有的数据库表的蛮力解决方案是先删除旧的表：
+
+>>> db.drop_all()
+>>> db.create_all()
+不幸的是,这种方法有个不受欢迎的副作用就是摧毁旧的数据库中的所有数据。更新数据库问题的解决方案会在这章快结束的时候介绍。
+
+8.2、插入行
+
+下面的示例会创建新的角色和用户：
+
+>>> from hello import Role, User
+>>> admin_role = Role(name='Admin')
+>>> mod_role = Role(name='Moderator')
+>>> user_role = Role(name='User')
+>>> user_john = User(username='john', role=admin_role)
+>>> user_susan = User(username='susan', role=user_role)
+>>> user_david = User(username='david', role=user_role)
+模型的构造函数接受模型属性的初始值作为关键字参数。注意，甚至可以使用role属性，即使它不是一个真正的数据库列，而是一对多关系的高级表示。这些新对象的id属性没有显式设置：主键由Flask-SQLAlchemy来管理。到目前为止对象只存于Python中，他们还没有被写入数据库。因为他们的id值尚未分配：
+
+>>> print(admin_role.id) None
+>>> print(mod_role.id) None
+>>> print(user_role.id) None
+修改数据库的操作由Flask-SQLAlchemy提供的db.session数据库会话来管理。准备写入到数据库中的对象必须添加到会话中：
+
+>>> db.session.add(admin_role)
+>>> db.session.add(mod_role)
+>>> db.session.add(user_role)
+>>> db.session.add(user_john)
+>>> db.session.add(user_susan)
+>>> db.session.add(user_david)
+或，更简洁的：
+
+>>> db.session.add_all([admin_role, mod_role, user_role,
+...     user_john, user_susan, user_david])
+为了写对象到数据库，需要通过它的commit()方法来提交会话：
+
+>>> db.session.commit()
+再次检查id属性；这个时候它们都已经被设置好了：
+
+>>> print(admin_role.id)
+1
+>>> print(mod_role.id)
+2
+>>> print(user_role.id)
+3
+注：db.session数据库会话和第四章讨论的Flask会话没有任何联系。数据库会话也叫事务。
+
+数据库会话在数据库一致性上是非常有用的。提交操作会原子性地将所有添加到会话中的对象写入数据库。如果在写入的过程发生错误，会将整个会话丢弃。如果你总是在一个会话提交相关修改，你必须保证避免因部分更新导致的数据库不一致的情况。
+
+注：数据库会话也可以回滚。如果调用db.session.rollback()，任何添加到数据库会话中的对象都会恢复到它们曾经在数据库中的状态。
+
+8.3、修改行
+
+数据库会话中的add()方法同样可以用于更新模型。继续在同一shell会话中，下面的示例重命名“Admin”角色为“Administrator”：
+
+>>> admin_role.name = 'Administrator'
+>>> db.session.add(admin_role)
+>>> db.session.commit()
+注意：不过貌似我们在做更新操作的时候都不使用db.session.add()，而是直接使用db.session.commit()来提交事务。
+
+8.4、删除行
+
+数据库会话同样有delete()方法。下面的示例从数据库中删除“Moderator”角色：
+
+>>> db.session.delete(mod_role)
+>>> db.session.commit()
+注意删除，和插入更新一样，都是在数据库会话提交后执行。
+
+8.5、返回行
+
+Flask-SQLAlchemy为每个模型类创建一个query对象。最基本的查询模型是返回对应的表的全部内容：
+
+>>> Role.query.all()
+[<Role u'Administrator'>, <Role u'User'>]
+>>> User.query.all()
+[<User u'john'>, <User u'susan'>, <User u'david'>]
+使用过滤器可以配置查询对象去执行更具体的数据库搜索。下面的例子查找所有被分配“User”角色的用户：
+
+>>> User.query.filter_by(role=user_role).all()
+[<User u'susan'>, <User u'david'>]
+对于给定的查询还可以检查SQLAlchemy生成的原生SQL查询，并将查询对象转换为一个字符串：
+
+>>> str(User.query.filter_by(role=user_role))
+'SELECT users.id AS users_id, users.username AS users_username,
+users.role_id AS users_role_id FROM users WHERE :param_1 = users.role_id'
+如果你退出shell会话，在前面的示例中创建的对象将不能作为Python对象而存在，但可继续作为行记录存在各自的数据库表中。如果你开始一个全新的shell会话，你必须从它们的数据库行中重新创建Python对象。下面的示例执行查询来加载名字为“User”的用户角色。
+
+>>> user_role = Role.query.filter_by(name='User').first()
+过滤器如filter_by()通过query对象来调用，且返回经过提炼后的query。多个过滤器可以依次调用直到需要的查询配置结束为止。
+
+表格5-5展示一些查询中常用的过滤器。完整的列表参阅SQLAlchemy文档。
+
+表格5-5.常用SQLAlchemy查询过滤器
+
+
+
+在需要的过滤器已经全部运用于query后，调用all()会触发query执行并返回一组结果，但是除了all()以外还有其他方式可以触发执行。表格5-6.展示其他查询执行方法。
+
+表格5-6.常用SQLAlchemy查询执行器
+
+
+
+关系的原理类似于查询。下面的示例从两边查询角色和用户之间的一对多关系：
+
+>>> users = user_role.users
+>>> users
+[<User u'susan'>, <User u'david'>]
+>>> users[0].role
+<Role u'User'>
+此处的user_role.users查询有点小问题。当user_role.users表达式在内部调用all()时通过隐式查询执行来返回用户的列表。因为查询对象是隐藏的，是不可能通过附加查询过滤器进一步提取出来。在这个特定的例子中，它可能是用于按字母排列顺序返回用户列表。在示例5-4中，被lazy = 'dynamic'参数修改过的关系配置的查询是不会自动执行的。
+
+示例5-4. app/models.py：动态关系
+
+class Role(db.Model):
+    # ...
+    users = db.relationship('User', backref='role', lazy='dynamic')
+    # ...
+用这种方式配置关系，user_roles.user查询还没有执行，所以可以给它增加过滤器：
+
+>>> user_role.users.order_by(User.username).all()
+[<User u'david'>, <User u'susan'>]
+>>> user_role.users.count()
+2
+
+
+9，数据库在视图函数中的使用
+在示例5-5展示的新版本主页实现了用户输入名称并保存到数据库中。
+
+示例5-5。hello.py：数据库在视图函数中的使用
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.name.data).first()
+        if user is None:
+            user = User(username = form.name.data)
+            db.session.add(user)
+            session['known'] = False
+        else:
+            session['known'] = True
+        session['name'] = form.name.data
+        form.name.data = ''
+        return redirect(url_for('index'))
+    return render_template('index.html',
+        form = form, name = session.get('name'), known = session.get('known', False))
+在这个已修改的应用程序版本中，每次提交一个名字应用程序都要使用filter_by()查询过滤器到数据库中检查一遍。known变量被写入到用户会话中，这样在重定向后信息就可以发送到模板来定制问候语。注意为了应用程序可以工作，必须创建好之前在Python shell中展示的那些数据库表。
+
+新版本的相关模板在示例5-6中展示。此模板使用known参数用于区分是已知用户还是新用户的问候。
+
+{ % extends "base.html" %}
+{ % import "bootstrap/wtf.html" as wtf %}
+
+{ % block title %}Flasky{ % endblock %}
+
+{ % block page_content %}
+<div class="page-header">
+  <h1>Hello, { % if name %}{ { name }}{ % else %}Stranger{ % endif %}!</h1>
+  { % if not known %}
+  <p>Pleased to meet you!</p>
+  { % else %}
+  <p>Happy to see you again!</p>
+  { % endif %}
+</div>
+{ { wtf.quick_form(form) }}
+{ % endblock %}
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 5b来切换到这个版本的应用程序。
+
+10，与python shell的集成
+每次shell会话启动都必须引入数据库实例和模型是非常单调乏味的工作。为了避免不断重复这些引入，可以配置Flask-Script的shell命令来自动引入特定的对象。
+
+shell命令需要注册make_context某些函数来将对象添加到导入列表。如示例5-7所示。
+
+示例5-7。hello.py：增加外壳长度
+
+from flask.ext.script import Shell
+
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+manager.add_command("shell", Shell(make_context=make_shell_context))
+make_shell_context()函数注册应用程序和数据库的实例以及模型，这样就可以自动导入到shell中了：
+
+$ python hello.py shell
+>>> app
+<Flask 'app'>
+>>> db
+<SQLAlchemy engine='sqlite:////home/flask/flasky/data.sqlite'>
+>>> User
+<class 'app.User'>
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 5c来切换到这个版本的应用程序。
+
+11，使用Flask-Migrate迁移数据库
+随着开发进度不断向前，你会发现你的数据库模型需要更改，而当这种情况发生时需要更新数据库。
+
+Flask-SQLAlchemy只有当数据库表不存在才从模型创建它们，所以更新表的唯一途径就是销毁旧的表，当然这将导致所有数据库中的数据丢失。
+
+个有更好的解决方案就是使用数据库迁移框架。和源码版本控制工具跟踪更改源码文件一样，数据库迁移框架跟踪更改数据库模型，然后将增量变化应用到数据库中。
+
+SQLAlchemy的主要开发人员写了一个Alembic迁移框架，但我们不直接使用Alembic，Flask应用可以使用Flask-Migrate扩展，一个集成了Flask-Script来提供所有操作命令的轻量级Alembic包。
+
+11.1，创建迁移仓库
+
+首先，Flask-Migrate必须已经安装到虚拟环境中：
+
+(venv) $ pip install flask-migrate
+示例5-8展示扩展如何初始化。
+
+示例5-8。hello.py：Flask迁移配置
+
+from flask.ext.migrate import Migrate, MigrateCommand
+
+# ...
+
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
+为了可以使用数据库迁移命令，Flask-Migrate提供MigrateCommand类来连接Flask-Script的manager对象。在这个示例中使用db来连接到命令。
+
+在数据库迁移可以维护之前，必须通过init子命令来创建一个迁移库：
+
+(venv) $ python hello.py db init
+  Creating directory /home/flask/flasky/migrations...done
+  Creating directory /home/flask/flasky/migrations/versions...done
+  Generating /home/flask/flasky/migrations/alembic.ini...done
+  Generating /home/flask/flasky/migrations/env.py...done
+  Generating /home/flask/flasky/migrations/env.pyc...done
+  Generating /home/flask/flasky/migrations/README...done
+  Generating /home/flask/flasky/migrations/script.py.mako...done
+  Please edit configuration/connection/logging settings in
+  '/home/flask/flasky/migrations/alembic.ini' before proceeding.
+这个命令创建一个migrations文件夹，里面存放了所有迁移脚本。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 5c来切换到这个版本的应用程序。
+
+11.2，创建迁移脚本
+
+在Alembic，数据库迁移工作由迁移脚本完成。这个脚本有两个函数，分别叫做upgrade()和downgrade()。upgrade()函数实施数据库更改，是迁移的一部分，downgrade()函数则删除它们。数据库从历史记录中的任何时间点。
+
+蒸馏器可以迁移使用分别revision状语从句：migrate命令手动或自动创建33。手动迁移通过由开发人员使用蒸馏器的Operations对象指令实现的空upgrade()状语从句：downgrade()函数创建33迁移框架脚本。另一方面，自动迁移通过寻找模型定义和数据库当前状态间的不同为upgrade()和downgrade()生成代码。
+
+警告：自动迁移并不总是准确的，可以忽略一些细节。所以应该经常审查一下自动生成的迁移脚本。
+
+migrate子命令创建自动迁移脚本：
+
+(venv) $ python hello.py db migrate -m "initial migration"
+INFO  [alembic.migration] Context impl SQLiteImpl.
+INFO  [alembic.migration] Will assume non-transactional DDL.
+INFO  [alembic.autogenerate] Detected added table 'roles'
+INFO  [alembic.autogenerate] Detected added table 'users'
+INFO  [alembic.autogenerate.compare] Detected added index
+'ix_users_username' on '['username']'
+  Generating /home/flask/flasky/migrations/versions/1bc
+  594146bb5_initial_migration.py...done
+建议：如果您有克隆在GitHub上的应用程序，您现在可以运行git checkout 5c来切换到该版本的应用程序。注意，您不需要为这个应用生成迁移，所有的迁移脚本都包含在版本库中。
+
+11.3，更新数据库
+
+一旦迁移脚本被审查且接受，就可以使用db upgrade命令更新到数据库中：
+
+(venv) $ python hello.py db upgrade
+INFO  [alembic.migration] Context impl SQLiteImpl.
+INFO  [alembic.migration] Will assume non-transactional DDL.
+INFO  [alembic.migration] Running upgrade None -> 1bc594146bb5, initial migration
+第一次迁移实际上意味着调用db.create_all()，但在后续迁移中，upgrade命令对表实施更新操作但不影响表中的内容。
+
+数据库的设计和使用是非常重要的，实际上整本书都是围绕这个主题来写的。你应该把本章作为一个概述来研究；更高级的主题将在以后的章节中讨论。下一章致力于讲解发送电子邮件。
+
+
+==================================================
+
+
+1、使用Flask-Mail作为邮件支持
+使用pip安装Flask-Mail：
+
+(venv) $ pip install flask-mail
+扩展连接到一个简单邮件传输协议(SMTP)服务器并将邮件传递给它由它递送。如果没有给出配置，Flask-Mail则连接到localhost25端口并发送无验证的电子邮件。表6-1所示的配置键列表可以用来配置SMTP服务器。
+
+表格6-1. Flask-Mail SMTP服务器配置键
+
+
+
+在开发过程中如果能连接到一个外部SMTP服务器会更方便。示例6-1展示了如何配置应用程序通过谷歌的Gmail帐户发送电子邮件。
+
+示例6-1. hello.py：Flask-Mail配置Gmail
+
+import os
+# ...
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+建议：永远不要将账户证书直接写在你的脚本里面，尤其是如果你打算将你的的工作开源。为了保护你的帐户信息，必须让脚本从你的配置环境中导入敏感信息。
+
+示例6-2展示了Flask-Mail的初始化。
+
+示例6-2. hello.py：Flask-Mail初始化
+
+from flask.ext.mail import
+Mail mail = Mail(app)
+持有email服务器用户名和密码的两个变量需要在环境中定义。如果你是使用Linux或Mac OS X上的bash，你可以设置这些变量如下：
+
+(venv) $ export MAIL_USERNAME=<Gmail username>
+(venv) $ export MAIL_PASSWORD=<Gmail password>
+对于Windows用户，可以设置环境变量如下：
+
+(venv) $ set MAIL_USERNAME=<Gmail username>
+(venv) $ set MAIL_PASSWORD=<Gmail password>
+1.1、使用python shell发送邮件
+
+为了测试配置，你可以开启一个shell会话并发送测试email：
+
+(venv) $ python hello.py shell
+>>> from flask.ext.mail import Message
+>>> from hello import mail
+>>> msg = Message('test subject', sender='you@example.com',
+... recipients=['you@example.com'])
+>>> msg.body = 'text body'
+>>> msg.html = '<b>HTML</b> body'
+>>> with app.app_context():
+... mail.send(msg)
+...
+注意，Flask-Mail的send()函数使用current_app，所以它需要执行已激活的应用程序上下文。
+
+1.2、集成邮件到应用程序
+
+为了避免每次都手动创建电子邮件消息，将应用电子邮件发送功能的共同部分抽象到一个函数中是非常不错的做法。另一个好处是，这个函数可以用Jinja2模板尽情渲染。示例6-3展示了怎么实现。
+
+示例6-3. hello.py：Email支持
+
+from flask.ext.mail import Message
+
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
+
+def send_email(to, subject, template, **kwargs):
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject,
+                  sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    mail.send(msg)
+为发件人的主题和地址定义前缀字符串的函数依赖于两个特定于应用程序的配置键。send_email函数携带目的地址、主题、邮件体模板和一组关键字参数。模板名不能有扩展，这样两个版本的模板可以使用纯文本或富文本。调用者传递关键字参数给render_template()调用，这样模板就可以生成email体。
+
+index()视图函数可以非常容易的扩充用来发送一个email给管理员，当从表单中收到一个新的名字的时候。示例6-4展示所做的改动。
+
+示例6-4. hello.py：Email示例
+
+# ...
+app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
+# ...
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.name.data).first()
+        if user is None:
+            user = User(username=form.name.data)
+            db.session.add(user)
+            session['known'] = False
+            if app.config['FLASKY_ADMIN']:
+                send_email(app.config['FLASKY_ADMIN'], 'New User',
+                           'mail/new_user', user=user)
+        else:
+            session['known'] = True
+        session['name'] = form.name.data
+        form.name.data = ''
+        return redirect(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'),
+                            known=session.get('known', False))
+启动过程中，在FLASKY_ADMIN环境变量中给出的email收件人会加载到同名的配置变量中。需要创建文本和HTML两个版本的email模板文件。这些文件都存储在template内的mail子目录中，让他们独立于普通模板。电子邮件模板需要给出用户作为该模板参数，因此send_email()调用包括用户来作为一个关键字参数。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 6a来切换到这个版本的应用程序。
+
+除了前面描述的MAIL_USERNAME和MAIL_PASSWORD环境变量，这个版本的应用程序需要FLASKY_ADMIN环境变量。对于Linux和Mac OS X用户来说，启动应用程序命令：
+
+(venv) $ export FLASKY_ADMIN=<your-email-address>
+对于Windows用户，命令如下：
+
+(venv) $ set FLASKY_ADMIN=<Gmail username>
+使用这些环境变量设置，当你每次在表单中输入一个新的名字的时候都可以测试应用程序和接收电子邮件。
+
+1.3、发送异步邮件
+
+如果你发送一些测试邮件，你可能注意到mail.send()函数在发送电子邮件的时候会阻塞几秒钟，这段时间浏览器看起来没有响应。为了避免请求处理不必要的延误，可以将邮件发送功能移到一个后台线程去处理。示例6-5展示了以上改动。
+
+示例6-5. hello.py：异步邮件支持
+
+from threading import Thread
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+def send_email(to, subject, template, **kwargs):
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject,
+                  sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
+这个实现突显了一个有趣的问题。许多Flask扩展操作是在假设有活动的应用程序和请求上下文的情况下进行的。Flask-Mail的send()函数使用current_app，所以它需要已激活的应用程序上下文。但是当mail.send()函数在一个不同的线程上执行，应用程序上下文需要人为地创建使用app.app_context()。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 6b来切换到这个版本的应用程序。
+
+如果你现在运行应用程序，你会发现它响应更快了，但请记住，发送大量的电子邮件的应用程序，其拥有一个致力于发送电子邮件的服务比开启一个新的线程更合适。例如，执行send_async_email()函数可以将邮件发送到Celery的任务队列中。
+
+本章完成的是大多数web应用程序必备的功能。现在的问题是，hello.py脚本开始大，这使得它变得更难管理。在下一章中，你将学习如何构建一个更大的应用程序。
+
+
+==========================================================
+
+虽然小型web应用程序用单个脚本可以很方便，但这种方法却不能很好地扩展。随着应用变得复杂，在单个大的源文件中处理会变得问题重重。
+
+与大多数其他web框架不同，Flask对大型项目没有特定的组织方式；应用程序的结构完全交给开发人员自己决定。在这一章，提出一个可能的方式来组织管理一个大型应用程序的包和模块。这种结构将用于书中其余的示例中。
+
+1、项目结构
+示例7-1展示基本Flask应用程序结构
+
+示例7-1：基本多文件Flask应用结构
+
+|-flasky
+  |-app/
+    |-templates/
+    |-static/
+    |-main/
+      |-__init__.py
+      |-errors.py
+      |-forms.py
+      |-views.py
+    |-__init__.py
+    |-email.py
+    |-models.py
+  |-migrations/
+  |-tests/
+    |-__init__.py
+    |-test*.py
+  |-venv/
+  |-requirements.txt
+  |-config.py
+  |-manage.py
+这个结构有四个顶层目录：
+
+Flask应用一般放置在名为app的目录下。
+
+migrations目录包含数据库迁移脚本，这和之前说的一样。
+
+单元测试放置在test目录下
+
+venv目录包含Python虚拟环境，这和之前说的也是一样的。
+
+还有一些新的文件：
+
+requirements.txt列出一些依赖包，这样就可以很容易的在不同的计算机上部署一个相同的虚拟环境。
+
+config.py存储了一些配置设置。
+
+manage.py用于启动应用程序和其他应用程序任务。
+
+为了帮助你完全理解这个结构，下面会描述将hello.py应用改为符合这一结构的整个流程。
+
+2、配置选项
+应用程序通常需要几个配置设置。最好的例子就是在开发过程中需要使用不同的数据库，测试，生产环境，这样他们可以做到互不干扰。
+
+我们可以使用配置类的层次结构来代替hello.py中的简单类字典结构配置。示例7-2展示了config.py文件。
+
+示例7-2. config.py：应用程序配置
+
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
+    FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
+    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+
+    @staticmethod
+    def init_app(app):
+        pass
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+
+    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+
+config = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
+    'default': DevelopmentConfig
+}
+Config基类包含一些相同配置；不同的子类定义不同的配置。额外配置可以在需要的时候在加入。
+
+为了让配置更灵活更安全，一些设置可以从环境变量中导入。例如，SECRET_KEY，由于它的敏感性，可以在环境中设置，但如果环境中没有定义就必须提供一个默认值。
+
+在三个配置中SQLALCHEMY_DATABASE_URI变量可以分配不同的值。这样应用程序可以在不同的配置下运行，每个可以使用不同的数据库。
+
+
+
+配置类可以定义一个将应用程序实例作为参数的init_app()静态方法。这里特定于配置的初始化是可以执行的。这里Config基类实现一个空init_app()方法。
+
+在配置脚本的底部，这些不同的配置是注册在配置字典中。将其中一个配置(开发配置)注册为默认配置。
+
+3、应用程序包
+应用程序包放置了所有应用程序代码、模板和静态文件。它被简单的称为app，也可以给定一个特定于应用的名称(如果需要的话)。templates和static目录是应用的一部分，因此这两个目录应该放置在app中。数据库模型和电子邮件支持功能也要置入到这个包中，每个都以app/models.py和app/email.py形式存入自己的模块当中。
+
+3.1、使用一个应用程序工厂
+
+在单个文件中创建应用程序的方式非常方便，但是它有一个大缺点。因为应用程序创建在全局范围，没有办法动态的适应应用配置的更改:脚本运行时，应用程序实例已经创建，所以它已经来不及更改配置。对于单元测试这是特别重要的，因为有时需要在不同的配置下运行应用程序来获得更好的测试覆盖率。
+
+解决这一问题的方法就是将应用程序放入一个工厂函数中来延迟创建，这样就可以从脚本中显式的调用。
+
+这不仅给脚本充足的时间来设置配置，也能用于创建多个应用程序实例——一些在测试过程中非常有用的东西。被定义在app包的构造函数中的应用程序工厂函数会在示例7-3中展示。
+
+这个构造函数导入大部分当前需要使用的扩展，但因为没有应用程序实例初始化它们，它可以被创建但不初始化通过不传递参数给它们的构造函数。create_app()即应用程序工厂函数，需要传入用于应用程序的配置名。配置中的设置被保存在config.py中的一个类中，可以使用Flask的app.config配置对象的from_object()方法来直接导入。配置对象可以通过对象名从config字典中选出。一旦应用程序被创建且配置好，扩展就可以被初始化。调用扩展里的init_app()之前先创建并完成初始化工作。
+
+示例7-3. app/__ init__.py：应用程序包构造函数
+
+from flask import Flask, render_template
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.mail import Mail
+from flask.ext.moment import Moment
+from flask.ext.sqlalchemy import SQLAlchemy
+from config import config
+
+bootstrap = Bootstrap()
+mail = Mail()
+moment = Moment()
+db = SQLAlchemy()
+
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    moment.init_app(app)
+    db.init_app(app)
+
+    # attach routes and custom error pages here
+
+    return app
+工厂函数返回创建的应用程序实例，但是请注意，在当前状态下使用工厂函数创建的应用程序是不完整的，因为它们没有路由和自定义错误页面处理程序。这是下一节的主题。
+
+3.2、在蓝图中实现应用程序的功能
+
+应用程序工厂的转化工作引出了路由的复杂化。在单脚本应用中，应用程序实例是全局的，所以可以很容易地使用app.route装饰器定义路由。但是现在应用程序在运行时创建，app.route装饰器只有在create_app()调用后才开始存在，这就太迟了。就像路由那样，这些通过app.errorhandler装饰器定义的自定义错误页面处理程序也存在同样的问题。
+
+幸运的是Flask使用蓝图来提供一个更好的解决方案。一个蓝图就类似于一个可以定义路由的应用程序。不同的是，和路由相关联的蓝图都在休眠状态，只有当蓝图在应用中被注册后，此时的路由才会成为它的一部分。使用定义在全局作用域下的蓝图，定义应用程序的路由就几乎可以和单脚本应用程序一样简单了。
+
+和应用程序一样，蓝图可以定义在一个文件或一个包中与多个模块一起创建更结构化的方式。为了追求最大的灵活性，可以在应用程序包中创建子包来持有蓝图。示例7-4展示了创建蓝图的构造函数。
+
+示例7-4. app/main/__ init__.py：创建蓝图
+
+from flask import Blueprint
+
+main = Blueprint('main', __name__)
+
+from . import views, errors
+蓝图是通过实例化Blueprint类对象来创建的。这个类的构造函数接收两个参数：蓝图名和蓝图所在的模块或包的位置。与应用程序一样，在大多数情况下，对于第二个参数值使用Python的__name__变量是正确的。
+
+应用程序的路由都保存在app/main/views.py模块内部，而错误处理程序则保存在app/main/errors.py中。导入这些模块可以使路由、错误处理与蓝图相关联。重要的是要注意，在app/init.py脚本的底部导入模块要避免循环依赖，因为view.py和errors.py都需要导入main蓝图。
+
+蓝图和应用程序一样注册在create_app()工厂函数中，如示例7-5所示。
+
+示例7-5. app/__ init__.py：蓝图注册
+
+def create_app(config_name):
+    # ...
+    from main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    return app
+示例7-6展示了错误处理。
+
+示例7-6. app/main/errors.py：蓝图的错误处理
+
+from flask import render_template
+from . import main
+
+@main.app_errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@main.app_errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+在蓝图中写错误处理的不同之处是，如果使用了errorhandler装饰器，则只会调用在蓝图中引起的错误处理。而应用程序范围内的错误处理则必须使用app_errorhandler。
+
+示例7-7展示了被更新在蓝图中的应用程序路由。
+
+示例7-7. app/main/views.py：带有蓝图的应用程序路由
+
+from datetime import datetime
+from flask import render_template, session, redirect, url_for
+
+from . import main
+from .forms import NameForm
+from .. import db
+from ..models import User
+
+@main.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        # ...
+        return redirect(url_for('.index'))
+    return render_template('index.html',
+                            form=form, name=session.get('name'),
+                            known=session.get('known', False),
+                            current_time=datetime.utcnow())
+在蓝图中写视图函数有两大不同点。第一，正如之前的错误处理一样，路由装饰器来自于蓝图。第二个不同是url_for()函数的使用。你可能会回想，该函数的第一个参数为路由节点名，它给基于应用程序的路由指定默认视图函数。例如，单脚本应用程序中的index()视图函数的URL可以通过url_for('index')来获得。
+
+不同的是Flask名称空间适用于来自蓝图的所有节点，这样多个蓝图可以使用相同节点定义视图函数而不会产生冲突。名称空间就是蓝图名（Blueprint构造函数中的第一个参数），所以index()视图函数注册为main.index且它的URL可以通过url_for('main.index')获得。
+
+在蓝图中，url_for()函数同样支持更短格式的节点，省略蓝图名，例如url_for('.index')。有了这个，就可以这样使用当前请求的蓝图了。这实际意味着相同蓝图内的重定向可以使用更短的形式，如果重定向跨蓝图则必须使用带名称空间的节点名。
+
+完成了应用程序页面更改，表单对象也保存在app/main/forms.py模块中的蓝图里面。
+
+4、启动脚本
+顶层目录中的manage.py文件用于启动应用。这个脚本会在示例7-8中展示。
+
+示例7-8. manage.py：启动脚本
+
+#!/usr/bin/env python
+import os
+from app import create_app, db
+from app.models import User, Role
+from flask.ext.script import Manager, Shell
+from flask.ext.migrate import Migrate, MigrateCommand
+
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+manager = Manager(app)
+migrate = Migrate(app, db)
+
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+    manager.add_command("shell", Shell(make_context=make_shell_context))
+    manager.add_command('db', MigrateCommand)
+
+if __name__ == '__main__':
+    manager.run()
+这个脚本开始于创建应用程序。使用环境变量FLASK_CONFIG，若它已经定义了则从中获取配置；如果没有，则是用默认配置。然后用于Python shell的Flask-Script、Flask-Migrate以及自定义上下文会被初始化。
+
+为了方便，会增加一行执行环境，这样在基于Unix的操作系统上可以通过./manage.py来执行脚本来替代冗长的python manage.py。
+
+5、需求文件
+应用程序必须包含requirements.txt文件来记录所有依赖包，包括精确的版本号。这很重要，因为可以在不同的机器上重新生成虚拟环境，例如在生产环境的机器上部署应用程序。这个文件可以通过下面的pip命令自动生成：
+
+(venv) $ pip freeze >requirements.txt
+当安装或更新一个包之后最好再更新一下这个文件。以下展示了一个需求文件示例：
+
+Flask==0.10.1
+Flask-Bootstrap==3.0.3.1
+Flask-Mail==0.9.0
+Flask-Migrate==1.1.0
+Flask-Moment==0.2.0
+Flask-SQLAlchemy==1.0
+Flask-Script==0.6.6
+Flask-WTF==0.9.4
+Jinja2==2.7.1
+Mako==0.9.1
+MarkupSafe==0.18
+SQLAlchemy==0.8.4
+WTForms==1.0.5
+Werkzeug==0.9.4
+alembic==0.6.2
+blinker==1.3
+itsdangerous==0.23
+当你需要完美复制一个虚拟环境的时候，你可以运行以下命令创建一个新的虚拟环境：
+
+(venv) $ pip install -r requirements.txt
+当你读到这时，示例requirements.txt文件中的版本号可能已经过时了。如果喜欢你可以尝试用最近发布的包。如果遇到任何问题，你可以随时回退到需求文件中与应用兼容的指定版本。
+
+6、单元测试
+这个应用非常小以至于不需要太多的测试，但是作为示例会在示例7-9中展示两个简单的测试定义。
+
+示例7-9. tests/test_basics.py：单元测试
+
+import unittest
+from flask import current_app
+from app import create_app, db
+
+class BasicsTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app('testing')
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+        db.create_all()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+        self.app_context.pop()
+
+    def test_app_exists(self):
+        self.assertFalse(current_app is None)
+
+    def test_app_is_testing(self):
+        self.assertTrue(current_app.config['TESTING'])
+编写好的测试使用的是来自于Python标准库中标准的unittest包。setUp()和tearDown()方法在每个测试之前和之后运行，且任何一个方法必须以test_开头作为测试来执行。
+
+建议：如果你想要学习更多使用Python的unittest包来写单元测试的内容，请参阅官方文档。
+
+setUp()方法尝试创建一个测试环境，类似于运行应用程序。首先它创建应用程序配置用于测试并激活上下文。这一步确保测试可以和常规请求一样访问current_app。然后，当需要的时候，可以创建一个供测试使用的全新数据库。数据库和应用程序上下文会在tearDown()方法中被移除。
+
+第一个测试确保应用程序实例存在。第二个测试确保应用程序在测试配置下运行。为了确保tests目录有效，需要在tests目录下增加__init__.py文件，不过该文件可以为空，这样unittest包可以扫描所有模块并定位测试。
+
+建议：如果你有克隆在GitHub上的应用程序，你现在可以运行git checkout 7a来切换到这个版本的应用程序。为了确保你已经安装了所有依赖集，需要运行pip install -r requirements.txt。
+
+为了运行单元测试，可以在manage.py脚本中增加一个自定义的命令。
+
+示例7-10展示如何添加测试命令。
+
+示例7-10. manage.pyt：单元测试启动脚本
+
+@manager.command
+def test():
+    """Run the unit tests."""
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
+manager.command装饰器使得它可以很容易的实现自定义命令。被装饰的函数名可以被当做命令名使用，且函数的文档字符串会显示帮助信息。test()函数的执行会调用unittest包中的测试运行器。
+
+单元测试可以像下面这样执行：
+
+(venv) $ python manage.py test
+test_app_exists (test_basics.BasicsTestCase) ... ok
+test_app_is_testing (test_basics.BasicsTestCase) ... ok
+
+.----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK
+7、数据库启动
+与单脚本的应用相比，重构后的应用使用不同数据库。
+
+从环境变量中获取的数据库URL作为首选，默认SQLite数据库作为可选。三个配置中的环境变量和SQLite数据库文件名是不一样的。例如，开发配置的URL是从DEV_DATABASE_URL环境变量中获取，如果没有定义则会使用名为data-dev.sqlite的SQLite数据库。
+
+无论数据库URL源的是哪一个，都必须为新的数据库创建数据库表。如果使用了Flask-Migrate来保持迁移跟踪，数据库表可以被创建或更新到最近的版本通过下面的命令：
+
+(venv) $ python manage.py db upgrade
+相信与否，已经到了第一部分结束的地方。你现在已经学到了Flask必要的基本要素，但是你不确定如何将这些零散的知识组合在一起形成一个真正的应用程序。第二部分的目的是通过开发一个完整的应用程序来带领你继续前行。
+
+
+flask常用扩展包：
+    Fask-SQLAlchemy: 操作数据库
+    Flask-script: 插入脚本
+    Flask-migrate: 管理数据库迁移
+    Flask-Session: session存储方式
+    Flask-WTF: 表单处理
+    Flask-Mail：邮件
+    Flask-Login: 认证用户登录
+    Flask-OpenID: 认证
+    Flask-RESTful: 开发REST API的工具
+    Flask-Bootstrap: 集成前端框架
+    Flask-Moment: 本地化日期和时间
+    Flask-Admin: 简单可扩展的管理接口光框架

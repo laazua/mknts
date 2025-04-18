@@ -1,0 +1,9 @@
+---
+# 执行区服动作[start|stop|check]
+
+- name: zone action
+  hosts:
+    - zone
+  gather_facts: no
+  roles:
+    - zone

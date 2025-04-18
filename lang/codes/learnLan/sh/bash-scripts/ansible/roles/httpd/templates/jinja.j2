@@ -1,0 +1,24 @@
+{# 变量 #}
+{% set firstname='hello' %}
+{% set lastname='jinjia' %}
+
+{# if statement #}
+{% if 2 > 1 %}
+    set name = firstname + ' ' + lastname
+    {{ name }}
+{% else %}
+    {{ firstname }}
+{% endif %}
+
+{# for statement #}
+{% for item in seq %}
+    {{ item }}
+{% endfor %}
+
+{# block statement #}
+{% block some %}
+    ...
+{% endblock %}
+
+{# extends some #}
+{% extends "test.txt" %}

@@ -1,0 +1,10 @@
+### demo
+
+[说明]
+  *) setup.py打包项目成为可执行文件:
+     python setup.py bdist_wheel
+  *) 生成: dist/demo-0.0.1-py3-none-any.whl
+  *) 在目标机器上安装: demo-0.0.1-py3-none-any.whl
+     1. 创建虚拟隔离环境: mkdir target_path && cd target_path && python -m venv .venv
+     2. 安装demo-0.0.1-py3-none-any.whl: .venv/bin/python -m pip install demo-0.0.1-py3-none-any.whl -i https://pypi.tuna.tsinghua.edu.cn/simple
+     3. 运行项目: .venv/bin/demo

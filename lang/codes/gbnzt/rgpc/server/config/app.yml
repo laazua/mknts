@@ -1,0 +1,21 @@
+# app配置
+app:
+  addr: '0.0.0.0:8888'
+  token: "bnzt test123456"
+
+# 区服管理配置
+zone:
+  path: /data/game/
+  bincmd: "rm gameserv* -rf && sshpass -p 123456 rsync --compress-level=9 gamecpp@172.16.9.127:/data/codes/go/src/gbnzt/resource/gameserv.zip . 
+           && unzip gameserv.zip >/dev/null 2>&1 && md5sum gameserv || echo failed"
+  name: gameserv
+
+# svn配置
+svn:
+  user: xxxxx
+  pass: xxxxx
+  addr: http://127.0.0.1:8888/svn/test
+
+# 主机配置
+host:
+  disk: "/data"

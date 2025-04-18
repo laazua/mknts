@@ -1,0 +1,647 @@
+definitions:
+  models.Cds:
+    properties:
+      etime:
+        type: string
+      stime:
+        type: string
+      zone:
+        type: string
+    required:
+    - etime
+    - stime
+    - zone
+    type: object
+  models.Gds:
+    properties:
+      etime:
+        type: string
+      stime:
+        type: string
+      zone:
+        type: string
+    required:
+    - etime
+    - stime
+    - zone
+    type: object
+  models.Ods:
+    properties:
+      order:
+        type: string
+      uid:
+        type: string
+      zone:
+        type: string
+    required:
+    - order
+    - uid
+    - zone
+    type: object
+  models.Page:
+    properties:
+      num:
+        type: integer
+      size:
+        type: integer
+    required:
+    - num
+    - size
+    type: object
+  models.Rgs:
+    properties:
+      etime:
+        type: string
+      stime:
+        type: string
+      zone:
+        type: string
+    required:
+    - etime
+    - stime
+    - zone
+    type: object
+  models.Rrs:
+    properties:
+      etime:
+        type: string
+      page:
+        $ref: '#/definitions/models.Page'
+      stime:
+        type: string
+      zone:
+        type: string
+    required:
+    - etime
+    - page
+    - stime
+    - zone
+    type: object
+info:
+  contact: {}
+paths:
+  /oa/api/countdata:
+    post:
+      consumes:
+      - application/json
+      description: 数据查询
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "数据查询成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/gradedist:
+    post:
+      consumes:
+      - application/json
+      description: 等级分布
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "等级分布查询成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/ltvsdata:
+    post:
+      consumes:
+      - application/json
+      description: LTV数据
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询LTV数据成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/recharank:
+    post:
+      consumes:
+      - application/json
+      description: 充值排行
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Rrs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "成功获取数据"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/retendata:
+    post:
+      consumes:
+      - application/json
+      description: 留存数据
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询留存数据成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/rollsdata:
+    post:
+      consumes:
+      - application/json
+      description: 滚服数据
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询滚服数据成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /oa/api/vipsdata:
+    post:
+      consumes:
+      - application/json
+      description: VIP等级
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Gds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询VIP等级成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务运营相关
+  /perm/api/permlist:
+    get:
+      consumes:
+      - application/json
+      description: 菜单列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "获取菜单列表成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统菜单相关
+  /perm/api/perms:
+    delete:
+      consumes:
+      - application/json
+      description: 删除菜单
+      parameters:
+      - in: query
+        name: permdesc
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "删除菜单成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统菜单相关
+    get:
+      consumes:
+      - application/json
+      description: 查询菜单
+      parameters:
+      - in: query
+        name: permdesc
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询菜单成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统菜单相关
+    post:
+      consumes:
+      - application/json
+      description: 添加菜单
+      parameters:
+      - in: query
+        name: namepath
+        required: true
+        type: string
+      - in: query
+        name: permdesc
+        required: true
+        type: string
+      - in: query
+        name: subdesc
+        required: true
+        type: string
+      - in: query
+        name: subpath
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "添加菜单成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统菜单相关
+    put:
+      consumes:
+      - application/json
+      description: 更新菜单
+      parameters:
+      - in: query
+        name: column
+        required: true
+        type: string
+      - in: query
+        name: permdesc
+        required: true
+        type: string
+      - in: query
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "更新菜单成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统菜单相关
+  /player/api/currdata:
+    post:
+      consumes:
+      - application/json
+      description: 货币消耗
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Cds'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询货币成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务玩家相关
+  /player/api/orderdata:
+    post:
+      consumes:
+      - application/json
+      description: 订单查询
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Rgs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询订单成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务玩家相关
+  /player/api/roledata:
+    post:
+      consumes:
+      - application/json
+      description: 角色查询
+      parameters:
+      - description: 查询参数
+        in: body
+        name: object
+        schema:
+          $ref: '#/definitions/models.Ods'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询角色成功"}'
+          schema:
+            type: string
+      tags:
+      - 业务玩家相关
+  /role/api/rolelist:
+    put:
+      consumes:
+      - application/json
+      description: 角色列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "获取角色列表成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统角色相关
+  /role/api/roles:
+    delete:
+      consumes:
+      - application/json
+      description: 删除角色
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "删除角色成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统角色相关
+    get:
+      consumes:
+      - application/json
+      description: 查询角色
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "查询角色成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统角色相关
+    post:
+      consumes:
+      - application/json
+      description: 添加角色
+      parameters:
+      - in: query
+        name: desc
+        required: true
+        type: string
+      - in: query
+        name: menu
+        required: true
+        type: string
+      - in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "添加角色成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统角色相关
+    put:
+      consumes:
+      - application/json
+      description: 更新角色
+      parameters:
+      - in: query
+        name: column
+        required: true
+        type: string
+      - in: query
+        name: name
+        required: true
+        type: string
+      - in: query
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "更新角色成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统角色相关
+  /user/api/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      - in: query
+        name: passone
+        required: true
+        type: string
+      - in: query
+        name: passtow
+        required: true
+        type: string
+      - in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"token": "", "code":200}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+  /user/api/userlist:
+    get:
+      consumes:
+      - application/json
+      description: 用户列表
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      - in: query
+        name: passone
+        required: true
+        type: string
+      - in: query
+        name: passtow
+        required: true
+        type: string
+      - in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "获取用户列表成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+  /user/api/users:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "删除用户成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+    get:
+      consumes:
+      - application/json
+      description: 用户查询
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": object, "code":200, "message": "用户查询成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+    post:
+      consumes:
+      - application/json
+      description: 添加用户
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      - in: query
+        name: passone
+        required: true
+        type: string
+      - in: query
+        name: passtow
+        required: true
+        type: string
+      - in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "添加用户成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+    put:
+      consumes:
+      - application/json
+      description: 更新用户
+      parameters:
+      - in: query
+        name: name
+        required: true
+        type: string
+      - in: query
+        name: passone
+        required: true
+        type: string
+      - in: query
+        name: passtow
+        required: true
+        type: string
+      - in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": nil, "code":200, "message": "更新用户成功"}'
+          schema:
+            type: string
+      tags:
+      - 系统用户相关
+swagger: "2.0"

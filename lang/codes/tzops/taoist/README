@@ -1,0 +1,5 @@
+taoist
+
+[说明]
+  *) taoist是运行在主节点上发号施令的程序
+  *) 需要系统库: sudo apt-get install libmariadb-dev

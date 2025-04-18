@@ -1,0 +1,18 @@
+--- yaml 文件的开始
+# 注释
+
+  # 执行操作的主机
+- hosts: all
+  # 哪个用户执行
+  remote_user: root
+
+  # 任务列表
+  tasks:
+      # 任务描述
+    - name: this is a test
+      # 模块: 参数
+      copy: src=/data/test.txt dest=/data/test.txt
+
+
+## 执行该文件前要检查该文件的语法
+## ansible-playbook -C ansible-playbook.yaml

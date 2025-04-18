@@ -1,0 +1,28 @@
+---
+### master程序的配置文件
+
+# 程序本身配置
+app:
+  # 程序运行时监听的端口和地址
+  port: 8888
+  host: 0.0.0.0
+  # servant程序运行端口
+  sPort: 8887
+
+# 数据库配置
+db:
+  port: 27017
+  host: 127.0.0.1
+  # 数据库名字和认证用户密码
+  name: test
+  user: zhangsan
+  pass: 12345678
+
+# redis配置
+redis:
+  port: 6379
+  host: 127.0.0.1
+  # 数据库名字和认证用户密码
+  name: 0
+  user: zhangsan
+  pass: 12345678

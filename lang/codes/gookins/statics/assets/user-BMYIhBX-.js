@@ -1,0 +1,1 @@
+import{s}from"./request-Sx4CXzmN.js";const t=r=>s({url:"/login",method:"post",data:r}),o=()=>s({url:"/user/list",method:"get"}),u=r=>s({url:"/user/add",method:"post",data:r});export{u as a,o as g,t as u};

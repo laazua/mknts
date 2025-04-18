@@ -1,0 +1,8 @@
+
+cmake demo:
+  - DemoOne
+  - DemoTow
+  - MultiCmake  (x)
+  - SharedLib  
+  - StaticLib  
+  - TestLib

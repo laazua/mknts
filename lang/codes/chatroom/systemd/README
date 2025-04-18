@@ -1,0 +1,17 @@
+### service
+
+[描述]
+    *) 使用systemd管理服务进程
+
+[配置]
+    *) 将chatroot.service配置放在/usr/lib/systemd/system
+       或者放在/etc/systemd/system目录下面
+    *) 将编译后的chatroom二进制文件放在/usr/local/bin/路径下
+       将chatroom的配置文件server.yaml放在/etc/chatroom/路径下
+
+[操作]
+    *) sudo useradd -l -s /usr/sbin/nologin zhangsan
+    *) sudo systemctl daemon-reload
+    *) sudo systemctl start chatroom.service
+    *) sudo systemctl status chatroom.service
+    *) sudo systemctl stop chatroom.service

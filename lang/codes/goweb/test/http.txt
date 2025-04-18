@@ -1,0 +1,16 @@
+{
+    "zonelist": [
+        {
+            "target": "open",
+            "zonename": "test_syf",
+            "zoneid": 1,
+            "zoneip": "127.0.0.1"
+        },
+        {
+            "target": "open",
+            "zonename": "test_syf",
+            "zoneid": 2,
+            "zoneip": "127.0.0.1"
+        }
+    ]
+}

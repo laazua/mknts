@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}login {% endblock %}
+
+{% block content %}
+
+<main class="form-signin w-100 m-auto text-center">
+    <form id="formId" method="post" action="/auth/login">
+        <img class="mb-4" src="{{ url_for('static', filename='imgs/bootstrap-logo.svg') }}" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">请登陆</h1>
+
+        <div class="form-floating">
+            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="用户">
+            <label for="floatingInput">用户</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="密码">
+            <label for="floatingPassword">密码</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">登陆</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024–2030</p>
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+<body>
+    <ol>
+        {{range $.images}}
+        <li><a href="/view?id={{.|urlquery}}">{{.|html}}</a> </li>
+        {{end}}
+    </ol>
+</body>
+</html>
+<!-- 双{}区分模板和html的分隔符,里面填要输出的数据或者控制语句if range for等 -->

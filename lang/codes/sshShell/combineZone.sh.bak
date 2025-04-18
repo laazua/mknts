@@ -1,0 +1,169 @@
+#!/bin/bash
+
+## 作者: Sseve
+## 日期: 2021Äê08ÔÂ18ÈÕ
+
+dump_cmd="/usr/bin/mysqldump"
+load_cmd="/usr/bin/mysql"
+sql_host="101.132.245.153"
+sql_port=3306
+sql_user="yunwei"
+sql_pass="yunwei123"
+errExit=1
+bakDir="/data/back/"
+GameDir="/data/game/"
+GameAlias="syf"
+
+Help() {
+	printf " ** 请在关服的情况下使用该脚本.\n"
+	printf " ** 该脚本用于游戏合服\n"
+	printf " ** %-20s %-20s\n" "-h|--help" "帮助信息"
+	printf " ** %-20s %-20s\n" "-a|--agent" "平台名"
+	printf " ** %-20s %-20s\n" "-d|--dest" "目标区服"
+	printf " ** %-20s %-20s\n" "-s|--source" "源区服"
+	printf " ** Usage: sh $0 -a syf_dev -d 1000 -s 1001\n"
+}
+
+
+checkEnv() {
+    if [ ! -x "${dump_cmd}" ] || [ ! -x "${load_cmd}" ]
+    then
+        echo "MySQL备份和导入工具不存在"
+        exit ${errExit}
+    fi
+
+    if [ ! -d "${bakDir}" ]
+    then
+        mkdir -p ${bakDir}
+    fi    
+}
+
+
+## 
+bakupData() {
+    echo -e "\033[32m正在备份源区数据库...\033[0m"
+    curTime=$(date +%Y%m%d%H%M%S)
+    ## backup source zone data
+    ${dump_cmd} -h ${sql_host} -P ${sql_port} -u ${sql_user} -p${sql_pass} ${agent}_${SourceZone} > ${bakDir}back_pre_combine_${agent}_${SourceZone}_${curTime}.sql
+    if [ $? -eq 0 ]
+    then
+        echo -e "\033[32m备份源区数据库 ${agent}_${SourceZone} 成功.\033[0m"
+    else
+    	  echo -e "\033[31m备份源区数据库 ${agent}_${SourceZone} 失败.\033[0m"
+    	  exit ${errExit}
+    fi
+
+    echo -e "\033[32m正在备份目标区数据库...\033[0m"
+    ${dump_cmd} -h ${sql_host} -P ${sql_port} -u ${sql_user} -p${sql_pass} ${agent}_${DistZone} > ${bakDir}back_pre_combine_${agent}_${DistZone}_${curTime}.sql
+    if [ $? -eq 0 ]
+    then
+        echo -e "\033[32m备份目标区数据库 ${agent}_${DistZone} 成功.\033[0m"
+    else
+    	  echo -e "\033[31m备份目标区数据库 ${agent}_${DistZone} 失败\033[0m"
+    	  exit ${errExit}
+    fi
+}
+
+## 
+dumpSourceData() {
+	echo -e "\033[32m正在导出源区数据...\033[0m"
+	${dump_cmd} -h ${sql_host} -P ${sql_port} -u ${sql_user} -p${sql_pass} -t -c ${agent}_${SourceZone} > ${bakDir}${agent}_${SourceZone}.sql
+	if [ $? -eq 0 ]
+	then
+	   echo -e "\033[32m导出源区数据 ${agent}_${SourceZone} 成功.\033[0m"
+	else
+	   echo -e "\033[31m导出源区数据 ${agent}_${SourceZone} 失败.\033[0m"
+           exit ${errExit}
+	fi
+}
+
+##
+combineZone() {
+    echo -e "\033[32m正在将源区数据导入目标区...\033[0m"
+    ${load_cmd} -h ${sql_host} -P ${sql_port} -u${sql_user} -p${sql_pass} ${agent}_${DistZone} < ${bakDir}${agent}_${SourceZone}.sql
+    if [ $? -eq 0 ]
+    then
+        echo -e "\033[32m导入 ${agent}_${SourceZone} 到 ${agent}_${DistZone} 成功.\033[0m"
+    else
+    	  echo -e "\033[31m导入 ${agent}_${SourceZone} 到 ${agent}_${DistZone} 失败.\033[0m"
+    	  exit ${errExit}
+    fi
+}
+
+remove_file() {
+   sip=$(sh ./manage/serveMsg.sh -f serverIp -a ${agent} -z ${z} -g ${GameAlias})
+   ssh -q -tt ${sip} "cd ${GameDir}${GameAlias}${agent}_${SourceZone} && rm gameserv${SourceZone} && echo 删除gameserv${SourceZone}成功. && 删除gameserv${SourceZone}失败."
+   if [ $? -eq 0 ];then
+       echo -e "\033[32m合服完成.\033[0m"
+   else
+       echo -e "\033[32m合服未完成.\033[0m"
+   fi
+   
+   sh ./manage/serveMsg.sh -f isCombined -v 1 -a ${agent} -z ${SourceZone} -g ${GameAlias} -t update
+   if [ $? -eq 0 ];then
+       echo -e "\033[32m数据库更新成功.\033[0m"   
+   else
+       echo -e "\033[32m数据库更新失败.\033[0m"
+   fi    
+}
+
+main() {
+    if [ $# -ne 6 ]
+    then
+    	Help
+    	exit ${errExit}
+    fi
+    if [ "$1" = "-a" ] && [ "$3" = "-d" ] && [ "$5" = "-s" ]
+    then
+        local agent=$2
+        local DistZone=$4
+        local SourceZone=$6
+  
+        read -e -p "请再次输入平台名: " aagent
+        if [ "${agent}" != "${aagent}" ]
+        then
+            echo -e "\033[31m两次输入的平台名不一致!!!\033[0m"
+            exit ${errExit}
+        fi
+
+        read -e -p "请再次输入目标区服: " adest
+        if [ "${DistZone}" != "${adest}" ]
+        then
+            echo -e "\033[31m两次输入的目标区服不一致!!!\033[0m"
+            exit ${errExit}
+        fi
+
+        read -e -p "请再次输入源区服: " asource
+
+        if [ "${SourceZone}" != "${asource}" ]
+        then
+            echo -e "\033[31m两次输入的源区服不一致!!!\033[0m"
+            exit ${errExit}
+        fi
+    	bakupData
+    	if [ $? -ne 0 ]
+    	then
+    		exit ${errExit}
+    	fi
+
+    	dumpSourceData
+    	if [ $? -ne 0 ]
+    	then
+    	    exit ${errExit}
+    	fi
+
+    	combineZone
+    	if [ $? -ne 0 ]
+    	then
+    	    exit ${errExit}
+    	fi
+    else
+    	Help
+    fi
+
+    echo -e "\033[32m平台${agent}: 源区服${SourceZone} => 目标区服${DistZone} 成功.\033[0m"
+    remove_file
+}
+
+main "$@"
+

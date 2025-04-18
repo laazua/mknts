@@ -1,0 +1,22 @@
+---
+# gookins配置文件
+address: :8084
+run_mode: debug
+jwt_key: gookins123
+salt_key: gookins
+expired_time: 120 # 分钟
+task_pool_size: 20 # 任务池大小
+worker_count: 5 #并发数量
+strategy: block  # 任务池策略: block|drop|expand
+
+# postgres配置
+db_host: 192.168.165.88
+db_port: 5432
+db_user: postgres
+db_pass: 123456
+db_name: gookins
+
+# 代码仓库认证
+code_user:
+code_pass:
+workspace: 

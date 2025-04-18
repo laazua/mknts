@@ -1,0 +1,50 @@
+安装yum install gawk
+描述: 按行读取文本并进行相应的操作
+用法: awk [option] '[pattern] + [action]' filename
+不同动作之间最好用{}包裹，并用;隔开，如下示例
+示例:
+    cat test |awk 'BEGIN{i=1;j=1};{if(NR%2==1){A[i]=$0;i++}};{if(NR%2==0){B[j]=$0;j++}};END{for(a=0;a<length(A);a++){print A[a], B[a]}}'
+    该示例用于将文本内的奇数行与偶数行放在同一行，用空格隔开.
+
+
+内置变量：
+    NR --> 当前记录的数量(可以理解为行号)
+    NF --> 列数量
+    $0 --> 整行
+    $N --> 第N列
+    FS --> 输入数据分隔域
+    RS --> 输入记录的分割符(行间分隔符)
+    OFS --> 输出分隔域
+    ORS --> 输出记录行之间的分割符
+    ......
+
+操作符：
+    算数操作符：
+        + - * / % ++ -- ^(**) += -= *= /= %= ^=(指数赋值运算)
+    关系运算符：
+        > < == >= <=
+    逻辑运算：
+        && || !
+三元运算符：
+    condition expression ? statement1 ：statement2
+
+数组:
+    访问数组:  for(i in ARRAY)
+              如果要按数组下标进行索引，需要在定义数组的时候给定下标(ps:数组不是内联数组)
+
+正则表达式:
+    同shell
+
+
+控制流程:
+if(condition){action}
+if(condition){action}else(action)
+if(condition){action}else if(condition){action}...
+
+循环:
+    for(initialisation;condition;increment/decrement){action}
+    while(condition){action}
+    do{action}while(condition)
+
+    break：结束循环
+    continue：循环体内结束本次循环

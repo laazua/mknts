@@ -1,0 +1,14 @@
+{
+    "App": {
+        "Ip": "0.0.0.0",
+        "Port": 8888,
+        "ZonePath": "/data/game/",
+        "BinPath": "/data/game/minion/bin/",
+        "KeyWord": "gweb12345678test"
+    },
+    "Svn": {
+        "Username": "test",
+        "Password": "test",
+        "Url": "http://127.0.0.1:8868/svn/test"
+    }
+}

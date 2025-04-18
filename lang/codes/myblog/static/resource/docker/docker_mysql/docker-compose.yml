@@ -1,0 +1,9 @@
+version: "2.11.1"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root123456
+      TZ: Asia/Shang
+    ports:
+      - 3306:3306

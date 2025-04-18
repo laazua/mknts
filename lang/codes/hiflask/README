@@ -1,0 +1,28 @@
+Flask Demo App
+
+[容器运行]
+  *) sudo docker build -t ImageName:Tag .
+  *) sudo docker run -itd --name CountainerName -p 8887:8887 ImageName:Tag
+
+[二进制运行]
+  *) 打包: python setup.py sdist
+  *) pex -r requirements.txt -D src -o hiflask  -e hiflask.main:main
+  *) zipapp打包: demo目录为项目的根目录(是一个独立的示例项目, 这是另一种项目结构不同的打包示例)
+
+[pex打包运行]
+  *) make check
+  *) make -f pex/Makefile
+  *) make clean -f pex/Makefile
+
+[标准库zipapp打包]
+  *) make -f zipapp/Makefile
+  *) make clean -f zipapp/Makefile
+
+[setuptools打包]
+  *) python setup.py bdist_wheel
+
+[注意]
+  *) pex打包后不需要目标主机有python解释器就可以运行
+  *) zipapp打包后目标机器需要有对应的python解释器才能运行
+  *) 在打包过程中需要注意项目导包的层级结构与打包过程中指定的
+     程序入口和拷贝源码(zipapp打包方式)的目录层级结构相对应

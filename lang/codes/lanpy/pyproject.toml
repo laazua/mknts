@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lanpy"
+version = "0.0.1"
+description = "Python base"
+authors = [
+    { name="Sseve", email="github@Sseve.com" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+
+# 项目三方依赖包依赖包
+# 一个字符串列表,列表中的每一项格式:
+# "pkg_name==0.0.1"
+dependencies = [
+
+]
+
+[project.scripts]
+lanpy = "lanpy.__main__:main"
+
+#[tool.setuptools]
+## 是否包含MANIFEST.in中的资源文件
+#include-package-data = true

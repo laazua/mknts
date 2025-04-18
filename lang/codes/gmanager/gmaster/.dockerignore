@@ -1,0 +1,8 @@
+__pycache__
+.gitignore
+.pdm.toml
+pdm.lock
+pyproject.toml
+logs
+Dockerfile
+manage.sh

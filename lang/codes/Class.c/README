@@ -1,0 +1,16 @@
+说明:
+====
+  - Calculate
+  - C中类的简单示例
+
+  - Person
+  - c/c++混合编译源文件
+
+  - student
+  - c/c++混合编译链接
+
+编译:
+====
+  - 在项目根目录新建build文件夹: mkdir build
+  - cd build && cmake .. && make
+  - 在build目录下生成对应的目标二进制文件

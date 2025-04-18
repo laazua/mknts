@@ -1,0 +1,10 @@
+#!/bin/bash
+#远程执行脚本,机器需要做免登陆
+
+remote_cmd="/home/UP1vRNMm/aaaa.sh"
+
+for i in `cat iplist`
+do
+    scp aaaa.sh $i:~
+    ssh $i "sudo sh $remote_cmd" 
+done

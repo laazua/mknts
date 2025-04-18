@@ -1,0 +1,1578 @@
+[2021-12-29 15:10:59 +0800] [14668] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:10:59 +0800] [14668] [INFO] Listening at: http://127.0.0.1:8888 (14668)
+[2021-12-29 15:10:59 +0800] [14668] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:10:59 +0800] [14669] [INFO] Booting worker with pid: 14669
+[2021-12-29 15:10:59 +0800] [14670] [INFO] Booting worker with pid: 14670
+[2021-12-29 15:10:59 +0800] [14671] [INFO] Booting worker with pid: 14671
+[2021-12-29 15:10:59 +0800] [14672] [INFO] Booting worker with pid: 14672
+[2021-12-29 15:11:00 +0800] [14673] [INFO] Booting worker with pid: 14673
+[2021-12-29 15:11:00 +0800] [14670] [INFO] Started server process [14670]
+[2021-12-29 15:11:00 +0800] [14670] [INFO] Waiting for application startup.
+[2021-12-29 15:11:00 +0800] [14670] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 485, in _connect
+    self._reader, self._writer = await \
+  File "/usr/local/python3/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/local/python3/lib/python3.9/asyncio/streams.py", line 52, in open_connection
+    transport, _ = await loop.create_connection(
+  File "uvloop/loop.pyx", line 1963, in create_connection
+socket.gaierror: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 621, in lifespan
+    async with self.lifespan_context(app):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 518, in __aenter__
+    await self._router.startup()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 598, in startup
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 7, in start_app
+    app.state.pool = await aiomysql.create_pool(
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/pool.py", line 29, in _create_pool
+    await pool._fill_free_pool(False)
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/pool.py", line 167, in _fill_free_pool
+    conn = await connect(echo=self._echo, loop=self._loop,
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 75, in _connect
+    await conn._connect()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 519, in _connect
+    raise OperationalError(2003,
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on ''")
+
+[2021-12-29 15:11:00 +0800] [14670] [ERROR] Application startup failed. Exiting.
+[2021-12-29 15:11:00 +0800] [14670] [INFO] Worker exiting (pid: 14670)
+[2021-12-29 15:11:00 +0800] [14668] [WARNING] Worker with pid 14672 was terminated due to signal 15
+[2021-12-29 15:11:00 +0800] [14668] [WARNING] Worker with pid 14673 was terminated due to signal 15
+[2021-12-29 15:11:00 +0800] [14668] [WARNING] Worker with pid 14671 was terminated due to signal 15
+[2021-12-29 15:11:00 +0800] [14668] [WARNING] Worker with pid 14669 was terminated due to signal 15
+[2021-12-29 15:11:00 +0800] [14668] [INFO] Shutting down: Master
+[2021-12-29 15:11:00 +0800] [14668] [INFO] Reason: Worker failed to boot.
+[2021-12-29 15:12:09 +0800] [15063] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:12:09 +0800] [15063] [INFO] Listening at: http://127.0.0.1:8888 (15063)
+[2021-12-29 15:12:09 +0800] [15063] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:12:09 +0800] [15064] [INFO] Booting worker with pid: 15064
+[2021-12-29 15:12:09 +0800] [15065] [INFO] Booting worker with pid: 15065
+[2021-12-29 15:12:09 +0800] [15066] [INFO] Booting worker with pid: 15066
+[2021-12-29 15:12:10 +0800] [15067] [INFO] Booting worker with pid: 15067
+[2021-12-29 15:12:10 +0800] [15068] [INFO] Booting worker with pid: 15068
+[2021-12-29 15:12:10 +0800] [15064] [INFO] Started server process [15064]
+[2021-12-29 15:12:10 +0800] [15064] [INFO] Waiting for application startup.
+[2021-12-29 15:12:10 +0800] [15064] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 485, in _connect
+    self._reader, self._writer = await \
+  File "/usr/local/python3/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/local/python3/lib/python3.9/asyncio/streams.py", line 52, in open_connection
+    transport, _ = await loop.create_connection(
+  File "uvloop/loop.pyx", line 1963, in create_connection
+socket.gaierror: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 621, in lifespan
+    async with self.lifespan_context(app):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 518, in __aenter__
+    await self._router.startup()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 598, in startup
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 7, in start_app
+    app.state.pool = await aiomysql.create_pool(
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/pool.py", line 29, in _create_pool
+    await pool._fill_free_pool(False)
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/pool.py", line 167, in _fill_free_pool
+    conn = await connect(echo=self._echo, loop=self._loop,
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 75, in _connect
+    await conn._connect()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/aiomysql/connection.py", line 519, in _connect
+    raise OperationalError(2003,
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on ''")
+
+[2021-12-29 15:12:10 +0800] [15064] [ERROR] Application startup failed. Exiting.
+[2021-12-29 15:12:10 +0800] [15064] [INFO] Worker exiting (pid: 15064)
+[2021-12-29 15:12:10 +0800] [15063] [WARNING] Worker with pid 15065 was terminated due to signal 15
+[2021-12-29 15:12:10 +0800] [15063] [WARNING] Worker with pid 15066 was terminated due to signal 15
+[2021-12-29 15:12:10 +0800] [15063] [WARNING] Worker with pid 15067 was terminated due to signal 15
+[2021-12-29 15:12:10 +0800] [15063] [WARNING] Worker with pid 15068 was terminated due to signal 15
+[2021-12-29 15:12:10 +0800] [15063] [INFO] Shutting down: Master
+[2021-12-29 15:12:10 +0800] [15063] [INFO] Reason: Worker failed to boot.
+[2021-12-29 15:16:36 +0800] [15215] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:16:36 +0800] [15215] [INFO] Listening at: http://127.0.0.1:8888 (15215)
+[2021-12-29 15:16:36 +0800] [15215] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:16:36 +0800] [15219] [INFO] Booting worker with pid: 15219
+[2021-12-29 15:16:36 +0800] [15220] [INFO] Booting worker with pid: 15220
+[2021-12-29 15:16:36 +0800] [15221] [INFO] Booting worker with pid: 15221
+[2021-12-29 15:16:36 +0800] [15222] [INFO] Booting worker with pid: 15222
+[2021-12-29 15:16:36 +0800] [15223] [INFO] Booting worker with pid: 15223
+[2021-12-29 15:16:37 +0800] [15222] [INFO] Started server process [15222]
+[2021-12-29 15:16:37 +0800] [15222] [INFO] Waiting for application startup.
+[2021-12-29 15:16:37 +0800] [15222] [INFO] Application startup complete.
+[2021-12-29 15:16:37 +0800] [15220] [INFO] Started server process [15220]
+[2021-12-29 15:16:37 +0800] [15220] [INFO] Waiting for application startup.
+[2021-12-29 15:16:37 +0800] [15220] [INFO] Application startup complete.
+[2021-12-29 15:16:37 +0800] [15221] [INFO] Started server process [15221]
+[2021-12-29 15:16:37 +0800] [15221] [INFO] Waiting for application startup.
+[2021-12-29 15:16:37 +0800] [15221] [INFO] Application startup complete.
+[2021-12-29 15:16:37 +0800] [15219] [INFO] Started server process [15219]
+[2021-12-29 15:16:37 +0800] [15219] [INFO] Waiting for application startup.
+[2021-12-29 15:16:37 +0800] [15219] [INFO] Application startup complete.
+[2021-12-29 15:16:37 +0800] [15223] [INFO] Started server process [15223]
+[2021-12-29 15:16:37 +0800] [15223] [INFO] Waiting for application startup.
+[2021-12-29 15:16:37 +0800] [15223] [INFO] Application startup complete.
+[2021-12-29 15:17:51 +0800] [15215] [INFO] Handling signal: int
+[2021-12-29 15:17:51 +0800] [15215] [WARNING] Worker with pid 15219 was terminated due to signal 3
+[2021-12-29 15:17:51 +0800] [15215] [WARNING] Worker with pid 15221 was terminated due to signal 3
+[2021-12-29 15:17:51 +0800] [15215] [WARNING] Worker with pid 15223 was terminated due to signal 3
+[2021-12-29 15:17:51 +0800] [15215] [WARNING] Worker with pid 15220 was terminated due to signal 3
+[2021-12-29 15:17:51 +0800] [15215] [WARNING] Worker with pid 15222 was terminated due to signal 3
+[2021-12-29 15:17:51 +0800] [15215] [INFO] Shutting down: Master
+[2021-12-29 15:19:19 +0800] [15305] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:19:19 +0800] [15305] [INFO] Listening at: http://127.0.0.1:8888 (15305)
+[2021-12-29 15:19:19 +0800] [15305] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:19:19 +0800] [15306] [INFO] Booting worker with pid: 15306
+[2021-12-29 15:19:19 +0800] [15307] [INFO] Booting worker with pid: 15307
+[2021-12-29 15:19:19 +0800] [15308] [INFO] Booting worker with pid: 15308
+[2021-12-29 15:19:19 +0800] [15309] [INFO] Booting worker with pid: 15309
+[2021-12-29 15:19:19 +0800] [15310] [INFO] Booting worker with pid: 15310
+[2021-12-29 15:19:19 +0800] [15307] [INFO] Started server process [15307]
+[2021-12-29 15:19:19 +0800] [15307] [INFO] Waiting for application startup.
+[2021-12-29 15:19:19 +0800] [15307] [INFO] Application startup complete.
+[2021-12-29 15:19:20 +0800] [15306] [INFO] Started server process [15306]
+[2021-12-29 15:19:20 +0800] [15306] [INFO] Waiting for application startup.
+[2021-12-29 15:19:20 +0800] [15306] [INFO] Application startup complete.
+[2021-12-29 15:19:20 +0800] [15308] [INFO] Started server process [15308]
+[2021-12-29 15:19:20 +0800] [15308] [INFO] Waiting for application startup.
+[2021-12-29 15:19:20 +0800] [15308] [INFO] Application startup complete.
+[2021-12-29 15:19:20 +0800] [15309] [INFO] Started server process [15309]
+[2021-12-29 15:19:20 +0800] [15309] [INFO] Waiting for application startup.
+[2021-12-29 15:19:20 +0800] [15309] [INFO] Application startup complete.
+[2021-12-29 15:19:20 +0800] [15310] [INFO] Started server process [15310]
+[2021-12-29 15:19:20 +0800] [15310] [INFO] Waiting for application startup.
+[2021-12-29 15:19:20 +0800] [15310] [INFO] Application startup complete.
+[2021-12-29 15:19:21 +0800] [15305] [INFO] Handling signal: int
+[2021-12-29 15:19:21 +0800] [15305] [WARNING] Worker with pid 15307 was terminated due to signal 3
+[2021-12-29 15:19:21 +0800] [15305] [WARNING] Worker with pid 15306 was terminated due to signal 3
+[2021-12-29 15:19:21 +0800] [15305] [WARNING] Worker with pid 15308 was terminated due to signal 3
+[2021-12-29 15:19:21 +0800] [15305] [WARNING] Worker with pid 15309 was terminated due to signal 3
+[2021-12-29 15:19:21 +0800] [15305] [WARNING] Worker with pid 15310 was terminated due to signal 3
+[2021-12-29 15:19:21 +0800] [15305] [INFO] Shutting down: Master
+[2021-12-29 15:19:36 +0800] [15314] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:19:36 +0800] [15314] [INFO] Listening at: http://127.0.0.1:8888 (15314)
+[2021-12-29 15:19:36 +0800] [15314] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:19:36 +0800] [15317] [INFO] Booting worker with pid: 15317
+[2021-12-29 15:19:36 +0800] [15318] [INFO] Booting worker with pid: 15318
+[2021-12-29 15:19:36 +0800] [15319] [INFO] Booting worker with pid: 15319
+[2021-12-29 15:19:36 +0800] [15320] [INFO] Booting worker with pid: 15320
+[2021-12-29 15:19:37 +0800] [15321] [INFO] Booting worker with pid: 15321
+[2021-12-29 15:19:37 +0800] [15317] [INFO] Started server process [15317]
+[2021-12-29 15:19:37 +0800] [15317] [INFO] Waiting for application startup.
+[2021-12-29 15:19:37 +0800] [15317] [INFO] Application startup complete.
+[2021-12-29 15:19:37 +0800] [15321] [INFO] Started server process [15321]
+[2021-12-29 15:19:37 +0800] [15321] [INFO] Waiting for application startup.
+[2021-12-29 15:19:37 +0800] [15321] [INFO] Application startup complete.
+[2021-12-29 15:19:37 +0800] [15318] [INFO] Started server process [15318]
+[2021-12-29 15:19:37 +0800] [15318] [INFO] Waiting for application startup.
+[2021-12-29 15:19:37 +0800] [15318] [INFO] Application startup complete.
+[2021-12-29 15:19:37 +0800] [15320] [INFO] Started server process [15320]
+[2021-12-29 15:19:37 +0800] [15320] [INFO] Waiting for application startup.
+[2021-12-29 15:19:37 +0800] [15319] [INFO] Started server process [15319]
+[2021-12-29 15:19:37 +0800] [15319] [INFO] Waiting for application startup.
+[2021-12-29 15:19:37 +0800] [15320] [INFO] Application startup complete.
+[2021-12-29 15:19:37 +0800] [15319] [INFO] Application startup complete.
+[2021-12-29 15:20:42 +0800] [15314] [INFO] Handling signal: int
+[2021-12-29 15:20:42 +0800] [15314] [WARNING] Worker with pid 15317 was terminated due to signal 3
+[2021-12-29 15:20:43 +0800] [15314] [WARNING] Worker with pid 15318 was terminated due to signal 3
+[2021-12-29 15:20:43 +0800] [15314] [WARNING] Worker with pid 15320 was terminated due to signal 3
+[2021-12-29 15:20:43 +0800] [15314] [WARNING] Worker with pid 15321 was terminated due to signal 3
+[2021-12-29 15:20:43 +0800] [15314] [WARNING] Worker with pid 15319 was terminated due to signal 3
+[2021-12-29 15:20:43 +0800] [15314] [INFO] Shutting down: Master
+[2021-12-29 15:20:50 +0800] [15374] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 15:20:50 +0800] [15374] [INFO] Listening at: http://0.0.0.0:8888 (15374)
+[2021-12-29 15:20:50 +0800] [15374] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 15:20:50 +0800] [15375] [INFO] Booting worker with pid: 15375
+[2021-12-29 15:20:50 +0800] [15376] [INFO] Booting worker with pid: 15376
+[2021-12-29 15:20:50 +0800] [15377] [INFO] Booting worker with pid: 15377
+[2021-12-29 15:20:50 +0800] [15378] [INFO] Booting worker with pid: 15378
+[2021-12-29 15:20:50 +0800] [15379] [INFO] Booting worker with pid: 15379
+[2021-12-29 15:20:51 +0800] [15376] [INFO] Started server process [15376]
+[2021-12-29 15:20:51 +0800] [15376] [INFO] Waiting for application startup.
+[2021-12-29 15:20:51 +0800] [15375] [INFO] Started server process [15375]
+[2021-12-29 15:20:51 +0800] [15375] [INFO] Waiting for application startup.
+[2021-12-29 15:20:51 +0800] [15378] [INFO] Started server process [15378]
+[2021-12-29 15:20:51 +0800] [15378] [INFO] Waiting for application startup.
+[2021-12-29 15:20:51 +0800] [15375] [INFO] Application startup complete.
+[2021-12-29 15:20:51 +0800] [15376] [INFO] Application startup complete.
+[2021-12-29 15:20:51 +0800] [15378] [INFO] Application startup complete.
+[2021-12-29 15:20:51 +0800] [15377] [INFO] Started server process [15377]
+[2021-12-29 15:20:51 +0800] [15377] [INFO] Waiting for application startup.
+[2021-12-29 15:20:51 +0800] [15379] [INFO] Started server process [15379]
+[2021-12-29 15:20:51 +0800] [15379] [INFO] Waiting for application startup.
+[2021-12-29 15:20:51 +0800] [15377] [INFO] Application startup complete.
+[2021-12-29 15:20:51 +0800] [15379] [INFO] Application startup complete.
+[2021-12-29 15:23:39 +0800] [15374] [INFO] Handling signal: int
+[2021-12-29 15:23:39 +0800] [15374] [WARNING] Worker with pid 15376 was terminated due to signal 3
+[2021-12-29 15:23:39 +0800] [15374] [WARNING] Worker with pid 15378 was terminated due to signal 3
+[2021-12-29 15:23:39 +0800] [15374] [WARNING] Worker with pid 15379 was terminated due to signal 3
+[2021-12-29 15:23:39 +0800] [15374] [WARNING] Worker with pid 15377 was terminated due to signal 3
+[2021-12-29 15:23:39 +0800] [15374] [WARNING] Worker with pid 15375 was terminated due to signal 3
+[2021-12-29 15:23:39 +0800] [15374] [INFO] Shutting down: Master
+[2021-12-29 16:30:46 +0800] [16879] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 16:30:46 +0800] [16879] [INFO] Listening at: http://0.0.0.0:8888 (16879)
+[2021-12-29 16:30:46 +0800] [16879] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 16:30:46 +0800] [16880] [INFO] Booting worker with pid: 16880
+[2021-12-29 16:30:46 +0800] [16881] [INFO] Booting worker with pid: 16881
+[2021-12-29 16:30:46 +0800] [16882] [INFO] Booting worker with pid: 16882
+[2021-12-29 16:30:46 +0800] [16883] [INFO] Booting worker with pid: 16883
+[2021-12-29 16:30:46 +0800] [16884] [INFO] Booting worker with pid: 16884
+[2021-12-29 16:30:47 +0800] [16884] [INFO] Started server process [16884]
+[2021-12-29 16:30:47 +0800] [16884] [INFO] Waiting for application startup.
+[2021-12-29 16:30:47 +0800] [16882] [INFO] Started server process [16882]
+[2021-12-29 16:30:47 +0800] [16882] [INFO] Waiting for application startup.
+[2021-12-29 16:30:47 +0800] [16880] [INFO] Started server process [16880]
+[2021-12-29 16:30:47 +0800] [16880] [INFO] Waiting for application startup.
+[2021-12-29 16:30:47 +0800] [16880] [INFO] Application startup complete.
+[2021-12-29 16:30:47 +0800] [16884] [INFO] Application startup complete.
+[2021-12-29 16:30:47 +0800] [16882] [INFO] Application startup complete.
+[2021-12-29 16:30:47 +0800] [16881] [INFO] Started server process [16881]
+[2021-12-29 16:30:47 +0800] [16881] [INFO] Waiting for application startup.
+[2021-12-29 16:30:47 +0800] [16881] [INFO] Application startup complete.
+[2021-12-29 16:30:47 +0800] [16883] [INFO] Started server process [16883]
+[2021-12-29 16:30:47 +0800] [16883] [INFO] Waiting for application startup.
+[2021-12-29 16:30:47 +0800] [16883] [INFO] Application startup complete.
+[2021-12-29 16:31:39 +0800] [16879] [INFO] Handling signal: int
+[2021-12-29 16:31:39 +0800] [16879] [WARNING] Worker with pid 16883 was terminated due to signal 3
+[2021-12-29 16:31:39 +0800] [16879] [WARNING] Worker with pid 16881 was terminated due to signal 3
+[2021-12-29 16:31:39 +0800] [16879] [WARNING] Worker with pid 16882 was terminated due to signal 3
+[2021-12-29 16:31:39 +0800] [16879] [WARNING] Worker with pid 16884 was terminated due to signal 3
+[2021-12-29 16:31:39 +0800] [16879] [WARNING] Worker with pid 16880 was terminated due to signal 3
+[2021-12-29 16:31:39 +0800] [16879] [INFO] Shutting down: Master
+[2021-12-29 16:31:55 +0800] [16897] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 16:31:55 +0800] [16897] [INFO] Listening at: http://0.0.0.0:8888 (16897)
+[2021-12-29 16:31:55 +0800] [16897] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 16:31:55 +0800] [16898] [INFO] Booting worker with pid: 16898
+[2021-12-29 16:31:55 +0800] [16899] [INFO] Booting worker with pid: 16899
+[2021-12-29 16:31:55 +0800] [16900] [INFO] Booting worker with pid: 16900
+[2021-12-29 16:31:55 +0800] [16901] [INFO] Booting worker with pid: 16901
+[2021-12-29 16:31:55 +0800] [16902] [INFO] Booting worker with pid: 16902
+[2021-12-29 16:31:56 +0800] [16900] [INFO] Started server process [16900]
+[2021-12-29 16:31:56 +0800] [16900] [INFO] Waiting for application startup.
+[2021-12-29 16:31:56 +0800] [16901] [INFO] Started server process [16901]
+[2021-12-29 16:31:56 +0800] [16901] [INFO] Waiting for application startup.
+[2021-12-29 16:31:56 +0800] [16898] [INFO] Started server process [16898]
+[2021-12-29 16:31:56 +0800] [16898] [INFO] Waiting for application startup.
+[2021-12-29 16:31:56 +0800] [16899] [INFO] Started server process [16899]
+[2021-12-29 16:31:56 +0800] [16899] [INFO] Waiting for application startup.
+[2021-12-29 16:31:56 +0800] [16902] [INFO] Started server process [16902]
+[2021-12-29 16:31:56 +0800] [16902] [INFO] Waiting for application startup.
+[2021-12-29 16:31:59 +0800] [16901] [INFO] Application startup complete.
+[2021-12-29 16:31:59 +0800] [16898] [INFO] Application startup complete.
+[2021-12-29 16:31:59 +0800] [16899] [INFO] Application startup complete.
+[2021-12-29 16:31:59 +0800] [16900] [INFO] Application startup complete.
+[2021-12-29 16:31:59 +0800] [16902] [INFO] Application startup complete.
+[2021-12-29 16:32:05 +0800] [16897] [INFO] Handling signal: int
+[2021-12-29 16:32:05 +0800] [16897] [WARNING] Worker with pid 16899 was terminated due to signal 3
+[2021-12-29 16:32:05 +0800] [16897] [WARNING] Worker with pid 16900 was terminated due to signal 3
+[2021-12-29 16:32:05 +0800] [16897] [WARNING] Worker with pid 16901 was terminated due to signal 3
+[2021-12-29 16:32:05 +0800] [16897] [WARNING] Worker with pid 16902 was terminated due to signal 3
+[2021-12-29 16:32:05 +0800] [16897] [WARNING] Worker with pid 16898 was terminated due to signal 3
+[2021-12-29 16:32:05 +0800] [16897] [INFO] Shutting down: Master
+[2021-12-29 16:32:29 +0800] [16939] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 16:32:29 +0800] [16939] [INFO] Listening at: http://0.0.0.0:8888 (16939)
+[2021-12-29 16:32:29 +0800] [16939] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 16:32:29 +0800] [16940] [INFO] Booting worker with pid: 16940
+[2021-12-29 16:32:29 +0800] [16941] [INFO] Booting worker with pid: 16941
+[2021-12-29 16:32:29 +0800] [16942] [INFO] Booting worker with pid: 16942
+[2021-12-29 16:32:29 +0800] [16943] [INFO] Booting worker with pid: 16943
+[2021-12-29 16:32:29 +0800] [16944] [INFO] Booting worker with pid: 16944
+[2021-12-29 16:32:32 +0800] [16944] [INFO] Started server process [16944]
+[2021-12-29 16:32:32 +0800] [16944] [INFO] Waiting for application startup.
+[2021-12-29 16:32:32 +0800] [16940] [INFO] Started server process [16940]
+[2021-12-29 16:32:32 +0800] [16940] [INFO] Waiting for application startup.
+[2021-12-29 16:32:32 +0800] [16943] [INFO] Started server process [16943]
+[2021-12-29 16:32:32 +0800] [16943] [INFO] Waiting for application startup.
+[2021-12-29 16:32:32 +0800] [16941] [INFO] Started server process [16941]
+[2021-12-29 16:32:32 +0800] [16941] [INFO] Waiting for application startup.
+[2021-12-29 16:32:32 +0800] [16942] [INFO] Started server process [16942]
+[2021-12-29 16:32:32 +0800] [16942] [INFO] Waiting for application startup.
+[2021-12-29 16:32:32 +0800] [16940] [INFO] Application startup complete.
+[2021-12-29 16:32:32 +0800] [16942] [INFO] Application startup complete.
+[2021-12-29 16:32:32 +0800] [16941] [INFO] Application startup complete.
+[2021-12-29 16:32:32 +0800] [16944] [INFO] Application startup complete.
+[2021-12-29 16:32:32 +0800] [16943] [INFO] Application startup complete.
+[2021-12-29 16:33:01 +0800] [16939] [INFO] Handling signal: term
+[2021-12-29 16:33:01 +0800] [16942] [INFO] Shutting down
+[2021-12-29 16:33:01 +0800] [16942] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:33:01 +0800] [16940] [INFO] Shutting down
+[2021-12-29 16:33:01 +0800] [16941] [INFO] Shutting down
+[2021-12-29 16:33:01 +0800] [16940] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:33:01 +0800] [16941] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:33:01 +0800] [16943] [INFO] Shutting down
+[2021-12-29 16:33:01 +0800] [16943] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:33:01 +0800] [16944] [INFO] Shutting down
+[2021-12-29 16:33:01 +0800] [16944] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:33:01 +0800] [16942] [INFO] Waiting for application shutdown.
+[2021-12-29 16:33:01 +0800] [16942] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:33:01 +0800] [16942] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:33:01 +0800] [16942] [INFO] Finished server process [16942]
+[2021-12-29 16:33:01 +0800] [16942] [INFO] Worker exiting (pid: 16942)
+[2021-12-29 16:33:01 +0800] [16940] [INFO] Waiting for application shutdown.
+[2021-12-29 16:33:01 +0800] [16941] [INFO] Waiting for application shutdown.
+[2021-12-29 16:33:01 +0800] [16940] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:33:01 +0800] [16940] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:33:01 +0800] [16940] [INFO] Finished server process [16940]
+[2021-12-29 16:33:01 +0800] [16940] [INFO] Worker exiting (pid: 16940)
+[2021-12-29 16:33:01 +0800] [16941] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:33:01 +0800] [16941] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:33:01 +0800] [16941] [INFO] Finished server process [16941]
+[2021-12-29 16:33:01 +0800] [16941] [INFO] Worker exiting (pid: 16941)
+[2021-12-29 16:33:01 +0800] [16943] [INFO] Waiting for application shutdown.
+[2021-12-29 16:33:01 +0800] [16943] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:33:01 +0800] [16943] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:33:01 +0800] [16943] [INFO] Finished server process [16943]
+[2021-12-29 16:33:01 +0800] [16943] [INFO] Worker exiting (pid: 16943)
+[2021-12-29 16:33:01 +0800] [16944] [INFO] Waiting for application shutdown.
+[2021-12-29 16:33:01 +0800] [16944] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:33:01 +0800] [16944] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:33:01 +0800] [16944] [INFO] Finished server process [16944]
+[2021-12-29 16:33:01 +0800] [16944] [INFO] Worker exiting (pid: 16944)
+[2021-12-29 16:33:02 +0800] [16939] [INFO] Shutting down: Master
+[2021-12-29 16:33:04 +0800] [16976] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 16:33:04 +0800] [16976] [INFO] Listening at: http://0.0.0.0:8888 (16976)
+[2021-12-29 16:33:04 +0800] [16976] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 16:33:04 +0800] [16977] [INFO] Booting worker with pid: 16977
+[2021-12-29 16:33:04 +0800] [16978] [INFO] Booting worker with pid: 16978
+[2021-12-29 16:33:05 +0800] [16979] [INFO] Booting worker with pid: 16979
+[2021-12-29 16:33:05 +0800] [16980] [INFO] Booting worker with pid: 16980
+[2021-12-29 16:33:05 +0800] [16981] [INFO] Booting worker with pid: 16981
+[2021-12-29 16:33:05 +0800] [16980] [INFO] Started server process [16980]
+[2021-12-29 16:33:05 +0800] [16980] [INFO] Waiting for application startup.
+[2021-12-29 16:33:05 +0800] [16978] [INFO] Started server process [16978]
+[2021-12-29 16:33:05 +0800] [16978] [INFO] Waiting for application startup.
+[2021-12-29 16:33:05 +0800] [16980] [INFO] Application startup complete.
+[2021-12-29 16:33:05 +0800] [16978] [INFO] Application startup complete.
+[2021-12-29 16:33:05 +0800] [16977] [INFO] Started server process [16977]
+[2021-12-29 16:33:05 +0800] [16977] [INFO] Waiting for application startup.
+[2021-12-29 16:33:05 +0800] [16979] [INFO] Started server process [16979]
+[2021-12-29 16:33:05 +0800] [16979] [INFO] Waiting for application startup.
+[2021-12-29 16:33:05 +0800] [16977] [INFO] Application startup complete.
+[2021-12-29 16:33:05 +0800] [16979] [INFO] Application startup complete.
+[2021-12-29 16:33:05 +0800] [16981] [INFO] Started server process [16981]
+[2021-12-29 16:33:05 +0800] [16981] [INFO] Waiting for application startup.
+[2021-12-29 16:33:05 +0800] [16981] [INFO] Application startup complete.
+[2021-12-29 16:54:00 +0800] [16976] [INFO] Handling signal: term
+[2021-12-29 16:54:00 +0800] [16979] [INFO] Shutting down
+[2021-12-29 16:54:00 +0800] [16978] [INFO] Shutting down
+[2021-12-29 16:54:00 +0800] [16979] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:54:00 +0800] [16978] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:54:00 +0800] [16977] [INFO] Shutting down
+[2021-12-29 16:54:00 +0800] [16977] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:54:00 +0800] [16980] [INFO] Shutting down
+[2021-12-29 16:54:00 +0800] [16980] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:54:00 +0800] [16981] [INFO] Shutting down
+[2021-12-29 16:54:00 +0800] [16981] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 16:54:00 +0800] [16979] [INFO] Waiting for application shutdown.
+[2021-12-29 16:54:00 +0800] [16978] [INFO] Waiting for application shutdown.
+[2021-12-29 16:54:00 +0800] [16978] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:54:00 +0800] [16978] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:54:00 +0800] [16979] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:54:00 +0800] [16978] [INFO] Finished server process [16978]
+[2021-12-29 16:54:00 +0800] [16979] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:54:00 +0800] [16979] [INFO] Finished server process [16979]
+[2021-12-29 16:54:00 +0800] [16977] [INFO] Waiting for application shutdown.
+[2021-12-29 16:54:00 +0800] [16977] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:54:00 +0800] [16977] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:54:00 +0800] [16977] [INFO] Finished server process [16977]
+[2021-12-29 16:54:00 +0800] [16979] [INFO] Worker exiting (pid: 16979)
+[2021-12-29 16:54:00 +0800] [16977] [INFO] Worker exiting (pid: 16977)
+[2021-12-29 16:54:00 +0800] [16978] [INFO] Worker exiting (pid: 16978)
+[2021-12-29 16:54:00 +0800] [16980] [INFO] Waiting for application shutdown.
+[2021-12-29 16:54:00 +0800] [16980] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:54:00 +0800] [16980] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:54:00 +0800] [16980] [INFO] Finished server process [16980]
+[2021-12-29 16:54:00 +0800] [16980] [INFO] Worker exiting (pid: 16980)
+[2021-12-29 16:54:00 +0800] [16981] [INFO] Waiting for application shutdown.
+[2021-12-29 16:54:00 +0800] [16981] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 16:54:00 +0800] [16981] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 16:54:00 +0800] [16981] [INFO] Finished server process [16981]
+[2021-12-29 16:54:00 +0800] [16981] [INFO] Worker exiting (pid: 16981)
+[2021-12-29 16:54:01 +0800] [16976] [INFO] Shutting down: Master
+[2021-12-29 16:54:04 +0800] [17375] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 16:54:04 +0800] [17375] [INFO] Listening at: http://0.0.0.0:8888 (17375)
+[2021-12-29 16:54:04 +0800] [17375] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 16:54:04 +0800] [17376] [INFO] Booting worker with pid: 17376
+[2021-12-29 16:54:04 +0800] [17377] [INFO] Booting worker with pid: 17377
+[2021-12-29 16:54:04 +0800] [17378] [INFO] Booting worker with pid: 17378
+[2021-12-29 16:54:04 +0800] [17379] [INFO] Booting worker with pid: 17379
+[2021-12-29 16:54:04 +0800] [17380] [INFO] Booting worker with pid: 17380
+[2021-12-29 16:54:04 +0800] [17376] [INFO] Started server process [17376]
+[2021-12-29 16:54:04 +0800] [17376] [INFO] Waiting for application startup.
+[2021-12-29 16:54:05 +0800] [17380] [INFO] Started server process [17380]
+[2021-12-29 16:54:05 +0800] [17380] [INFO] Waiting for application startup.
+[2021-12-29 16:54:05 +0800] [17378] [INFO] Started server process [17378]
+[2021-12-29 16:54:05 +0800] [17378] [INFO] Waiting for application startup.
+[2021-12-29 16:54:05 +0800] [17377] [INFO] Started server process [17377]
+[2021-12-29 16:54:05 +0800] [17377] [INFO] Waiting for application startup.
+[2021-12-29 16:54:05 +0800] [17376] [INFO] Application startup complete.
+[2021-12-29 16:54:05 +0800] [17378] [INFO] Application startup complete.
+[2021-12-29 16:54:05 +0800] [17377] [INFO] Application startup complete.
+[2021-12-29 16:54:05 +0800] [17380] [INFO] Application startup complete.
+[2021-12-29 16:54:05 +0800] [17379] [INFO] Started server process [17379]
+[2021-12-29 16:54:05 +0800] [17379] [INFO] Waiting for application startup.
+[2021-12-29 16:54:05 +0800] [17379] [INFO] Application startup complete.
+[2021-12-29 18:09:08 +0800] [17375] [INFO] Handling signal: term
+[2021-12-29 18:09:08 +0800] [17376] [INFO] Shutting down
+[2021-12-29 18:09:08 +0800] [17378] [INFO] Shutting down
+[2021-12-29 18:09:08 +0800] [17376] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:09:08 +0800] [17378] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:09:08 +0800] [17377] [INFO] Shutting down
+[2021-12-29 18:09:08 +0800] [17377] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:09:08 +0800] [17379] [INFO] Shutting down
+[2021-12-29 18:09:08 +0800] [17380] [INFO] Shutting down
+[2021-12-29 18:09:08 +0800] [17379] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:09:08 +0800] [17380] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:09:08 +0800] [17376] [INFO] Waiting for application shutdown.
+[2021-12-29 18:09:08 +0800] [17378] [INFO] Waiting for application shutdown.
+[2021-12-29 18:09:08 +0800] [17376] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:09:08 +0800] [17378] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:09:08 +0800] [17376] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:09:08 +0800] [17378] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:09:08 +0800] [17376] [INFO] Finished server process [17376]
+[2021-12-29 18:09:08 +0800] [17378] [INFO] Finished server process [17378]
+[2021-12-29 18:09:08 +0800] [17378] [INFO] Worker exiting (pid: 17378)
+[2021-12-29 18:09:08 +0800] [17376] [INFO] Worker exiting (pid: 17376)
+[2021-12-29 18:09:08 +0800] [17380] [INFO] Waiting for application shutdown.
+[2021-12-29 18:09:08 +0800] [17380] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:09:08 +0800] [17380] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:09:08 +0800] [17380] [INFO] Finished server process [17380]
+[2021-12-29 18:09:08 +0800] [17379] [INFO] Waiting for application shutdown.
+[2021-12-29 18:09:08 +0800] [17380] [INFO] Worker exiting (pid: 17380)
+[2021-12-29 18:09:08 +0800] [17379] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:09:08 +0800] [17379] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:09:08 +0800] [17379] [INFO] Finished server process [17379]
+[2021-12-29 18:09:08 +0800] [17379] [INFO] Worker exiting (pid: 17379)
+[2021-12-29 18:09:08 +0800] [17377] [INFO] Waiting for application shutdown.
+[2021-12-29 18:09:08 +0800] [17377] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:09:08 +0800] [17377] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:09:08 +0800] [17377] [INFO] Finished server process [17377]
+[2021-12-29 18:09:08 +0800] [17377] [INFO] Worker exiting (pid: 17377)
+[2021-12-29 18:09:08 +0800] [17375] [INFO] Shutting down: Master
+[2021-12-29 18:09:11 +0800] [18137] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 18:09:11 +0800] [18137] [INFO] Listening at: http://0.0.0.0:8888 (18137)
+[2021-12-29 18:09:11 +0800] [18137] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 18:09:11 +0800] [18138] [INFO] Booting worker with pid: 18138
+[2021-12-29 18:09:11 +0800] [18139] [INFO] Booting worker with pid: 18139
+[2021-12-29 18:09:11 +0800] [18140] [INFO] Booting worker with pid: 18140
+[2021-12-29 18:09:11 +0800] [18141] [INFO] Booting worker with pid: 18141
+[2021-12-29 18:09:11 +0800] [18142] [INFO] Booting worker with pid: 18142
+[2021-12-29 18:09:12 +0800] [18139] [INFO] Started server process [18139]
+[2021-12-29 18:09:12 +0800] [18139] [INFO] Waiting for application startup.
+[2021-12-29 18:09:12 +0800] [18139] [INFO] Application startup complete.
+[2021-12-29 18:09:12 +0800] [18141] [INFO] Started server process [18141]
+[2021-12-29 18:09:12 +0800] [18141] [INFO] Waiting for application startup.
+[2021-12-29 18:09:12 +0800] [18141] [INFO] Application startup complete.
+[2021-12-29 18:09:12 +0800] [18138] [INFO] Started server process [18138]
+[2021-12-29 18:09:12 +0800] [18138] [INFO] Waiting for application startup.
+[2021-12-29 18:09:12 +0800] [18140] [INFO] Started server process [18140]
+[2021-12-29 18:09:12 +0800] [18140] [INFO] Waiting for application startup.
+[2021-12-29 18:09:12 +0800] [18140] [INFO] Application startup complete.
+[2021-12-29 18:09:12 +0800] [18138] [INFO] Application startup complete.
+[2021-12-29 18:09:12 +0800] [18142] [INFO] Started server process [18142]
+[2021-12-29 18:09:12 +0800] [18142] [INFO] Waiting for application startup.
+[2021-12-29 18:09:12 +0800] [18142] [INFO] Application startup complete.
+[2021-12-29 18:11:41 +0800] [18137] [INFO] Handling signal: term
+[2021-12-29 18:11:41 +0800] [18138] [INFO] Shutting down
+[2021-12-29 18:11:41 +0800] [18138] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:11:41 +0800] [18140] [INFO] Shutting down
+[2021-12-29 18:11:41 +0800] [18140] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:11:41 +0800] [18139] [INFO] Shutting down
+[2021-12-29 18:11:41 +0800] [18139] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:11:41 +0800] [18142] [INFO] Shutting down
+[2021-12-29 18:11:41 +0800] [18142] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:11:41 +0800] [18141] [INFO] Shutting down
+[2021-12-29 18:11:41 +0800] [18141] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 18:11:41 +0800] [18138] [INFO] Waiting for application shutdown.
+[2021-12-29 18:11:41 +0800] [18138] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:11:41 +0800] [18138] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:11:41 +0800] [18138] [INFO] Finished server process [18138]
+[2021-12-29 18:11:41 +0800] [18138] [INFO] Worker exiting (pid: 18138)
+[2021-12-29 18:11:41 +0800] [18140] [INFO] Waiting for application shutdown.
+[2021-12-29 18:11:41 +0800] [18140] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:11:41 +0800] [18140] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:11:41 +0800] [18140] [INFO] Finished server process [18140]
+[2021-12-29 18:11:41 +0800] [18140] [INFO] Worker exiting (pid: 18140)
+[2021-12-29 18:11:41 +0800] [18139] [INFO] Waiting for application shutdown.
+[2021-12-29 18:11:41 +0800] [18139] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:11:41 +0800] [18139] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:11:41 +0800] [18139] [INFO] Finished server process [18139]
+[2021-12-29 18:11:41 +0800] [18139] [INFO] Worker exiting (pid: 18139)
+[2021-12-29 18:11:41 +0800] [18142] [INFO] Waiting for application shutdown.
+[2021-12-29 18:11:41 +0800] [18142] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:11:41 +0800] [18142] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:11:41 +0800] [18142] [INFO] Finished server process [18142]
+[2021-12-29 18:11:41 +0800] [18142] [INFO] Worker exiting (pid: 18142)
+[2021-12-29 18:11:41 +0800] [18141] [INFO] Waiting for application shutdown.
+[2021-12-29 18:11:41 +0800] [18141] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 18:11:41 +0800] [18141] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 18:11:41 +0800] [18141] [INFO] Finished server process [18141]
+[2021-12-29 18:11:41 +0800] [18141] [INFO] Worker exiting (pid: 18141)
+[2021-12-29 18:11:41 +0800] [18137] [INFO] Shutting down: Master
+[2021-12-29 18:11:44 +0800] [18188] [INFO] Starting gunicorn 20.1.0
+[2021-12-29 18:11:44 +0800] [18188] [INFO] Listening at: http://0.0.0.0:8888 (18188)
+[2021-12-29 18:11:44 +0800] [18188] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-29 18:11:44 +0800] [18189] [INFO] Booting worker with pid: 18189
+[2021-12-29 18:11:44 +0800] [18190] [INFO] Booting worker with pid: 18190
+[2021-12-29 18:11:44 +0800] [18191] [INFO] Booting worker with pid: 18191
+[2021-12-29 18:11:44 +0800] [18192] [INFO] Booting worker with pid: 18192
+[2021-12-29 18:11:44 +0800] [18193] [INFO] Booting worker with pid: 18193
+[2021-12-29 18:11:45 +0800] [18190] [INFO] Started server process [18190]
+[2021-12-29 18:11:45 +0800] [18190] [INFO] Waiting for application startup.
+[2021-12-29 18:11:45 +0800] [18190] [INFO] Application startup complete.
+[2021-12-29 18:11:45 +0800] [18189] [INFO] Started server process [18189]
+[2021-12-29 18:11:45 +0800] [18189] [INFO] Waiting for application startup.
+[2021-12-29 18:11:45 +0800] [18189] [INFO] Application startup complete.
+[2021-12-29 18:11:45 +0800] [18193] [INFO] Started server process [18193]
+[2021-12-29 18:11:45 +0800] [18193] [INFO] Waiting for application startup.
+[2021-12-29 18:11:45 +0800] [18193] [INFO] Application startup complete.
+[2021-12-29 18:11:45 +0800] [18192] [INFO] Started server process [18192]
+[2021-12-29 18:11:45 +0800] [18192] [INFO] Waiting for application startup.
+[2021-12-29 18:11:45 +0800] [18192] [INFO] Application startup complete.
+[2021-12-29 18:11:45 +0800] [18191] [INFO] Started server process [18191]
+[2021-12-29 18:11:45 +0800] [18191] [INFO] Waiting for application startup.
+[2021-12-29 18:11:45 +0800] [18191] [INFO] Application startup complete.
+[2021-12-29 19:01:38 +0800] [18188] [INFO] Handling signal: term
+[2021-12-29 19:01:38 +0800] [18193] [INFO] Shutting down
+[2021-12-29 19:01:38 +0800] [18193] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 19:01:38 +0800] [18192] [INFO] Shutting down
+[2021-12-29 19:01:38 +0800] [18192] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 19:01:38 +0800] [18189] [INFO] Shutting down
+[2021-12-29 19:01:38 +0800] [18189] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 19:01:38 +0800] [18190] [INFO] Shutting down
+[2021-12-29 19:01:38 +0800] [18191] [INFO] Shutting down
+[2021-12-29 19:01:38 +0800] [18190] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 19:01:38 +0800] [18191] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-29 19:01:38 +0800] [18193] [INFO] Waiting for application shutdown.
+[2021-12-29 19:01:38 +0800] [18192] [INFO] Waiting for application shutdown.
+[2021-12-29 19:01:38 +0800] [18192] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 19:01:38 +0800] [18193] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 19:01:38 +0800] [18192] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 19:01:38 +0800] [18193] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 19:01:38 +0800] [18192] [INFO] Finished server process [18192]
+[2021-12-29 19:01:38 +0800] [18193] [INFO] Finished server process [18193]
+[2021-12-29 19:01:38 +0800] [18192] [INFO] Worker exiting (pid: 18192)
+[2021-12-29 19:01:38 +0800] [18193] [INFO] Worker exiting (pid: 18193)
+[2021-12-29 19:01:38 +0800] [18189] [INFO] Waiting for application shutdown.
+[2021-12-29 19:01:38 +0800] [18189] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 19:01:38 +0800] [18189] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 19:01:38 +0800] [18189] [INFO] Finished server process [18189]
+[2021-12-29 19:01:38 +0800] [18189] [INFO] Worker exiting (pid: 18189)
+[2021-12-29 19:01:38 +0800] [18191] [INFO] Waiting for application shutdown.
+[2021-12-29 19:01:38 +0800] [18190] [INFO] Waiting for application shutdown.
+[2021-12-29 19:01:38 +0800] [18191] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 19:01:38 +0800] [18191] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 19:01:38 +0800] [18191] [INFO] Finished server process [18191]
+[2021-12-29 19:01:38 +0800] [18191] [INFO] Worker exiting (pid: 18191)
+[2021-12-29 19:01:38 +0800] [18190] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-29 19:01:38 +0800] [18190] [ERROR] Application shutdown failed. Exiting.
+[2021-12-29 19:01:38 +0800] [18190] [INFO] Finished server process [18190]
+[2021-12-29 19:01:38 +0800] [18190] [INFO] Worker exiting (pid: 18190)
+[2021-12-29 19:01:38 +0800] [18188] [INFO] Shutting down: Master
+[2021-12-31 12:41:26 +0800] [17796] [INFO] Starting gunicorn 20.1.0
+[2021-12-31 12:41:26 +0800] [17796] [INFO] Listening at: http://0.0.0.0:8888 (17796)
+[2021-12-31 12:41:26 +0800] [17796] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-31 12:41:26 +0800] [17797] [INFO] Booting worker with pid: 17797
+[2021-12-31 12:41:26 +0800] [17798] [INFO] Booting worker with pid: 17798
+[2021-12-31 12:41:26 +0800] [17799] [INFO] Booting worker with pid: 17799
+[2021-12-31 12:41:26 +0800] [17800] [INFO] Booting worker with pid: 17800
+[2021-12-31 12:41:26 +0800] [17801] [INFO] Booting worker with pid: 17801
+[2021-12-31 12:41:27 +0800] [17801] [INFO] Started server process [17801]
+[2021-12-31 12:41:27 +0800] [17801] [INFO] Waiting for application startup.
+[2021-12-31 12:41:27 +0800] [17797] [INFO] Started server process [17797]
+[2021-12-31 12:41:27 +0800] [17797] [INFO] Waiting for application startup.
+[2021-12-31 12:41:27 +0800] [17800] [INFO] Started server process [17800]
+[2021-12-31 12:41:27 +0800] [17800] [INFO] Waiting for application startup.
+[2021-12-31 12:41:27 +0800] [17799] [INFO] Started server process [17799]
+[2021-12-31 12:41:27 +0800] [17799] [INFO] Waiting for application startup.
+[2021-12-31 12:41:27 +0800] [17798] [INFO] Started server process [17798]
+[2021-12-31 12:41:27 +0800] [17798] [INFO] Waiting for application startup.
+[2021-12-31 12:41:27 +0800] [17797] [INFO] Application startup complete.
+[2021-12-31 12:41:27 +0800] [17798] [INFO] Application startup complete.
+[2021-12-31 12:41:27 +0800] [17799] [INFO] Application startup complete.
+[2021-12-31 12:41:27 +0800] [17800] [INFO] Application startup complete.
+[2021-12-31 12:41:27 +0800] [17801] [INFO] Application startup complete.
+[2021-12-31 12:42:21 +0800] [17796] [INFO] Handling signal: term
+[2021-12-31 12:42:21 +0800] [17797] [INFO] Shutting down
+[2021-12-31 12:42:21 +0800] [17797] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:42:21 +0800] [17798] [INFO] Shutting down
+[2021-12-31 12:42:21 +0800] [17799] [INFO] Shutting down
+[2021-12-31 12:42:21 +0800] [17798] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:42:21 +0800] [17799] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:42:21 +0800] [17801] [INFO] Shutting down
+[2021-12-31 12:42:21 +0800] [17800] [INFO] Shutting down
+[2021-12-31 12:42:21 +0800] [17801] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:42:21 +0800] [17800] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:42:21 +0800] [17797] [INFO] Waiting for application shutdown.
+[2021-12-31 12:42:21 +0800] [17797] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:42:21 +0800] [17797] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:42:21 +0800] [17797] [INFO] Finished server process [17797]
+[2021-12-31 12:42:21 +0800] [17797] [INFO] Worker exiting (pid: 17797)
+[2021-12-31 12:42:21 +0800] [17799] [INFO] Waiting for application shutdown.
+[2021-12-31 12:42:21 +0800] [17798] [INFO] Waiting for application shutdown.
+[2021-12-31 12:42:21 +0800] [17799] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:42:21 +0800] [17798] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:42:21 +0800] [17799] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:42:21 +0800] [17798] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:42:21 +0800] [17799] [INFO] Finished server process [17799]
+[2021-12-31 12:42:21 +0800] [17798] [INFO] Finished server process [17798]
+[2021-12-31 12:42:21 +0800] [17799] [INFO] Worker exiting (pid: 17799)
+[2021-12-31 12:42:21 +0800] [17798] [INFO] Worker exiting (pid: 17798)
+[2021-12-31 12:42:21 +0800] [17801] [INFO] Waiting for application shutdown.
+[2021-12-31 12:42:21 +0800] [17801] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:42:21 +0800] [17801] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:42:21 +0800] [17801] [INFO] Finished server process [17801]
+[2021-12-31 12:42:21 +0800] [17801] [INFO] Worker exiting (pid: 17801)
+[2021-12-31 12:42:21 +0800] [17800] [INFO] Waiting for application shutdown.
+[2021-12-31 12:42:21 +0800] [17800] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:42:21 +0800] [17800] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:42:21 +0800] [17800] [INFO] Finished server process [17800]
+[2021-12-31 12:42:21 +0800] [17800] [INFO] Worker exiting (pid: 17800)
+[2021-12-31 12:42:21 +0800] [17796] [INFO] Shutting down: Master
+[2021-12-31 12:42:24 +0800] [17851] [INFO] Starting gunicorn 20.1.0
+[2021-12-31 12:42:24 +0800] [17851] [INFO] Listening at: http://0.0.0.0:8888 (17851)
+[2021-12-31 12:42:24 +0800] [17851] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-31 12:42:24 +0800] [17852] [INFO] Booting worker with pid: 17852
+[2021-12-31 12:42:24 +0800] [17853] [INFO] Booting worker with pid: 17853
+[2021-12-31 12:42:24 +0800] [17854] [INFO] Booting worker with pid: 17854
+[2021-12-31 12:42:24 +0800] [17855] [INFO] Booting worker with pid: 17855
+[2021-12-31 12:42:24 +0800] [17856] [INFO] Booting worker with pid: 17856
+[2021-12-31 12:42:25 +0800] [17853] [INFO] Started server process [17853]
+[2021-12-31 12:42:25 +0800] [17853] [INFO] Waiting for application startup.
+[2021-12-31 12:42:25 +0800] [17853] [INFO] Application startup complete.
+[2021-12-31 12:42:25 +0800] [17852] [INFO] Started server process [17852]
+[2021-12-31 12:42:25 +0800] [17852] [INFO] Waiting for application startup.
+[2021-12-31 12:42:25 +0800] [17852] [INFO] Application startup complete.
+[2021-12-31 12:42:25 +0800] [17856] [INFO] Started server process [17856]
+[2021-12-31 12:42:25 +0800] [17856] [INFO] Waiting for application startup.
+[2021-12-31 12:42:25 +0800] [17854] [INFO] Started server process [17854]
+[2021-12-31 12:42:25 +0800] [17854] [INFO] Waiting for application startup.
+[2021-12-31 12:42:25 +0800] [17856] [INFO] Application startup complete.
+[2021-12-31 12:42:25 +0800] [17854] [INFO] Application startup complete.
+[2021-12-31 12:42:25 +0800] [17855] [INFO] Started server process [17855]
+[2021-12-31 12:42:25 +0800] [17855] [INFO] Waiting for application startup.
+[2021-12-31 12:42:25 +0800] [17855] [INFO] Application startup complete.
+[2021-12-31 12:44:57 +0800] [17851] [INFO] Handling signal: term
+[2021-12-31 12:44:57 +0800] [17854] [INFO] Shutting down
+[2021-12-31 12:44:57 +0800] [17856] [INFO] Shutting down
+[2021-12-31 12:44:57 +0800] [17856] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:44:57 +0800] [17854] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:44:57 +0800] [17852] [INFO] Shutting down
+[2021-12-31 12:44:57 +0800] [17852] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:44:57 +0800] [17855] [INFO] Shutting down
+[2021-12-31 12:44:57 +0800] [17853] [INFO] Shutting down
+[2021-12-31 12:44:57 +0800] [17855] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:44:57 +0800] [17853] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:44:57 +0800] [17856] [INFO] Waiting for application shutdown.
+[2021-12-31 12:44:57 +0800] [17854] [INFO] Waiting for application shutdown.
+[2021-12-31 12:44:57 +0800] [17856] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:44:57 +0800] [17854] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:44:57 +0800] [17856] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:44:57 +0800] [17856] [INFO] Finished server process [17856]
+[2021-12-31 12:44:57 +0800] [17854] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:44:57 +0800] [17854] [INFO] Finished server process [17854]
+[2021-12-31 12:44:57 +0800] [17856] [INFO] Worker exiting (pid: 17856)
+[2021-12-31 12:44:57 +0800] [17854] [INFO] Worker exiting (pid: 17854)
+[2021-12-31 12:44:57 +0800] [17852] [INFO] Waiting for application shutdown.
+[2021-12-31 12:44:57 +0800] [17852] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:44:57 +0800] [17852] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:44:57 +0800] [17852] [INFO] Finished server process [17852]
+[2021-12-31 12:44:57 +0800] [17852] [INFO] Worker exiting (pid: 17852)
+[2021-12-31 12:44:57 +0800] [17853] [INFO] Waiting for application shutdown.
+[2021-12-31 12:44:57 +0800] [17853] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:44:57 +0800] [17853] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:44:57 +0800] [17855] [INFO] Waiting for application shutdown.
+[2021-12-31 12:44:57 +0800] [17853] [INFO] Finished server process [17853]
+[2021-12-31 12:44:57 +0800] [17853] [INFO] Worker exiting (pid: 17853)
+[2021-12-31 12:44:57 +0800] [17855] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:44:57 +0800] [17855] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:44:57 +0800] [17855] [INFO] Finished server process [17855]
+[2021-12-31 12:44:57 +0800] [17855] [INFO] Worker exiting (pid: 17855)
+[2021-12-31 12:44:57 +0800] [17851] [INFO] Shutting down: Master
+[2021-12-31 12:45:00 +0800] [17926] [INFO] Starting gunicorn 20.1.0
+[2021-12-31 12:45:00 +0800] [17926] [INFO] Listening at: http://0.0.0.0:8888 (17926)
+[2021-12-31 12:45:00 +0800] [17926] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-31 12:45:00 +0800] [17927] [INFO] Booting worker with pid: 17927
+[2021-12-31 12:45:00 +0800] [17928] [INFO] Booting worker with pid: 17928
+[2021-12-31 12:45:00 +0800] [17929] [INFO] Booting worker with pid: 17929
+[2021-12-31 12:45:00 +0800] [17930] [INFO] Booting worker with pid: 17930
+[2021-12-31 12:45:00 +0800] [17931] [INFO] Booting worker with pid: 17931
+[2021-12-31 12:45:01 +0800] [17928] [INFO] Started server process [17928]
+[2021-12-31 12:45:01 +0800] [17928] [INFO] Waiting for application startup.
+[2021-12-31 12:45:01 +0800] [17931] [INFO] Started server process [17931]
+[2021-12-31 12:45:01 +0800] [17931] [INFO] Waiting for application startup.
+[2021-12-31 12:45:01 +0800] [17930] [INFO] Started server process [17930]
+[2021-12-31 12:45:01 +0800] [17930] [INFO] Waiting for application startup.
+[2021-12-31 12:45:01 +0800] [17927] [INFO] Started server process [17927]
+[2021-12-31 12:45:01 +0800] [17927] [INFO] Waiting for application startup.
+[2021-12-31 12:45:01 +0800] [17929] [INFO] Started server process [17929]
+[2021-12-31 12:45:01 +0800] [17929] [INFO] Waiting for application startup.
+[2021-12-31 12:45:01 +0800] [17931] [INFO] Application startup complete.
+[2021-12-31 12:45:01 +0800] [17930] [INFO] Application startup complete.
+[2021-12-31 12:45:01 +0800] [17928] [INFO] Application startup complete.
+[2021-12-31 12:45:01 +0800] [17927] [INFO] Application startup complete.
+[2021-12-31 12:45:01 +0800] [17929] [INFO] Application startup complete.
+[2021-12-31 12:59:29 +0800] [17926] [INFO] Handling signal: term
+[2021-12-31 12:59:29 +0800] [17928] [INFO] Shutting down
+[2021-12-31 12:59:29 +0800] [17928] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:59:29 +0800] [17930] [INFO] Shutting down
+[2021-12-31 12:59:29 +0800] [17930] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:59:29 +0800] [17929] [INFO] Shutting down
+[2021-12-31 12:59:29 +0800] [17929] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:59:29 +0800] [17927] [INFO] Shutting down
+[2021-12-31 12:59:29 +0800] [17927] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:59:30 +0800] [17931] [INFO] Shutting down
+[2021-12-31 12:59:30 +0800] [17931] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 12:59:30 +0800] [17928] [INFO] Waiting for application shutdown.
+[2021-12-31 12:59:30 +0800] [17930] [INFO] Waiting for application shutdown.
+[2021-12-31 12:59:30 +0800] [17929] [INFO] Waiting for application shutdown.
+[2021-12-31 12:59:30 +0800] [17927] [INFO] Waiting for application shutdown.
+[2021-12-31 12:59:30 +0800] [17929] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:59:30 +0800] [17928] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:59:30 +0800] [17929] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:59:30 +0800] [17928] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:59:30 +0800] [17929] [INFO] Finished server process [17929]
+[2021-12-31 12:59:30 +0800] [17928] [INFO] Finished server process [17928]
+[2021-12-31 12:59:30 +0800] [17929] [INFO] Worker exiting (pid: 17929)
+[2021-12-31 12:59:30 +0800] [17928] [INFO] Worker exiting (pid: 17928)
+[2021-12-31 12:59:30 +0800] [17927] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:59:30 +0800] [17927] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:59:30 +0800] [17927] [INFO] Finished server process [17927]
+[2021-12-31 12:59:30 +0800] [17927] [INFO] Worker exiting (pid: 17927)
+[2021-12-31 12:59:30 +0800] [17930] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:59:30 +0800] [17930] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:59:30 +0800] [17930] [INFO] Finished server process [17930]
+[2021-12-31 12:59:30 +0800] [17930] [INFO] Worker exiting (pid: 17930)
+[2021-12-31 12:59:30 +0800] [17931] [INFO] Waiting for application shutdown.
+[2021-12-31 12:59:30 +0800] [17931] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 12:59:30 +0800] [17931] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 12:59:30 +0800] [17931] [INFO] Finished server process [17931]
+[2021-12-31 12:59:30 +0800] [17931] [INFO] Worker exiting (pid: 17931)
+[2021-12-31 12:59:30 +0800] [17926] [INFO] Shutting down: Master
+[2021-12-31 12:59:33 +0800] [18101] [INFO] Starting gunicorn 20.1.0
+[2021-12-31 12:59:33 +0800] [18101] [INFO] Listening at: http://0.0.0.0:8888 (18101)
+[2021-12-31 12:59:33 +0800] [18101] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-31 12:59:33 +0800] [18102] [INFO] Booting worker with pid: 18102
+[2021-12-31 12:59:33 +0800] [18103] [INFO] Booting worker with pid: 18103
+[2021-12-31 12:59:33 +0800] [18104] [INFO] Booting worker with pid: 18104
+[2021-12-31 12:59:33 +0800] [18105] [INFO] Booting worker with pid: 18105
+[2021-12-31 12:59:33 +0800] [18106] [INFO] Booting worker with pid: 18106
+[2021-12-31 12:59:34 +0800] [18104] [INFO] Started server process [18104]
+[2021-12-31 12:59:34 +0800] [18104] [INFO] Waiting for application startup.
+[2021-12-31 12:59:34 +0800] [18103] [INFO] Started server process [18103]
+[2021-12-31 12:59:34 +0800] [18103] [INFO] Waiting for application startup.
+[2021-12-31 12:59:34 +0800] [18102] [INFO] Started server process [18102]
+[2021-12-31 12:59:34 +0800] [18102] [INFO] Waiting for application startup.
+[2021-12-31 12:59:34 +0800] [18105] [INFO] Started server process [18105]
+[2021-12-31 12:59:34 +0800] [18105] [INFO] Waiting for application startup.
+[2021-12-31 12:59:34 +0800] [18106] [INFO] Started server process [18106]
+[2021-12-31 12:59:34 +0800] [18106] [INFO] Waiting for application startup.
+[2021-12-31 12:59:34 +0800] [18106] [INFO] Application startup complete.
+[2021-12-31 12:59:34 +0800] [18105] [INFO] Application startup complete.
+[2021-12-31 12:59:34 +0800] [18104] [INFO] Application startup complete.
+[2021-12-31 12:59:34 +0800] [18103] [INFO] Application startup complete.
+[2021-12-31 12:59:34 +0800] [18102] [INFO] Application startup complete.
+[2021-12-31 13:10:33 +0800] [18101] [INFO] Handling signal: term
+[2021-12-31 13:10:33 +0800] [18105] [INFO] Shutting down
+[2021-12-31 13:10:33 +0800] [18105] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 13:10:33 +0800] [18104] [INFO] Shutting down
+[2021-12-31 13:10:33 +0800] [18104] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 13:10:33 +0800] [18103] [INFO] Shutting down
+[2021-12-31 13:10:33 +0800] [18103] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 13:10:33 +0800] [18102] [INFO] Shutting down
+[2021-12-31 13:10:33 +0800] [18102] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 13:10:33 +0800] [18106] [INFO] Shutting down
+[2021-12-31 13:10:33 +0800] [18106] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 13:10:33 +0800] [18105] [INFO] Waiting for application shutdown.
+[2021-12-31 13:10:33 +0800] [18105] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 13:10:33 +0800] [18105] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 13:10:33 +0800] [18105] [INFO] Finished server process [18105]
+[2021-12-31 13:10:33 +0800] [18104] [INFO] Waiting for application shutdown.
+[2021-12-31 13:10:33 +0800] [18104] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 13:10:33 +0800] [18104] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 13:10:33 +0800] [18104] [INFO] Finished server process [18104]
+[2021-12-31 13:10:33 +0800] [18103] [INFO] Waiting for application shutdown.
+[2021-12-31 13:10:33 +0800] [18104] [INFO] Worker exiting (pid: 18104)
+[2021-12-31 13:10:33 +0800] [18103] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 13:10:33 +0800] [18103] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 13:10:33 +0800] [18103] [INFO] Finished server process [18103]
+[2021-12-31 13:10:33 +0800] [18103] [INFO] Worker exiting (pid: 18103)
+[2021-12-31 13:10:33 +0800] [18105] [INFO] Worker exiting (pid: 18105)
+[2021-12-31 13:10:33 +0800] [18102] [INFO] Waiting for application shutdown.
+[2021-12-31 13:10:33 +0800] [18102] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 13:10:33 +0800] [18102] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 13:10:33 +0800] [18102] [INFO] Finished server process [18102]
+[2021-12-31 13:10:33 +0800] [18102] [INFO] Worker exiting (pid: 18102)
+[2021-12-31 13:10:33 +0800] [18106] [INFO] Waiting for application shutdown.
+[2021-12-31 13:10:33 +0800] [18106] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/rpcClient/app/libs/events.py", line 21, in stop_app
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 13:10:33 +0800] [18106] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 13:10:33 +0800] [18106] [INFO] Finished server process [18106]
+[2021-12-31 13:10:33 +0800] [18106] [INFO] Worker exiting (pid: 18106)
+[2021-12-31 13:10:34 +0800] [18101] [INFO] Shutting down: Master
+[2021-12-31 13:10:36 +0800] [18316] [INFO] Starting gunicorn 20.1.0
+[2021-12-31 13:10:36 +0800] [18316] [INFO] Listening at: http://0.0.0.0:8888 (18316)
+[2021-12-31 13:10:36 +0800] [18316] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2021-12-31 13:10:36 +0800] [18317] [INFO] Booting worker with pid: 18317
+[2021-12-31 13:10:36 +0800] [18318] [INFO] Booting worker with pid: 18318
+[2021-12-31 13:10:36 +0800] [18319] [INFO] Booting worker with pid: 18319
+[2021-12-31 13:10:36 +0800] [18320] [INFO] Booting worker with pid: 18320
+[2021-12-31 13:10:36 +0800] [18321] [INFO] Booting worker with pid: 18321
+[2021-12-31 13:10:37 +0800] [18320] [INFO] Started server process [18320]
+[2021-12-31 13:10:37 +0800] [18320] [INFO] Waiting for application startup.
+[2021-12-31 13:10:37 +0800] [18319] [INFO] Started server process [18319]
+[2021-12-31 13:10:37 +0800] [18319] [INFO] Waiting for application startup.
+[2021-12-31 13:10:37 +0800] [18317] [INFO] Started server process [18317]
+[2021-12-31 13:10:37 +0800] [18317] [INFO] Waiting for application startup.
+[2021-12-31 13:10:37 +0800] [18318] [INFO] Started server process [18318]
+[2021-12-31 13:10:37 +0800] [18318] [INFO] Waiting for application startup.
+[2021-12-31 13:10:37 +0800] [18321] [INFO] Started server process [18321]
+[2021-12-31 13:10:37 +0800] [18321] [INFO] Waiting for application startup.
+[2021-12-31 13:10:37 +0800] [18319] [INFO] Application startup complete.
+[2021-12-31 13:10:37 +0800] [18317] [INFO] Application startup complete.
+[2021-12-31 13:10:37 +0800] [18320] [INFO] Application startup complete.
+[2021-12-31 13:10:37 +0800] [18321] [INFO] Application startup complete.
+[2021-12-31 13:10:37 +0800] [18318] [INFO] Application startup complete.
+[2021-12-31 17:21:45 +0800] [18318] [WARNING] Invalid HTTP request received.
+Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/uvicorn/protocols/http/httptools_impl.py", line 131, in data_received
+    self.parser.feed_data(data)
+  File "httptools/parser/parser.pyx", line 212, in httptools.parser.parser.HttpParser.feed_data
+httptools.parser.errors.HttpParserInvalidMethodError: Invalid method encountered
+[2021-12-31 17:21:50 +0800] [18319] [WARNING] Invalid HTTP request received.
+Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/uvicorn/protocols/http/httptools_impl.py", line 131, in data_received
+    self.parser.feed_data(data)
+  File "httptools/parser/parser.pyx", line 212, in httptools.parser.parser.HttpParser.feed_data
+httptools.parser.errors.HttpParserInvalidMethodError: Invalid method encountered
+[2021-12-31 17:21:50 +0800] [18318] [WARNING] Invalid HTTP request received.
+Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/uvicorn/protocols/http/httptools_impl.py", line 131, in data_received
+    self.parser.feed_data(data)
+  File "httptools/parser/parser.pyx", line 212, in httptools.parser.parser.HttpParser.feed_data
+httptools.parser.errors.HttpParserInvalidMethodError: Invalid method encountered
+[2021-12-31 17:25:00 +0800] [18316] [INFO] Handling signal: term
+[2021-12-31 17:25:00 +0800] [18318] [INFO] Shutting down
+[2021-12-31 17:25:00 +0800] [18318] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 17:25:00 +0800] [18320] [INFO] Shutting down
+[2021-12-31 17:25:00 +0800] [18320] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 17:25:00 +0800] [18321] [INFO] Shutting down
+[2021-12-31 17:25:00 +0800] [18321] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 17:25:00 +0800] [18319] [INFO] Shutting down
+[2021-12-31 17:25:00 +0800] [18319] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 17:25:00 +0800] [18317] [INFO] Shutting down
+[2021-12-31 17:25:00 +0800] [18317] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2021-12-31 17:25:00 +0800] [18318] [INFO] Waiting for application shutdown.
+[2021-12-31 17:25:00 +0800] [18318] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 17:25:00 +0800] [18318] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 17:25:00 +0800] [18318] [INFO] Finished server process [18318]
+[2021-12-31 17:25:00 +0800] [18318] [INFO] Worker exiting (pid: 18318)
+[2021-12-31 17:25:00 +0800] [18320] [INFO] Waiting for application shutdown.
+[2021-12-31 17:25:00 +0800] [18320] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 17:25:00 +0800] [18320] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 17:25:00 +0800] [18320] [INFO] Finished server process [18320]
+[2021-12-31 17:25:00 +0800] [18320] [INFO] Worker exiting (pid: 18320)
+[2021-12-31 17:25:00 +0800] [18321] [INFO] Waiting for application shutdown.
+[2021-12-31 17:25:00 +0800] [18321] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 17:25:00 +0800] [18321] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 17:25:00 +0800] [18321] [INFO] Finished server process [18321]
+[2021-12-31 17:25:00 +0800] [18321] [INFO] Worker exiting (pid: 18321)
+[2021-12-31 17:25:00 +0800] [18319] [INFO] Waiting for application shutdown.
+[2021-12-31 17:25:00 +0800] [18319] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 17:25:00 +0800] [18319] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 17:25:00 +0800] [18319] [INFO] Finished server process [18319]
+[2021-12-31 17:25:00 +0800] [18317] [INFO] Waiting for application shutdown.
+[2021-12-31 17:25:00 +0800] [18319] [INFO] Worker exiting (pid: 18319)
+[2021-12-31 17:25:00 +0800] [18317] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2021-12-31 17:25:00 +0800] [18317] [ERROR] Application shutdown failed. Exiting.
+[2021-12-31 17:25:00 +0800] [18317] [INFO] Finished server process [18317]
+[2021-12-31 17:25:00 +0800] [18317] [INFO] Worker exiting (pid: 18317)
+[2021-12-31 17:25:00 +0800] [18316] [INFO] Shutting down: Master
+[2022-01-04 10:49:54 +0800] [28060] [INFO] Starting gunicorn 20.1.0
+[2022-01-04 10:49:54 +0800] [28060] [INFO] Listening at: http://0.0.0.0:8888 (28060)
+[2022-01-04 10:49:54 +0800] [28060] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2022-01-04 10:49:54 +0800] [28061] [INFO] Booting worker with pid: 28061
+[2022-01-04 10:49:54 +0800] [28062] [INFO] Booting worker with pid: 28062
+[2022-01-04 10:49:54 +0800] [28063] [INFO] Booting worker with pid: 28063
+[2022-01-04 10:49:54 +0800] [28064] [INFO] Booting worker with pid: 28064
+[2022-01-04 10:49:54 +0800] [28066] [INFO] Booting worker with pid: 28066
+[2022-01-04 10:49:55 +0800] [28061] [INFO] Started server process [28061]
+[2022-01-04 10:49:55 +0800] [28063] [INFO] Started server process [28063]
+[2022-01-04 10:49:55 +0800] [28061] [INFO] Waiting for application startup.
+[2022-01-04 10:49:55 +0800] [28063] [INFO] Waiting for application startup.
+[2022-01-04 10:49:55 +0800] [28062] [INFO] Started server process [28062]
+[2022-01-04 10:49:55 +0800] [28062] [INFO] Waiting for application startup.
+[2022-01-04 10:49:55 +0800] [28066] [INFO] Started server process [28066]
+[2022-01-04 10:49:55 +0800] [28066] [INFO] Waiting for application startup.
+[2022-01-04 10:49:55 +0800] [28064] [INFO] Started server process [28064]
+[2022-01-04 10:49:55 +0800] [28064] [INFO] Waiting for application startup.
+[2022-01-04 10:49:55 +0800] [28063] [INFO] Application startup complete.
+[2022-01-04 10:49:55 +0800] [28061] [INFO] Application startup complete.
+[2022-01-04 10:49:55 +0800] [28066] [INFO] Application startup complete.
+[2022-01-04 10:49:55 +0800] [28062] [INFO] Application startup complete.
+[2022-01-04 10:49:55 +0800] [28064] [INFO] Application startup complete.
+[2022-01-04 10:53:12 +0800] [28060] [INFO] Handling signal: term
+[2022-01-04 10:53:12 +0800] [28064] [INFO] Shutting down
+[2022-01-04 10:53:12 +0800] [28064] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2022-01-04 10:53:12 +0800] [28061] [INFO] Shutting down
+[2022-01-04 10:53:12 +0800] [28061] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2022-01-04 10:53:12 +0800] [28066] [INFO] Shutting down
+[2022-01-04 10:53:12 +0800] [28066] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2022-01-04 10:53:12 +0800] [28062] [INFO] Shutting down
+[2022-01-04 10:53:12 +0800] [28062] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2022-01-04 10:53:12 +0800] [28063] [INFO] Shutting down
+[2022-01-04 10:53:12 +0800] [28063] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2022-01-04 10:53:12 +0800] [28064] [INFO] Waiting for application shutdown.
+[2022-01-04 10:53:12 +0800] [28064] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2022-01-04 10:53:12 +0800] [28064] [ERROR] Application shutdown failed. Exiting.
+[2022-01-04 10:53:12 +0800] [28064] [INFO] Finished server process [28064]
+[2022-01-04 10:53:12 +0800] [28064] [INFO] Worker exiting (pid: 28064)
+[2022-01-04 10:53:12 +0800] [28061] [INFO] Waiting for application shutdown.
+[2022-01-04 10:53:12 +0800] [28061] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2022-01-04 10:53:12 +0800] [28061] [ERROR] Application shutdown failed. Exiting.
+[2022-01-04 10:53:12 +0800] [28061] [INFO] Finished server process [28061]
+[2022-01-04 10:53:12 +0800] [28061] [INFO] Worker exiting (pid: 28061)
+[2022-01-04 10:53:12 +0800] [28066] [INFO] Waiting for application shutdown.
+[2022-01-04 10:53:12 +0800] [28066] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2022-01-04 10:53:12 +0800] [28066] [ERROR] Application shutdown failed. Exiting.
+[2022-01-04 10:53:12 +0800] [28066] [INFO] Finished server process [28066]
+[2022-01-04 10:53:12 +0800] [28066] [INFO] Worker exiting (pid: 28066)
+[2022-01-04 10:53:12 +0800] [28063] [INFO] Waiting for application shutdown.
+[2022-01-04 10:53:12 +0800] [28062] [INFO] Waiting for application shutdown.
+[2022-01-04 10:53:12 +0800] [28063] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2022-01-04 10:53:12 +0800] [28063] [ERROR] Application shutdown failed. Exiting.
+[2022-01-04 10:53:12 +0800] [28062] [ERROR] Traceback (most recent call last):
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 624, in lifespan
+    await receive()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 521, in __aexit__
+    await self._router.shutdown()
+  File "/home/gamecpp/fpvirtual/lib/python3.9/site-packages/starlette/routing.py", line 608, in shutdown
+    await handler()
+  File "/home/gamecpp/codes/rpc/client/app/libs/events.py", line 21, in stop_app
+    await app.state.pool.close()
+TypeError: object NoneType can't be used in 'await' expression
+
+[2022-01-04 10:53:12 +0800] [28063] [INFO] Finished server process [28063]
+[2022-01-04 10:53:12 +0800] [28062] [ERROR] Application shutdown failed. Exiting.
+[2022-01-04 10:53:12 +0800] [28062] [INFO] Finished server process [28062]
+[2022-01-04 10:53:12 +0800] [28063] [INFO] Worker exiting (pid: 28063)
+[2022-01-04 10:53:12 +0800] [28062] [INFO] Worker exiting (pid: 28062)
+[2022-01-04 10:53:12 +0800] [28060] [INFO] Shutting down: Master
+[2022-01-07 09:10:42 +0800] [3524] [INFO] Starting gunicorn 20.1.0
+[2022-01-07 09:10:42 +0800] [3524] [INFO] Listening at: http://0.0.0.0:8888 (3524)
+[2022-01-07 09:10:42 +0800] [3524] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2022-01-07 09:10:42 +0800] [3527] [INFO] Booting worker with pid: 3527
+[2022-01-07 09:10:42 +0800] [3528] [INFO] Booting worker with pid: 3528
+[2022-01-07 09:10:42 +0800] [3527] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/uvicorn/workers.py", line 66, in init_process
+    super(UvicornWorker, self).init_process()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib64/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/gamecpp/codes/rpc/client/app/main.py", line 1, in <module>
+    from fastapi import FastAPI
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/__init__.py", line 7, in <module>
+    from .applications import FastAPI as FastAPI
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/applications.py", line 3, in <module>
+    from fastapi import routing
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/routing.py", line 2, in <module>
+    import dataclasses
+ModuleNotFoundError: No module named 'dataclasses'
+[2022-01-07 09:10:42 +0800] [3527] [INFO] Worker exiting (pid: 3527)
+[2022-01-07 09:10:42 +0800] [3528] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/uvicorn/workers.py", line 66, in init_process
+    super(UvicornWorker, self).init_process()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/gamecpp/.local/lib/python3.6/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib64/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/gamecpp/codes/rpc/client/app/main.py", line 1, in <module>
+    from fastapi import FastAPI
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/__init__.py", line 7, in <module>
+    from .applications import FastAPI as FastAPI
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/applications.py", line 3, in <module>
+    from fastapi import routing
+  File "/home/gamecpp/fpvirtual/lib64/python3.9/site-packages/fastapi/routing.py", line 2, in <module>
+    import dataclasses
+ModuleNotFoundError: No module named 'dataclasses'
+[2022-01-07 09:10:42 +0800] [3528] [INFO] Worker exiting (pid: 3528)

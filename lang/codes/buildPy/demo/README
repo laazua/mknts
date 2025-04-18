@@ -1,0 +1,33 @@
+### demo
+
+[描述]
+    *) demo是一个python项目打包的示例项目
+    *) 三种打包方式:
+       1. pex
+          打包: make -f makefiles/pex.mk
+          清理: make clean -f makefiles/pex.mk
+       2. zipapp
+          打包: make -f makefiles/zipapp.mk
+          清理: make clean -f makefiles/aipapp.mk
+       3. setuptools
+          打包: make -f makefiles/setuptools.mk
+          清理: make clean -f makefiles/setuptools.mk
+
+[运行]
+    *) pex打包后的目标文件运行: ./demo
+    *) zipapp打包后的目标文件运行: python demo.pyz
+    *) setuptools打包后端目标文件需要安装后运行:
+       1. 将demo-0.0.1-py3-none-any.whl安装到隔离环境:
+            python -m venv .venv
+            .venv/bin/python -m pip install demo-0.0.1-py3-none-any.whl
+            运行安装后的可执行文件:  .venv/bin/demo
+
+       2. 将demo-0.0.1-py3-none-any.whl安装到指定目录:
+            pip install demo-0.0.1-py3-none-any.whl -t path_name
+            运行demo包:
+              export PYTHONPATH=$PYTHONPATH:$path_name
+              $path_name/bin/demo
+
+[备注]
+    *) 以上运行方式都需要在执行运行命令的目录下新建.env文件并配置
+    *) 如何需要全局运行, 将$path_name/bin添加到环境变量PATH中(export PATH=$PATH:$path_name/bin)

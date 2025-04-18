@@ -1,0 +1,5 @@
+### webapi
+
+curl http://127.0.0.1:8883/foo  
+curl http://127.0.0.1:8883/bar -XPOST -H "Content-Type: application/json" -d '{"bar": "foo"}'  
+

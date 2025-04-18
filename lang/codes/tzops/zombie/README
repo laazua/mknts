@@ -1,0 +1,11 @@
+zombie
+
+[说明]
+  *) zombie是运行在从节点主机上干活的程序
+
+[打包]
+  *) 进行项目根目录: 
+     python -m venv .venv
+     source .venv/bin/activate
+     pip install -r requirements.txt
+  *) make

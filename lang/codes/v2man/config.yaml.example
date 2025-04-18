@@ -1,0 +1,12 @@
+address: :8088
+runMode: debug  # debug|release
+secuKey: dfdndafd
+tokenSign: xdfadfa
+tokenExpored: 60  # 分钟
+v2Address: 127.0.0.1:6666
+# 数据库配置: postgresql
+dbHost: 192.168.165.88
+dbPort: 5432
+dbUser: postgres
+dbPass: 123456
+dbName: v2man

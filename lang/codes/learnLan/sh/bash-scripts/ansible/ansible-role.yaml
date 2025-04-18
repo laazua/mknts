@@ -1,0 +1,31 @@
+--- role directory structure
+
+# playbooks
+production            # 关于生产环境服务器的清单文件
+stage                 # 关于stage环境的清单文件
+group_vars/
+    group1            # 特定的组赋值
+    group2            #
+host_vars/
+    hostname1         # 放置系统需要的特定变量
+    hostname2
+library/              # 自定义模块
+    filter_plugins/   # 自定义过滤插件
+
+site.yml              # site playbook
+webservers.yml        # webservers playbook
+fooservers.yml        # fooservers playbook
+roles/
+    common/           # 代表一个role
+        tasks/        # 至少有一个main.yaml文件定义各种tasks
+        handlers/     # 至少有一个main.yaml文件定义各种handlers
+        library/
+        files/        # 存放由copy模块或script模块调用的文件
+        templates/    # 存放jinja2模板
+        vars/         # 至少有一个main.yaml文件定义各种变量,用于本role使用
+        defaults/
+        meta/         # 至少有一个main.yaml文件定义此角色的特殊设定及其依赖关系.
+    webservers/
+        tasks/
+        defaults/
+        meta/

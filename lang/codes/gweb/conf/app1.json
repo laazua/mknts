@@ -1,0 +1,18 @@
+{
+    "App": {
+        "Ip": "0.0.0.0",
+        "Port": 8866,
+        "KeyWord": "gweb12345678test",
+        "RemotePort": 8888,
+        "RunMode": "debug",
+        "ReadTimeout": 10,
+        "WriteTimeout": 10
+    },
+    "Mysql": {
+        "Host": "127.0.0.1",
+        "Port": 3306,
+        "Dbname": "ywops",
+        "Username": "bnos",
+        "Password": "bnos123"
+    }
+}

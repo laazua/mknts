@@ -1,0 +1,18 @@
+# zone api data format
+# target: open, start, stop, check reload, config, binfile
+
+##  zone api data format
+{
+  "target": "open",
+  "zones": [
+    {
+      "ip": "172.16.9.128",
+      "name": "test_syf",
+      "id": "1"
+    },{
+      "ip": "172.16.9.129",
+      "name": "test_syf",
+      "id": "2"
+    }
+  ]
+}

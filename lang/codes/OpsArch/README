@@ -1,0 +1,19 @@
+OpsArch
+
+*) 描述
+=======
+
+  1. 运维架构.
+                               ->  worker-host-1
+                              /
+     ops-host -> jumper-host --->  worker-host-2
+                              \  
+                               ->  worker-host-n
+
+  2. 所有的操作只能通过操作机器(ops-host)操作跳板机(jumper-host)进行操作.
+  
+  3. jumper-host主机只对ops-host主机开放ssh访问端口.
+     jumper-host至关重要(必须做好审计工作,可以运行一个审计程序,将审计数据通过ssh回传到ops-host主机).
+
+  4. 以上所有主机必须配置好防火墙,且通过ssh协议进行数据通信.
+

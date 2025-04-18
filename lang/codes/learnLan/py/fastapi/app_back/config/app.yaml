@@ -1,0 +1,6 @@
+# app config
+
+### 数据库连接信息
+db:
+  # driver://username:password@host:port/database
+  url: mysql+pymysql://test:123456@127.0.0.1:3306/opms

@@ -1,0 +1,16 @@
+# chatroom进程管理服务
+
+[Unit]
+Description=chatroom service
+
+[Service]
+ExecStart=/usr/local/bin/chatroom -c /etc/chatroom/server.yaml
+User=zhangsan
+Group=zhangsan
+ExecStop=pkill chatroom
+RemainAfterExit=yes
+# limit system resource
+MemoryLimit=100M
+CPUQuota=50%
+LimitNOFILE=1024 
+LimitNPROC=256

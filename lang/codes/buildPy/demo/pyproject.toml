@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "demo"
+version = "0.1.0"
+description = "这是一个打包示例"
+authors = [
+    { name="Sseve", email="github@Sseve.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+# 如果你有依赖包
+#dependencies = [
+#    "python-dotenv==1.0.1"
+#]
+
+[project.scripts]
+demo = "demo.main:main"
+
+[project.optional-dependencies]
+dev = []
+
+[project.urls]
+homepage = "https://github.com/Sseve/demo"
+repository = "https://github.com/Sseve"
+

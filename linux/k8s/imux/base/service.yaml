@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: imux-service
+spec:
+  selector:
+    app: imux
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9990
+      nodePort: 30000   # 显示固定端口 masterIP:30000访问

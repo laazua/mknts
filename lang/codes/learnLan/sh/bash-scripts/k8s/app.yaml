@@ -1,0 +1,14 @@
+--- depolyment ---
+--- kubectl create deploymen nginx --image=nginx --dry-run -o yaml > nginx_deployment.yaml
+--- kubectl apply -f nginx_deployment.yaml
+
+--- service ---
+--- kubectl expose deployment nginx --port=80 --target-port=80 --type=NodePort --dry-run -o yaml > nginx_service.yaml
+--- kubectl apply -f nginx_service.yaml
+
+--- ingress ---
+
+--- helm ---
+--- 一个包管理工具对接k8s系统
+--- chart 
+--- release

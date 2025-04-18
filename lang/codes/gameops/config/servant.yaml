@@ -1,0 +1,22 @@
+---
+### servant程序的配置文件
+
+# 程序本身配置
+app:
+  # 程序运行时监听的端口和地址
+  port: 8887
+  host: 0.0.0.0
+
+# 区服信息配置
+zone:
+  # 区服所在的进程路径
+  path: /data/game
+  # bin文件所在的主机IP和路径
+  binIp: 127.0.0.1
+  binPath: /data/binfile
+
+# 配置文件的svn信息
+svn:
+  user: zhangsan
+  pass: 12345678
+  repo: http://127.0.0.1/test

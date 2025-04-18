@@ -1,0 +1,34 @@
+{
+    "remote.SSH.remotePlatform": {
+        "172.16.9.127": "linux",
+        "101.132.245.153": "linux",
+        "113.31.118.59": "linux"
+    },
+    "git.ignoreLegacyWarning": true,
+    "files.exclude": {
+        "**/.vscode": true
+    },
+    "gopls": {
+        "experimentalWorkspaceModule": true
+    },
+    "rust-analyzer.linkedProjects": [
+
+    ],
+    "editor.codeActionsOnSave": {
+
+
+
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "security.workspace.trust.untrustedFiles": "open",
+    "settingsSync.ignoredExtensions": [
+        "rust-lang.rust-analyzer"
+    ],
+    "window.zoomLevel": 1,
+    "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": false,
+    "editor.fontSize": 13,
+    "workbench.colorTheme": "One Dark Pro Flat",
+    "editor.fontWeight": "normal",
+}

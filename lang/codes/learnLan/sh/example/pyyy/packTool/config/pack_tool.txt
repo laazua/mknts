@@ -1,0 +1,12 @@
+# packtool config
+
+[initparam]
+release="True"
+selecttion="True"
+threadNum="1"
+appId="None"
+channelName=""
+
+[tools]
+python_version=""
+u8sdk_config=""

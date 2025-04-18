@@ -1,0 +1,19 @@
+---
+
+- name: httpd httpd-devel httpd-manual软件包安装
+  yum: name={{item}} state=latest
+  with_items:
+    - httpd
+    - httpd-devel
+    - httpd-manual
+
+- name: 创建apache管理用户www
+  user: name={{user}} state=present
+
+- name: 设置开机启动，并启动服务
+  service: name=httpd enabled=yes state=started
+
+- name: copy配置文件,初始化
+  copy: src=/etc/ansible/roles/httpd/files/httpd.conf dest=/etc/httpd/conf/httpd.conf
+  notyfy:    # 定义通知调用,当配置文件更新,需要重新启动服务
+    - restart apache

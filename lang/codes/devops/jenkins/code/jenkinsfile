@@ -1,0 +1,23 @@
+// pipeline语法
+
+pipeline {
+    agent any
+    environment {
+        key = 'value'
+        ...
+    } 
+
+    stages {
+        stage('one') {
+            steps {
+                echo "one step"
+            }
+        }
+        stage('tow') {
+            steps {
+                echo "tow step"
+            }
+        }
+        ...
+    } 
+}

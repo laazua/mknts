@@ -1,0 +1,36 @@
+---
+## this is caller's config
+
+# app run mode
+app_debug: true
+
+# app listen address
+app_url: 0.0.0.0:8888
+
+# app http read timeout
+app_read_timeout: 10
+
+# app http write timeout
+app_write_timeout: 10
+
+# db address
+db_url: mongodb://127.0.0.1:27017/test
+
+# jwt secret key
+jwt_secret: testApp1234567890
+
+# jwt timeout (hour)
+jwt_timeout: 24
+
+# api white ips
+white_ips:
+  - 127.0.0.1
+  # - 172.16.9.126
+
+# api white path
+white_path:
+  - /api/sign
+  # - /api/chek
+  # - /api/user
+  # - /api/zone
+  # - /api/host

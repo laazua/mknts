@@ -1,0 +1,62 @@
+.gradient-background {
+    background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+
+.radial-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-radial-gradient(
+            circle at center,
+            transparent 0,
+            transparent 20px,
+            rgba(255,255,255,0.1) 20px,
+            rgba(255,255,255,0.1) 40px
+    );
+    transform: scale(5);
+    opacity: 0.5;
+}
+
+.jenkins-logo {
+    position: relative;
+    z-index: 1;
+    width: 200px;
+    height: auto;
+}
+
+body {
+    padding-top: 10px; /* 增加顶部padding以适应更高的navbar */
+    margin: 0; /* Reset default body margins */
+}
+
+.sidebar {
+    position: fixed;
+    top: 70px; /* 调整顶部位置以适应更高的navbar */
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.main-content {
+    margin-left: 250px; /* 调整左边距以适应侧边栏宽度 */
+    padding: 20px; /* Add padding to main content */
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        top: 60px;
+        padding-top: 15px;
+        width: 100%; /* Make sidebar full width on small screens */
+        height: auto; /* Remove fixed height on small screens */
+        position: relative; /* Remove fixed position on small screens */
+        left: 0;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}

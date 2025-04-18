@@ -1,0 +1,6 @@
+## 获取当前隔离环境中,项目的三方依赖
+## python -m pip freeze >requirements.txt
+## 将此依赖填写到pyproject.toml的dependencies列表中
+build==1.2.2.post1
+packaging==24.2
+pyproject_hooks==1.2.0

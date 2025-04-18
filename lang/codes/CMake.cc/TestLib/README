@@ -1,0 +1,8 @@
+
+TEST USE LIB
+
+use demo:
+========
+  - cmake -DSTATIC=0 ..
+  - cmaKe -DSHARED=0 .. 
+

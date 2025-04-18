@@ -1,0 +1,21 @@
+syntax = "proto3";
+package zone;
+
+// zone service definiton
+service Zone {
+    rpc zone_option(ZoneRequest) returns (ZoneReply) {}
+}
+
+message ZoneRequest {
+    string target = 1;
+    string name = 2;
+    string zid = 3;
+    string ip = 4;
+}
+
+message ZoneReply {
+    string name = 1;
+    string zid = 2;
+    string ip = 3;
+    string result = 4;
+}
