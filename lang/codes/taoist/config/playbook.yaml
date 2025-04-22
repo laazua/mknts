@@ -1,0 +1,10 @@
+hosts: web
+steps:
+  - name: 安装 Nginx
+    command:
+      arg: ls -a
+
+  - name: 创建文件
+    copy: 
+      content: "Hello, Ansible from Go!"
+      dest: "/tmp/hello.txt"

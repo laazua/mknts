@@ -1,0 +1,11 @@
+
+# 主机资源配置
+
+[web]
+server1 = "addr=192.168.165.81 port=22 user=zhangsan password=123456"
+server2 = "addr=192.168.165.82 port=22 user=zhangsan password=123456"
+server3 = "addr=192.168.165.83 port=22 user=zhangsan password=123456"
+
+[k8s]
+server1 = "addr=192.168.165.84 port=22 user=zhangsan password=123456"
+server2 = "addr=192.168.165.85 port=22 user=zhangsan password=123456"

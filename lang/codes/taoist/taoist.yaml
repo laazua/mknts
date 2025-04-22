@@ -1,0 +1,7 @@
+---
+# 工具运行时配置
+
+# 私钥文件
+rasKeyFile: ~/.ssh/rsa_id
+# 任务文件路径
+tasksPath:
