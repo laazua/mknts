@@ -1,0 +1,283 @@
+### ES6
+
+[数据类型]
+字符串类型 string  
+        定义 字符串类型用于存储字符序列
+        代码
+            let name = "张三"
+
+数值类型 number
+        定义 用于存储数字, 可以表示整数、浮点数
+        代码
+            let age = 18
+            let weight = 55.5
+
+布尔类型 boolean
+        定义 布尔类型只能取两个值,true(真) 和 false(假)
+        代码
+            let on = true
+
+对象 object
+        定义 对象是一种复合的数据类型, 可以通过键值对的方式存储多个值
+        代码
+            //定义了一个包含姓名、年龄和体重的对象
+            let stu = {
+                name: "David",
+                age: 28,
+                weight: 70.5
+            }
+
+map
+        定义 map 是一种特殊的数据结构,用于存储键值对的有序集合,
+        代码
+            //定义了一个包含姓名、年龄和体重的map
+            let girl = new Map([
+                ["name", "Luna"],
+                ["age", 20],
+                ["weight", 50.5]
+            ])
+        注
+            Map相对于对象提供了更灵活、有序、高效的键值对存储和操作方式,当需要在大量键值对中快速查找或删除特定键值对时, Map比对象更高效
+            Map提供了一些便捷的方法来操作键值对, 如: get()、set()、delete()
+            Map提供了一些便捷的迭代方法, 如: forEach()、keys()、values()、entries()
+
+set
+        定义 Set 是一种特殊的数据结构, 用于存储无序且唯一的值的集合
+        代码
+            let number = new Set([1, 2, 3, 4, 5]) //定义了一个包含5个"不重复"的整数的集合
+            // let numbers = new Set([1, 2, 3, 4, 5, 5]) //错误示范                
+
+数组 array
+        定义 数组是一种有序集合, 可以包含不同类型的元素，并且数组的长度是可变的
+        代码
+            let str = ["a","b","c","b"] //定义了一个包含4个字符串的数组
+
+函数 function
+        定义 函数是一段可重复执行的代码块，可以接收输入参数并返回一个值或执行某些操作
+        代码
+            function add(a, b) {
+                return a + b
+            }
+
+            let sub = function (x, y) { //函数赋值给了一个变量 sub, 函数本身并没有一个具名标识符
+                return x - y
+            }
+            console.log("sub", sub(30, 5))
+
+            // 箭头函数 [箭头函数是一种匿名函数]
+            let plus = (a, b) => { //省略 function 添加 =>
+                return a + b
+            }
+            console.log("plus", plus(5, 10))
+
+            // 隐式返回 [在函数体内只有一个表达式的情况下, 可以省略花括号 {} 和 return 关键字]
+            let plus2 = (a, b) => a + b
+            console.log("plus2", plus2(10, 20))
+
+类 class
+        定义 类是一种蓝图或模板，用于创建具有相同属性和方法的对象
+        代码
+            //若在类中没有显式声明属性, 但在构造函数或方法中引用了未声明的属性, 会自动将其视为实例属性
+            name //姓名
+            class Person {
+                //构造函数 用于初始化属性
+                constructor(name, age) {
+                    this.name = name
+                    this.age = age
+                }
+
+                info() {
+                    console.log("姓名", this.name, "年龄", this.age)
+                }
+            }
+
+            const person = new Person("瑶瑶", 20)
+            person.info()
+===================================================================================
+            class Person {
+                name
+                #web //私有属性是指仅在类内部可访问和操作的属性, 外部无法直接访问和修改
+
+                constructor(name, web) {
+                    this.name = name
+                    this.#web = web
+                }
+
+                //使用存取器 getter 获取私有属性
+                get web() {
+                    return this.#web
+                }
+
+                //使用存取器 setter 设置私有属性
+                set web(value) {
+                    this.#web = value
+                }
+
+                info() {
+                    return `姓名:${this.name} 个人网站:${this.web}`
+                }
+            }
+
+            let person = new Person("张三", "dengruicode.com")
+
+            console.log("person", person)
+            console.log("web", person.web) //使用存取器 getter 获取私有属性
+            console.log("info", person.info())
+
+            person.web = "www.dengruicode.com" //使用存取器 setter 设置私有属性
+            console.log("web", person.web)
+===================================================================================
+            //父类
+            class Person {
+                name
+                gender
+
+                constructor(name, gender) {
+                    this.name = name
+                    this.gender = gender
+                }
+
+                sleep() {
+                    return `${this.name} 休息中...`
+                }
+            }
+
+            //子类
+            class David extends Person {
+                web
+
+                constructor(name, gender, web) {
+                    super(name, gender) //调用父类构造函数
+
+                    this.web = web
+                }
+
+                eat() {
+                    return `${this.name} 正在吃饭...`
+                }
+            }
+
+            let david = new David("邓瑞", "男", "dengruicode.com")
+
+            console.log("david", david)
+            console.log("web", david.web)
+            console.log("eat", david.eat())
+            
+            console.log("gender", david.gender)
+            console.log("sleep", david.sleep())
+
+[Promise]
+    /*
+        Promise 表示承诺在未来的某个时刻可能会完成并返回结果
+
+        对于某些需要时间来处理结果的操作, 如用户登录、读取文件等, 可以使用 Promise 对象来执行异步操作
+        Promise 对象有三种状态 pending(待处理)、fulfilled(已履行)、rejected(被驳回)
+
+        当创建一个 Promise 对象时, 它的初始状态为 pending, 表示异步执行还未完成
+        当异步执行成功时, 会调用 resolve 函数把 Promise 对象的状态改变为 fulfilled, 可通过 then 方法来获取异步操作的结果
+        当异步执行异常时, 会调用 reject 函数把 Promise 对象的状态更改为 rejected, 可通过 catch 方法来处理错误
+
+        注
+            异步操作是指在程序执行过程中, 某个操作不会立即返回结果, 而是需要一段时间的等待
+    */
+
+    /*
+        let promise = new Promise((resolve, reject) => {
+            
+        })
+
+        //当创建一个 Promise 对象时, 它的初始状态为 pending, 表示异步执行还未完成
+        console.log("promise:", promise) //pending
+    */
+
+    /*
+        let promise = new Promise((resolve, reject) => {
+            resolve("邮件发送成功") //异步执行成功
+        })
+        //当异步执行成功时, 会调用 resolve 函数把 Promise 对象的状态改变为 fulfilled, 可通过 then 方法来获取异步操作的结果
+        console.log("promise:", promise) //fulfilled
+
+        promise.then(result => {
+            console.log("result:", result)
+        })
+    */
+
+    /*
+        let promise = new Promise((resolve, reject) => {
+            reject("邮件发送失败") //异步执行失败
+        })
+        //当异步执行失败时, 会调用 reject 函数把 Promise 对象的状态更改为 rejected, 可通过 catch 方法来处理错误
+        console.log("promise:", promise) //rejected
+
+        promise.catch(error => {
+            console.log("error:", error)
+        })
+    */
+
+    let promise = new Promise((resolve, reject) => {
+        //resolve("邮件发送成功")
+        reject("邮件发送失败")
+    }).then(result => {
+        console.log("result:", result)
+    }).catch(error => {
+        console.log("error:", error)
+    }).finally(() => {
+        console.log("异步执行结束")
+    })
+=========================================================================================
+    /*
+        fetch 是基于 Promise 的 api, 它可以发送http请求并接收服务器返回的响应数据
+        fetch 返回的是一个 Promise 对象
+    */
+
+    //get请求
+    fetch('http://127.0.0.1/get').then(response => {
+        //返回的解析后的json数据会传递给下一个 then() 方法中的回调函数作为参数,这个参数就是 data
+        return response.json() //response.json() 用于将响应数据解析为json格式的数据
+    }).then(data => { //data 解析后的json数据
+        console.log("get.data:", data)
+    }).catch(error => {
+        console.log("get.error:", error.message)
+    }).finally(() => {
+        console.log("get.finally")
+    })
+
+    //post请求 post
+    fetch('http://127.0.0.1/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },            
+        body: new URLSearchParams({//URLSearchParams 用于处理键值对类型的数据,并将其编码为url查询字符串
+            name: '邓瑞',
+            web: 'dengruicode.com',
+        }),
+    }).then(response => {
+        return response.json()
+    }).then(data => {
+        console.log("post.data:", data)
+    }).catch(error => {
+        console.log("post.error:", error.message)
+    }).finally(() => {
+        console.log("post.finally")
+    })
+
+    //post请求 postJson
+    fetch('http://127.0.0.1/postJson', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({//JSON.stringify 用于将对象转换为json字符串
+            name: '邓瑞编程',
+            web: 'www.dengruicode.com',
+        }),
+    }).then(response => {
+        return response.json()
+    }).then(data => {
+        console.log("postJson.data:", data)
+    }).catch(error => {
+        console.log("postJson.error:", error.message)
+    }).finally(() => {
+        console.log("postJson.finally")
+    })

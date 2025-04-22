@@ -1,0 +1,113 @@
+{
+    // 主题和配色
+    "workbench.colorTheme": "JetBrains Rider Dark Theme", // 可替换为你喜欢的主题
+    "workbench.colorCustomizations": {
+        "editor.background": "#2B2B2B",
+        "editor.foreground": "#A9B7C6",
+        "editor.selectionBackground": "#214283",
+        "editor.lineHighlightBackground": "#323232",
+        "editorCursor.foreground": "#FFFFFF",
+        "editorLineNumber.foreground": "#606366",
+        "statusBar.background": "#2B2B2B",
+        "statusBar.foreground": "#A9B7C6",
+        "terminal.background": "#2B2B2B",
+        "terminal.foreground": "#A9B7C6",
+        "terminalCursor.foreground": "#FFFFFF",
+        "terminal.ansiBlack": "#2B2B2B",
+        "terminal.ansiRed": "#FF6B68",
+        "terminal.ansiGreen": "#A8FF60",
+        "terminal.ansiYellow": "#FFFFB6",
+        "terminal.ansiBlue": "#96CBFE",
+        "terminal.ansiMagenta": "#FF73FD",
+        "terminal.ansiCyan": "#C6C5FE",
+        "terminal.ansiWhite": "#FFFFFF"
+    },
+
+    // 字体设置
+    "editor.fontFamily": "'SF Mono', Consolas, 'Courier New', monospace",
+    "editor.fontSize": 15,
+    "editor.lineHeight": 20,
+    "editor.letterSpacing": 0.45,
+    "editor.fontLigatures": true,
+
+    // 编辑器布局与行为
+    "workbench.sideBar.location": "left",
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "smooth",
+    "editor.gotoLocation.multipleImplementations": "peek",
+    "editor.lineNumbers": "on",
+    "editor.smoothScrolling": true,
+
+    // 自动格式化与代码行为
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+
+    // 注释样式
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                // 函数名称的颜色
+                "scope": "entity.name.function",
+                "settings": {
+                    "foreground": "#c4a68e" // JetBrains 默认暖黄色
+                }
+            },
+            {
+                // 方法的颜色
+                "scope": "meta.method",
+                "settings": {
+                    "foreground": "#c4a68e" // 与函数名一致
+                }
+            },
+            {
+                // 大括号、小括号和中括号的颜色
+                "scope": [
+                    "punctuation.section.block",
+                    "punctuation.section.parens",
+                    "punctuation.section.brackets"
+                ],
+                "settings": {
+                    "foreground": "#A9B7C6" // 柔和灰白色
+                }
+            },
+            {
+                // 关键字颜色
+                "scope": "keyword.control",
+                "settings": {
+                    "foreground": "#c4a68e" // JetBrains 默认橙色
+                }
+            },
+            {
+                // 注释颜色
+                "scope": "comment",
+                "settings": {
+                    "foreground": "#808080",
+                    "fontStyle": "italic"
+                }
+            }
+        ]
+    },
+
+    // 文件和编码
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": true,
+    "files.eol": "\n",
+    "files.defaultLanguage": "javascript",
+
+    // 终端设置
+    "terminal.integrated.fontFamily": "'SF Mono', monospace",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.lineHeight": 1.2,
+    "terminal.integrated.letterSpacing": 0.5
+}

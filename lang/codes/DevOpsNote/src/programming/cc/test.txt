@@ -1,0 +1,6 @@
+# 配置文件
+# `#`开头的为注释
+# 配置文件格式为: key = value
+
+name = zhangsan
+addr = chengdu

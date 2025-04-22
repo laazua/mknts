@@ -1,0 +1,13 @@
+{
+    "editor.indentSize": "tabSize",
+    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.accessibilityPageSize": 16,
+    "editor.fontSize": 12,
+    "editor.letterSpacing": 0.5,
+    "editor.lineHeight": 20,
+    "window.zoomLevel": 1,
+    "editor.codeActionsOnSave": {
+
+    }
+}

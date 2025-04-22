@@ -1,0 +1,32 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "editor.fontSize": 15,
+  "editor.fontLigatures": true,
+  "editor.fontWeight": 1,
+  "editor.fontFamily": "SF mono",
+  "editor.fontVariations": false,
+  "editor.lineHeight": 0,
+  "editor.letterSpacing": 0.5,
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "workbench.list.smoothScrolling": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.cursorBlinking": true, 
+  "workbench.colorCustomizations": {
+    "tab.border":"#363636",
+    "editor.background": "#363636", // 编辑器背景颜色
+    "editor.foreground": "#fcfcfc", // 编辑器文字颜色
+    "activityBar.background": "#363636", // 左侧活动栏背景颜色
+    "statusBar.background": "#363636", // 状态栏背景颜色
+    "editor.lineHighlightBackground": "#414040",  // 光标行背景颜色
+    "editorGutter.background": "#363636",
+    "editorGroupHeader.tabsBackground": "#363636",
+    "terminal.background": "#363636",
+    "breadcrumb.background": "#363636",  // 文件路径指示栏背景色
+    "sideBar.background": "#363636",  // 侧边栏背景色
+    "panel.background": "#363636",  // terminal上面的bar背景色
+  }
+}

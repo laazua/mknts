@@ -1,0 +1,31 @@
+#!/usr/sbin/nft -f
+
+# 此配置位于/etc/nftables.d/中
+# systemctl restart nftables.service
+
+# flush ruleset
+
+define ssh_port = 22
+define allow_ip = { 
+    192.168.165.81,
+    192.168.165.82,
+    192.168.165.83
+}
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy drop;
+
+        # Allow loopback traffic
+        iif lo accept
+
+        # Allow established and related connections
+        ct state established,related accept
+
+        # Allow SSH (port 22) traffic from anywhere
+        tcp dport $ssh_port accept
+
+        # Allow port 8080 traffic from special ip
+        ip saddr $allow_ip tcp dport 8080 accept
+    }
+}

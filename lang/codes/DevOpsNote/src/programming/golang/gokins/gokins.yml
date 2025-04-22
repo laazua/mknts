@@ -1,0 +1,16 @@
+---
+# gokins配置文件
+address: 0.0.0.0:8083
+taskPath: tasks # 执行任务路径
+saltKey: gokins1234456 # 用户密码salt key
+securityKey: gokinsHahahaha # 用户token签名key
+signExpireTime: 1 # 小时
+
+# 数据库配置
+dbPort: 5432
+dbHost: 192.168.165.88
+dbUser: postgres
+dbPass: 123456
+dbName: gokins 
+dbConNum: 10 # 最大连接数
+dbConIdleTime: 5 # 分钟

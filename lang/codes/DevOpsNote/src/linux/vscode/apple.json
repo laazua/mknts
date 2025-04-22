@@ -1,0 +1,13 @@
+{
+    "editor.indentSize": "tabSize",
+    "editor.fontFamily": "'SF Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.accessibilityPageSize": 16,
+    "editor.fontSize": 16,
+    "editor.letterSpacing": 1,
+    "editor.lineHeight": 18,
+    "window.zoomLevel": 1,
+    "editor.fontWeight": "bold",
+    "editor.codeActionsOnSave": {
+    }
+}

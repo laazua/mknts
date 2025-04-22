@@ -1,0 +1,29 @@
+### 装饰器模式
+
+具体实现方式有两种：
+
+1. 函数式编程
+2. 面向对象编程
+
+#### 函数式编程
+
+```go
+type HandlerFunc func(http.ResponseWriter, *http.Request)
+func Logging(f HandlerFunc) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		now := time.Now()
+		f(w, r)
+	}
+}
+``` 
+
+#### 面向对象编程
+
+```go
+func Logging(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		now := time.Now()
+		next.ServeHTTP(w, r)
+	})
+}
+```
