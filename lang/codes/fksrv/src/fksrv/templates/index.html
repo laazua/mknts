@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Page Layout</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom styles -->
+    <style>
+        /* Add custom styles here if needed */
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="row bg-dark text-white p-2 mb-3">
+            <div class="col">
+                <h1 class="text-center">Header</h1>
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3 sidebar">
+                <h3>Sidebar</h3>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="#">Link 1</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main content area -->
+            <main class="col-md-9">
+                <h2>Main Content</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero eget risus faucibus,
+                    vitae condimentum ipsum tempor.</p>
+                <p>Quisque quis risus auctor, rhoncus purus et, vestibulum felis. Nullam ac lobortis est.</p>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="row bg-dark text-white p-2 mt-3">
+            <div class="col text-center">
+                Footer &copy; 2024
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

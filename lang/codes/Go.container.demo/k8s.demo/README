@@ -1,0 +1,9 @@
+###
+
+1. 安装ingress-nginx时, 当镜像在墙外网站时,要从墙外下载镜像后并使用ctr工具将导入到k8s.io命名空间:
+   * ingress-nginx-controller-v1.9.4.tar
+   * ingress-nginx-kube-webhook-certgen-v20231011.tar
+   * ctr -n k8s.io i import 打包的镜像名称
+
+2. 在安装应用时, ingress.yaml中的ingressClassName字段要与组件ingress-nginx的一致:
+   kubectl -n ingress-nginx get ingressclasses.networking.k8s.io进行查看

@@ -1,0 +1,3 @@
+
+安装ingress-nginx:  
+   helm upgrade -i ingress-nginx ./ingress-nginx-4.8.4.tgz -f ingress-nginx-values.yaml --namespace ingress-nginx --create-namespace

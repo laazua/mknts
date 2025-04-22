@@ -1,0 +1,70 @@
+# 这是有状态服务的一个示例
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-app
+  namespace: yuzhua-api
+spec:
+  selector:
+    matchLabels:
+      app: test-app # has to match .spec.template.metadata.labels
+  serviceName: "test-app"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: test-app # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: test-app
+        image: xxxxxxxxxxx.com/oooxxx/test-app:v1
+        ports:
+        - containerPort: 9510
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 800m
+            memory: 2000Mi
+          requests:
+            cpu: 100m
+            memory: 1000Mi
+        # 使用卷
+        volumeMounts:
+        - name: pv
+          mountPath: /opt/www/runtime
+          subPath: runtime
+        - name: env
+          mountPath: /opt/www/env
+      # 初始化容器(非必须)
+      initContainers:
+      - name: test-app-env
+        image: xxxxxxxxxxx.com/oooxxx/test-app:v1
+        command: [ "/bin/sh", "-c", "cp /opt/www/env/.env /opt/www" ]
+        # 使用卷
+        volumeMounts:
+        - name: pv
+          mountPath: /opt/www/runtime
+          subPath: runtime
+        - name: env
+          mountPath: /opt/www/env
+      # 申请卷
+      volumes:
+      - name: env
+        configMap:
+          defaultMode: 420
+          name: test-app
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: pv
+    spec:
+      accessModes: 
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
+      storageClassName: nfs
+      volumeMode: Filesystem

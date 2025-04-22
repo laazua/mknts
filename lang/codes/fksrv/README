@@ -1,0 +1,7 @@
+### fksrv
+
+[说明]
+    *) 打包: make
+    *) 清理: make clean
+    *) 安装: pip install dist/fksrv-0.0.1-py3-none-any.whl -t /opt/fksrv
+    *) 运行: sh run.sh

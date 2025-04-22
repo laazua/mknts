@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test
+  namespace: yuzhua-dev
+spec:
+  ingressClassName: yuzhua-dev  # 与ingress-nginx一致
+  rules:
+  - host: testxx.dev.yuzhua-test.com
+    http:
+      paths:
+      - path: /test
+        pathType: Prefix
+        backend:
+          service:
+            name: test
+            port:
+              number: 80
