@@ -1,0 +1,33 @@
+/* 自定义CSS以使VS Code更像JetBrains IDE */  
+  
+/* 调整标签样式 */  
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab {  
+  border-radius: 0;  
+  border-top: none;  
+}  
+  
+/* 活动标签样式 */  
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.active {  
+  border-top: 2px solid #4d9375;  
+}  
+  
+/* 调整滚动条样式 */  
+.monaco-scrollable-element > .scrollbar > .slider {  
+  border-radius: 0;  
+  background: rgba(121, 121, 121, 0.4);  
+}  
+  
+/* 调整侧边栏样式 */  
+.monaco-workbench .part.sidebar {  
+  border-right: 1px solid #323232;  
+}  
+  
+/* 调整状态栏样式 */  
+.monaco-workbench .part.statusbar {  
+  border-top: 1px solid #323232;  
+}  
+  
+/* 调整编辑器边框 */  
+.monaco-editor .margin {  
+  border-right: 1px solid #323232;  
+}

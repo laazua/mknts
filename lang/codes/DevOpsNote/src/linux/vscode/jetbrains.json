@@ -1,0 +1,121 @@
+{
+  // 安装插件:
+  // JetBrains IDE Darcula Theme
+  // IntelliJ IDEA Keybindings
+
+
+  // ===== 主题设置 =====  
+  "workbench.colorTheme": "JetBrains Darcula Theme", // 安装JetBrains主题扩展后使用  
+    
+  // ===== 字体设置 =====  
+  "editor.fontFamily": "SF Mono, Consolas, 'Courier New', monospace",  
+  "editor.fontSize": 14,  
+  "editor.lineHeight": 20,  
+  "editor.fontLigatures": true, // JetBrains Mono支持连字  
+    
+  // ===== 字体渲染 =====  
+  "workbench.fontAliasing": "auto", // macOS上使用，自动选择最佳字体平滑方式  
+    
+  // ===== UI布局设置 =====  
+  "workbench.editor.showTabs": "multiple",  
+  "workbench.sideBar.location": "left", // 侧边栏位置与JetBrains一致  
+  "workbench.activityBar.location": "default", // 活动栏位置  
+  "workbench.statusBar.visible": true,  
+  "workbench.editor.wrapTabs": false, // 不换行显示标签  
+  "workbench.editor.scrollToSwitchTabs": false, // 滚动不切换标签  
+    
+  // ===== 减少动画效果 =====  
+  "workbench.reduceMotion": "on", // 减少UI动画，更接近JetBrains的体验  
+    
+  // ===== 编辑器设置 =====  
+  "editor.renderWhitespace": "boundary", // 显示空白字符  
+  "editor.renderControlCharacters": true, // 显示控制字符  
+  "editor.cursorBlinking": "solid", // 光标不闪烁  
+  "editor.cursorStyle": "line", // 光标样式  
+  "editor.minimap.enabled": false, // 禁用小地图，JetBrains IDE默认没有  
+  "editor.scrollBeyondLastLine": false, // 不允许滚动超过最后一行  
+  "editor.smoothScrolling": false, // 禁用平滑滚动  
+  "editor.mouseWheelZoom": true, // 允许使用鼠标滚轮+Ctrl缩放  
+    
+  // ===== 终端设置 =====  
+  "terminal.integrated.fontFamily": "JetBrains Mono",  
+  "terminal.integrated.fontSize": 13,  
+    
+  // ===== Zen模式设置 =====  
+  "zenMode.fullScreen": true,  
+  "zenMode.centerLayout": true,  
+  "zenMode.hideActivityBar": true,  
+  "zenMode.hideLineNumbers": false, // JetBrains通常显示行号  
+  "zenMode.hideStatusBar": false, // 保持状态栏可见  
+  "zenMode.showTabs": "multiple", // 显示多个标签  
+  "zenMode.silentNotifications": true,  
+
+  // ==== 调整代码字体颜色 =====
+  "editor.tokenColorCustomizations": {  
+  "[JetBrains Darcula Theme]": { // 替换为您正在使用的主题名称  
+      "textMateRules": [  
+        {  
+          "scope": "entity.name.function",  
+          "settings": {  
+            "foreground": "#E5D68E" // 浅黄色  
+          }  
+        },  
+        {  
+          "scope": "punctuation.definition.block",  
+          "settings": {  
+            "foreground": "#E5D68E" // 浅黄色  
+          }  
+        },  
+        {  
+          "scope": "punctuation.curlybrace",  
+          "settings": {  
+            "foreground": "#E5D68E" // 浅黄色  
+          }  
+        },  
+        {  
+          "scope": "meta.brace.curly",  
+          "settings": {  
+            "foreground": "#E5D68E" // 浅黄色  
+          }  
+        }  
+      ]  
+    }  
+  },
+    // ===== 文件设置 =====  
+    "files.autoSave": "afterDelay",  
+    "files.autoSaveDelay": 1000,  
+    "files.exclude": {  
+      "**/.git": true,  
+      "**/.svn": true,  
+      "**/.hg": true,  
+      "**/CVS": true,  
+      "**/.DS_Store": true,  
+      "**/Thumbs.db": true,  
+      "**/*.class": true,  
+      "**/.idea": true,  
+      "**/.gradle": true,  
+      "**/build": true  
+    },  
+    
+  // ===== 窗口设置 =====  
+  "window.titleBarStyle": "custom", // 使用自定义标题栏  
+  "window.zoomLevel": 0,  
+    
+  // ===== 工作台设置 =====  
+  "workbench.tree.indent": 8, // 增加树视图缩进，更接近JetBrains  
+  "workbench.tree.renderIndentGuides": "always", // 显示缩进指南  
+  "workbench.list.horizontalScrolling": true, // 允许水平滚动  
+    
+  // ===== 扩展推荐 =====  
+  // 以下扩展需要单独安装  
+  // - JetBrains IDE Darcula Theme  
+  // - IntelliJ IDEA Keybindings  
+  // - Material Icon Theme (可选)  
+  // - Rainbow Brackets (类似于JetBrains的彩色括号)  
+  // - Custom CSS and JS Loader (用于高级自定义)  
+
+  // ===== 自定义css =====
+  "vscode_custom_css.imports": [  
+    "file:///C:/Users/admin/.vscode/custom.css"  
+  ]
+}
