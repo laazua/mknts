@@ -15,6 +15,7 @@ public class Variables {
     public void setNum(int num) {
         // 局部变量
         int a = 200;
+        System.out.println("a is: " + a);
         // number也是局部变量
         this.num = num;
     }
