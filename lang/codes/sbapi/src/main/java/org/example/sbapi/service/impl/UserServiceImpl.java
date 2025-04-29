@@ -3,7 +3,6 @@ package org.example.sbapi.service.impl;
 import org.example.sbapi.entity.User;
 import org.example.sbapi.repository.UserRepository;
 import org.example.sbapi.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
