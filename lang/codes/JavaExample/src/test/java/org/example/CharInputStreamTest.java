@@ -3,7 +3,6 @@ package org.example;
 import org.example.iostream.CharInputStream;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class CharInputStreamTest
