@@ -1,0 +1,16 @@
+# dpsup
+
+[Unit]
+Description=dpsup service
+
+[Service]
+ExecStart=/usr/local/bin/dpsup -config /etc/dpsup/dpsup.conf
+User=root
+Group=root
+ExecStop=pkill dpsup
+RemainAfterExit=yes
+# limit system resource
+MemoryLimit=50M
+CPUQuota=20%
+LimitNOFILE=1024 
+LimitNPROC=256
