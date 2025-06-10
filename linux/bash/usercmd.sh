@@ -1,4 +1,6 @@
-####### 将此配置在/etc/profile.d/usercmd.sh中 #######
+##### 说明:
+#####   1. 将此配置添加在/etc/profile.d/usercmd.sh中
+#####   2. root权限执行: source /etc/profile.d/usercmd.sh
 
 # 用户操作历史记录配置
 USER_IP=$(who -u am i 2>/dev/null | awk '{print $NF}' | sed -e 's/[()]//g')
