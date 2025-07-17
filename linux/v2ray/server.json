@@ -1,0 +1,66 @@
+{
+  "log": {
+    "loglevel": "info"
+ //   "access": "/var/log/v2ray/access.log",
+ //   "error": "/var/log/v2ray/error.log"
+  },
+  "api": {
+    "tag": "api",
+    "services": [
+      "StatsService"
+    ]
+  },
+  "dns": {},
+  "stats": {},
+  "routing": {},
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  },
+  "reverse": {},
+  "inbounds": [
+    {
+      "protocol": "vmess",
+      "port": 8877,
+      "settings": {
+        "clients": [
+          {
+            "id": "cd8b8eb8-0849-420a-8c66-4d84f938cb27",
+            "alterId": 0
+          },
+          {
+            "id": "cd8b8eb8-0849-420a-8c66-4d84f938cb28",
+            "alterId": 0
+          },
+          {
+            "id": "cd8b8eb8-0849-420a-8c66-4d84f938cb29",
+            "alterId": 0
+          }
+        ]
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+            "http",
+            "tls"
+        ],
+        "metadataOnly": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ],
+  "transport": {}
+}
