@@ -32,6 +32,17 @@ async def main():
     #     result = await task
     #     results.append(result)
 
+    #### asyncio.ensure_future(do_task(10))
+    futures = asyncio.Queue()
+    for num in range(10):
+        future = asyncio.ensure_future(do_task(num))
+        futures.put_nowait(future)
+    while True:
+        if futures.empty():
+            break
+        future = futures.get_nowait()
+        result = await future
+
     ### 信号量[限速]和asyncio.gather() 示例
     # semaphore = asyncio.Semaphore(3)
     # tasks = [do_rate_limited(semaphore, i) for i in range(10)]
@@ -46,22 +57,22 @@ async def main():
     #     results.append(result)
 
     ### 信号量[限速]和asyncio.create_task() 示例
-    semaphore = asyncio.Semaphore(5)
-    results = []
-    tasks = [asyncio.create_task(do_rate_limited(semaphore, i)) for i in range(10)]
-    for task in tasks:
-        result = await task
-        results.append(result)
+    # semaphore = asyncio.Semaphore(5)
+    # results = []
+    # tasks = [asyncio.create_task(do_rate_limited(semaphore, i)) for i in range(10)]
+    # for task in tasks:
+    #     result = await task
+    #     results.append(result)
 
 
 if __name__ == '__main__':
     start = time.perf_counter()
     ### 新式: 获取事件循环，运行任务直到它们被标记为完成，然后关闭事件循环
-    # asyncio.run(main())
+    asyncio.run(main())
     ### 老式: 获取事件循环，运行任务直到它们被标记为完成，然后关闭事件循环
-    loop = asyncio.new_event_loop()
-    try:
-        loop.run_until_complete(main())
-    finally:
-        loop.close()
+    # loop = asyncio.new_event_loop()
+    # try:
+    #     loop.run_until_complete(main())
+    # finally:
+    #     loop.close()
     print(f"total time: {time.perf_counter()-start}")
