@@ -45,3 +45,9 @@ penvpn --genkey --secret ta.key
 1. tar -xzf openvpn-server.tar.gz -C /etc/openvpn   (服务端)
 2. tar -xzf openvpn-client.tar.gz -C /etc/openvpn   (客户端)
 3. 修改服务端和配置端的相关配置(IP地址和相关证书证书)
+
+- openvpn启动
+1. 服务端: openvpn --config /etc/openvpn/server/server.conf
+2. 客户端: openvpn --config /etc/openvpn/client/client.conf
+
+- 配置防火墙安全规则
