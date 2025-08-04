@@ -1,0 +1,31 @@
+{
+  "inbounds": [
+    {
+      "port": 8080,
+      "protocol": "http",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "84.32.44.189",
+            "port": 10887,
+            "users": [
+              {
+                "id": "bd8d133f-905d-8298-0382-d5e67c0e797b",
+                "encryption":"none"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

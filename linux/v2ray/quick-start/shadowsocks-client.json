@@ -1,0 +1,42 @@
+{
+  "inbounds": [
+    {
+      "port": 8080,
+      "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "admin",
+            "pass": "K+kcvOwNVXC371LeYHVD8w"
+          }
+        ],
+        "udp": false,
+        "ip": "127.0.0.1",
+        "userLevel": 0,
+        "packetEncoding": "None"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "email": "admin@v2ray.com",
+            "address": "84.32.44.189",
+            "port": 10888,
+            "method": "aes-256-gcm",
+            "password": "K+kcvOwNVXC371LeYHVD8w",
+            "level": 0
+          }
+        ]
+      }
+    }
+  ]
+}

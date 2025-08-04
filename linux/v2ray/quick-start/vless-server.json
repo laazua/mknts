@@ -1,0 +1,34 @@
+{
+  "log": {
+    "loglevel": "info"
+  },
+  "api": {
+    "tag": "api",
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ]
+  },
+  "inbounds": [
+    {
+      "port": 10887,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "bd8d133f-905d-8298-0382-d5e67c0e797b",
+            "alterId": 0
+          }
+        ],
+        "decryption":"none"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ]
+}
