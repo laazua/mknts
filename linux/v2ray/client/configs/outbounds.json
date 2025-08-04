@@ -1,0 +1,48 @@
+{
+  "outbounds": [
+    {
+      "protocol": "vmess",
+        "settings": {
+          "vnext": [
+            {
+              "address": "84.32.44.189",
+              "port": 6686, 
+              "users": [
+                {
+                  "id": "cdca1d2b-bc9f-14dd-edb9-8152408e3635"
+                }
+              ]
+            }
+          ]
+        }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "84.32.44.189",
+            "port": 6687,
+            "users": [
+              {
+                "id": "38463b88-90d0-497b-bc6e-e2dddff8ff41",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/vlessws"
+        }
+      }
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ]
+}

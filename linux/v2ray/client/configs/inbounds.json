@@ -1,0 +1,35 @@
+{
+  "inbounds": [
+    {
+      "tag": "socks-transport-node",
+      "port": 10800,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {},
+      "streamSettings": {},
+      "sniffing": {
+          "enabled": false,
+          "destOverride": ["http", "tls"]
+      },
+      "allocate": {
+          "strategy": "always",
+          "refresh": 5,
+          "concurrency": 3
+      }
+    },
+    {
+      "tag": "http-transport-node",
+      "port": 10801,
+      "listen": "0.0.0.0",
+      "protocol": "http",
+      "settins": {},
+      "streamSettings": {},
+      "sniffing": {},
+      "allocate": {
+        "strategy": "always",
+        "refresh": 5,
+        "concurrency": 3
+      }
+    }
+  ]
+}

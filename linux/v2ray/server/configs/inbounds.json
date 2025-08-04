@@ -1,0 +1,78 @@
+{
+  "inbounds": [
+    {
+      "port": 6686,
+      "protocol": "vmess",
+      "listen": "84.32.44.189",
+      "settings": {
+        "clients": [
+          {
+            "id": "cdca1d2b-bc9f-14dd-edb9-8152408e3635",
+            "alterId": 0
+          }
+        ]
+      }
+    },
+    {
+      "port": 6687,
+      "protocol": "vless",
+      "listen": "84.32.44.189",
+      "settings": {
+        "clients": [
+          {
+            "id": "38463b88-90d0-497b-bc6e-e2dddff8ff41",
+            "alterId": 0
+          }
+        ],
+        "decryption": "none"
+      },
+      "sniffing":{
+        "enabled": true,
+        "destOverride": [
+            "http",
+            "tls"
+        ],
+        "metadataOnly": false
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "./ssl/v2_cert.pem",
+              "keyFile": "./ssl/v2_key.pem"
+            }
+          ]
+        },
+        "wsSettings": {
+          "path": "/vlessws"
+        }
+      },
+      "allocate": {
+        "strategy": "always",
+        "refresh": 5,
+        "concurrency": 3
+      }
+    },
+    {
+      "port": 6688,
+      "protocol": "shadowsocks",
+      "listen": "84.32.44.189",
+      "settings": {
+        "email": "zhangsan@admin.com",
+        "method": "chacha20-ietf-poly1305",
+        "password": "NYfekZ4vJ8GMfHvV59wG/w",
+        "network": "tcp,udp",
+        "ivCheck": true
+      },
+      "sniffing": {},
+      "streamSettings": {},
+      "allocate": {
+        "strategy": "always",
+        "refresh": 5,
+        "concurrency": 3
+      }
+    }
+  ]
+}
