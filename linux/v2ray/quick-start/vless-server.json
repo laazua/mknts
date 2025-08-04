@@ -14,6 +14,7 @@
     {
       "port": 10887,
       "protocol": "vless",
+      "security": "auto",
       "settings": {
         "clients": [
           {
@@ -22,6 +23,20 @@
           }
         ],
         "decryption":"none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "vless-grpc"
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "alpn": ["h2"]
+        }
+      },
+      "mux": {
+        "enabled": true,
+        "concurrency": 4
       }
     }
   ],
