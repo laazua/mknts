@@ -17,6 +17,7 @@ set -e
 # 判断是否是root用户执行
 if [[ "$EUID" -ne 0 ]];then
     echo "请使用root权限执行此脚本"
+    exit 1
 fi
 
 # 检查easyrsa和openvpn是否安装
