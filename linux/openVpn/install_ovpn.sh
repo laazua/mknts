@@ -3,7 +3,7 @@
 ##### 此脚本用于生成openvpn相关证书
 
 ## 说明：
-##   1. 安装openvpn根据具体操作系统而定:  
+##   1. 安装openvpn(根据具体操作系统而定:  
 ##        a. sudo yum install -y openvpn
 ##        b. sudo dnf install -y openvpn
 ##        c. sudo apt install -y openvpn
@@ -66,15 +66,21 @@ function removeClientUser() {
         echo "用户: $clt_username 不存在!!!"
         exit $result
     fi
+
+    # 这里移除客户端后需要重启服务
+    easyrsa gen-crl && 
+    cp -r "${CERT_PATH}/pki/crl.pem" "${SRV_CONFIG}" &&
+    sed -i 's|#crl-verify|crl-verify|' ${SRV_CONFIG}/server.conf
+
     # 移除用户的req文件
-    find "${VPN_HOME}" -name "${clt_username:=zhangsan}" -exec rm -f{} \; &&
+    find "${VPN_HOME}" -name "${clt_username:=abc}*" -exec rm -f {} \; &&
         return 0
 }
 
 # 开始进入脚本
 if [[ "${#@}" -eq 2 && "$1" == "--rm" && "$2" != "" ]];then
     if removeClientUser $2; then
-        echo "移除 $2 成功"
+        echo "移除 $2 成功,请重启vpn服务."
     fi
     exit 0
 fi
@@ -164,9 +170,12 @@ log-append /var/log/openvpn/openvpn.log
 verb 3
 explicit-exit-notify 1
 
-# 运行客户端之间流量转发
+## 移除的客户端
+#crl-verify $SRV_CONFIG/crl.pem
+
+## 运行客户端之间流量转发
 client-to-client
-# 为客户端配置静态IP
+## 为客户端配置静态IP
 client-config-dir ${VPN_HOME}/ccd
 EOF
 fi
@@ -212,7 +221,7 @@ EOF
 fi
 
 read -rp "是否为${USERNAME}配置静态IP地址(yes|no): " ENTER
-if [[ "${ENTER}" == "no" ]];then
+if [[ "${ENTER}" != "yes" ]];then
     exit 0
 fi
 
