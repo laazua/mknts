@@ -3,7 +3,7 @@
 ##### 此脚本用于生成openvpn相关证书
 
 ## 说明：
-##   1. 安装openvpn(根据具体操作系统而定:  
+##   1. 安装openvpn根据具体操作系统而定:  
 ##        a. sudo yum install -y openvpn
 ##        b. sudo dnf install -y openvpn
 ##        c. sudo apt install -y openvpn
