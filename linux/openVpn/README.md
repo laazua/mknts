@@ -51,3 +51,19 @@ penvpn --genkey --secret ta.key
 2. 客户端: openvpn --config /etc/openvpn/client/client.conf
 
 - 配置防火墙安全规则
+```txt
+1. 允许vpn所在服务器进行外网访问
+   a. 系统内核参数配置:  
+      echo "net.ipv4.ip_forward=1" >>/etc/sysctl.conf && sysctl -p
+   b. 允许网络转发: 
+        firewall-cmd --permanent --add-masquerade
+        firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+        firewall-cmd --reload
+      或者：
+        iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE  # -s参数为vpn虚拟网段
+
+2. 配置openvpn服务器与各个客户端节点服务的防火墙访问规则(最小权限原则)
+```
+
+- 使用unbound软件服务进行vpn虚拟网段中的域名解析
+

@@ -158,7 +158,10 @@ auth SHA256
 
 server $VPN_NETWORK $VPN_NETMASK
 ifconfig-pool-persist ${VPN_HOME}/ipp.txt
-push "redirect-gateway def1 bypass-dhcp"
+## 所有流量都走vpn
+# push "redirect-gateway def1 bypass-dhcp"
+## 只有在虚拟网段内的地址才走vpn
+push "route 10.8.0.0 255.255.255.0"
 push "dhcp-option DNS 8.8.8.8"
 topology subnet
 
