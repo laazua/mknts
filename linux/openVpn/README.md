@@ -15,6 +15,18 @@ Compile time defines: enable_async_push=yes enable_comp_stub=no enable_crypto_of
 2. 192.168.165.84  (client)
 3. 192.168.165.85  (client)
 
+- 服务端主机优化
+```bash
+# 增加最大文件描述符数量
+echo "fs.file-max = 100000" >> /etc/sysctl.conf
+#允许网络转发
+echo "net.ipv4.ip_forward=1" >>/etc/sysctl.conf && sysctl -p
+# 提高网络性能参数
+echo "net.core.rmem_max = 16777216" >> /etc/sysctl.conf
+echo "net.core.wmem_max = 16777216" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_rmem = 4096 87380 16777216" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_wmem = 4096 65536 16777216" >> /etc/sysctl.conf
+```
 
 - 三台主机都执行一下命令
 1. sudo dnf install -y epel-release
@@ -53,14 +65,11 @@ penvpn --genkey --secret ta.key
 - 配置防火墙安全规则
 ```txt
 1. 允许vpn所在服务器进行外网访问
-   a. 系统内核参数配置:  
-      echo "net.ipv4.ip_forward=1" >>/etc/sysctl.conf && sysctl -p
-   b. 允许网络转发: 
-        firewall-cmd --permanent --add-masquerade
-        firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-        firewall-cmd --reload
-      或者：
-        iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE  # -s参数为vpn虚拟网段
+   firewall-cmd --permanent --add-masquerade
+   firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+   firewall-cmd --reload  
+   或者：
+   iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE  # -s参数为vpn虚拟网段
 
 2. 配置openvpn服务器与各个客户端节点服务的防火墙访问规则(最小权限原则)
 ```

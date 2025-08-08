@@ -14,6 +14,9 @@
 
 set -e
 
+# 添加easyrsa工具到环境变量中
+export PATH="$PATH:/usr/local/EasyRSA-3.2.0"
+
 # 判断是否是root用户执行
 if [[ "$EUID" -ne 0 ]];then
     echo "请使用root权限执行此脚本"
@@ -22,7 +25,7 @@ fi
 
 # 检查easyrsa和openvpn是否安装
 if ! easyrsa --version >/dev/null 2>&1; then
-    echo "请先安装easyrsa和bc.x86_64工具"
+    echo "请先安装easyrsa,bc.x86_64,openssl工具"
     exit 1
 fi
 
@@ -31,15 +34,13 @@ if ! openvpn --version >/dev/null 2>&1; then
     exit 1
 fi
 
-# 添加easyrsa工具到环境变量中
-export PATH="$PATH:/usr/local/EasyRSA-3.2.0"
 
 VPN_HOME="/etc/openvpn"
 CERT_PATH="${VPN_HOME}/easy-rsa"
 VPN_NETWORK="10.8.0.0"
 VPN_NETMASK="255.255.255.0"
 SERVER_NAME="server"
-SERVER_IP="192.168.165.83"
+SERVER_IP="82.29.129.162"
 
 # 服务端配置
 SRV_CONFIG="${VPN_HOME}/server"
@@ -122,17 +123,17 @@ fi
 
 # 创建ca证书
 if [[ ! -f "${CERT_PATH}/pki/ca.crt" ]];then
-    echo "\n\n" | easyrsa build-ca
+    echo "\n\n"|easyrsa build-ca nopass
 fi
 
 # 生成dh.pem
 if [[ ! -f "${CERT_PATH}/pki/dh.pem" ]];then
-    easyrsa gen-dh
+    easyrsa gen-dh nopass
 fi 
 
 # 生成服务端证书
 if [[ ! -f "${CERT_PATH}/pki/reqs/${SERVER_NAME}.req" ]];then
-    echo yes|easyrsa build-server-full "${SERVER_NAME}"
+    echo yes|easyrsa build-server-full "${SERVER_NAME}" nopass
 fi
 
 # 生成ta.key
@@ -144,9 +145,17 @@ fi
 if [[ ! -f "${SRV_CONFIG}/server.conf" ]];then
     [ ! -d "${VPN_HOME}/ccd" ] && mkdir -p "${VPN_HOME}/ccd"
     cat <<EOF >"${SRV_CONFIG}/server.conf"
-port 1193
+port 11933
 proto udp
 dev tun0
+
+# 优化重传参数
+reneg-sec 3600
+# 使用更大的缓冲区
+sndbuf 393216
+rcvbuf 393216
+# 提高并发连接数,根据服务器能力调整
+max-clients 2048
 
 ca $CERT_PATH/pki/ca.crt
 cert $CERT_PATH/pki/issued/$SERVER_NAME.crt
@@ -161,7 +170,7 @@ ifconfig-pool-persist ${VPN_HOME}/ipp.txt
 ## 所有流量都走vpn
 # push "redirect-gateway def1 bypass-dhcp"
 ## 只有在虚拟网段内的地址才走vpn
-push "route 10.8.0.0 255.255.255.0"
+push "route $VPN_NETWORK $VPN_NETMASK"
 push "dhcp-option DNS 8.8.8.8"
 topology subnet
 
@@ -187,7 +196,7 @@ fi
 while true;do
     read -rp "开始生成客户端证书, 请输入客户端证书名称: " -e USERNAME
     if [[ $USERNAME =~ ^[a-zA-Z]{3,12}[a-zA-Z0-9\_]+[a-zA-Z0-9_]*$ ]];then
-        echo yes|easyrsa build-client-full "${USERNAME}"
+        echo yes|easyrsa build-client-full "${USERNAME}" nopass
         break
     else
         echo "证书名称必须以字母开头且可以和数字和下划线组合, 请重新输入!"
@@ -199,7 +208,7 @@ if [[ ! -f ${CLT_CONFIG}/${USERNAME}.ovpn ]];then
 client
 dev tun0
 proto udp
-remote $SERVER_IP 1193
+remote $SERVER_IP 11933
 resolv-retry infinite
 nobind
 persist-tun
@@ -242,3 +251,4 @@ if [[ ! -f "$VPN_HOME/ccd/$USERNAME" ]];then
 else
     echo "${USERNAME}静态IP配置地址已经存在"
 fi
+
