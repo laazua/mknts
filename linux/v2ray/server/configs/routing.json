@@ -8,6 +8,11 @@
           "geoip:private"
         ],
         "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "ip": ["geoip:cn"] // 匹配 geoip.dat 中的中国 IP
       }
     ]
   }
