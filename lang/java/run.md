@@ -7,3 +7,5 @@
 如果我的项目的包是: com.laazua.app, 则运行命令:
 java -classpath app.jar com.laazua.app.App
 ```
+
+- 注意: 开发打包的java版本必须与真实运行环境中的java版本一致
