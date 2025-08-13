@@ -1,12 +1,12 @@
 ### 运行jar
 
 - **说明**
->> java项目pom.xml中未指定入口类，则使用一下命令运行jar包:
->> java -cp|-classpath|--class-path app.jar package.MainClass
->> 其中: -cp,-classpath,--class-path三选一即可
->> java -cp app.jar com.example.app.MainClass
->> java -classpath app.jar com.example.app.MainClass
->> java --class-path app.jar com.example.app.MainClass
+  >> java项目pom.xml中未指定入口类，则使用一下命令运行jar包:  
+  >> java -cp|-classpath|--class-path app.jar package.MainClass  
+  >> 其中: -cp,-classpath,--class-path三选一即可  
+  >> java -cp app.jar com.example.app.MainClass  
+  >> java -classpath app.jar com.example.app.MainClass  
+  >> java --class-path app.jar com.example.app.MainClass  
 
 - **注意: 开发打包的java版本必须与真实运行环境中的java版本一致**
 
