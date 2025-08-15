@@ -22,11 +22,11 @@
 - **rich-rule**
 1. 基本语法: rule [family="ipv4|ipv6"] [source address="ip/MASK" mac="MAC地址"|destination address="IP/MASK"] [service name="服务名"|port port="端口号"|protocol value="协议名"] [log prefix="前缀文本" level="info"] [audit] [action] [other_options]
 2. 示例：
-   > 允许特定IP访问指定服务: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.1.100" service name="ssh" accept'
-   > 拒绝某网段的 ICMP 并记录日志: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.2.0/24" protocol value="icmp" log prefix="ICMP BLOCK: " level="warning" reject'
-   > 限速http请求: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" port port="80" protocol="tcp" limit value="10/minute" accept'
-   > 端口转发(公网 8080 → 内网 80): firewall-cmd --zone=external --add-rich-rule='rule family="ipv4" forward-port port="8080" protocol="tcp" to-port="80" to-addr="192.168.1.2"'
-   > 临时生效指定时长(30秒): firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="10.0.0.5" service name="http" accept' --timeout=30
+   > 允许特定IP访问指定服务: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.1.100" service name="ssh" accept'  
+   > 拒绝某网段的 ICMP 并记录日志: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.2.0/24" protocol value="icmp" log prefix="ICMP BLOCK: " level="warning" reject'  
+   > 限速http请求: firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" port port="80" protocol="tcp" limit value="10/minute" accept'  
+   > 端口转发(公网 8080 → 内网 80): firewall-cmd --zone=external --add-rich-rule='rule family="ipv4" forward-port port="8080" protocol="tcp" to-port="80" to-addr="192.168.1.2"'  
+   > 临时生效指定时长(30秒): firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="10.0.0.5" service name="http" accept' --timeout=30  
 
 - **特别说明**
 1. 调试建议：先用 --timeout 测试临时规则，避免配置错误导致访问中断
