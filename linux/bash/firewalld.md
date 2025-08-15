@@ -48,4 +48,5 @@ firewall-cmd --zone=external --add-rich-rule='rule family="ipv4" source address=
 
 ```
 - **特别说明**
-1. 调试建议：先用 --timeout 测试临时规则，避免配置错误导致访问中断
+1. 调试建议：先用 --timeout 测试临时规则，避免配置错误导致访问中断  
+   firewall-cmd --zone=external --add-rich-rule='rule family="ipv4" source address="192.168.1.0/24" masquerade' --timeout 30
