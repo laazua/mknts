@@ -1,0 +1,12 @@
+---
+
+address:
+
+dbHost:
+dbPort:
+dbName:
+dbUser:
+dbPass:
+dbPool:
+dbIdle:
+dbLifeTime:
