@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Command Runner</title>
+<style>
+body { font-family: monospace; padding: 20px; }
+#output { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; background: #111; color: #0f0; }
+</style>
+</head>
+<body>
+<h1>Run Command</h1>
+
+<h2>Step 1: Add Task</h2>
+<form id="runForm">
+    <label>Agent Name: <input type="text" id="agentName" value="test"></label><br><br>
+    <label>Command Name: <input type="text" id="runName" value="xxxxx"></label>
+    <label>Command: <input type="text" id="cmd" value="ls -l"></label><br><br>
+    <button type="submit">Run</button>
+</form>
+<div>Task ID: <span id="taskId"></span></div>
+
+<h2>Step 2: Get Output</h2>
+<form id="outForm">
+    <label>Task ID: <input type="text" id="outTaskId"></label><br><br>
+    <label>Agent Name: <input type="text" id="outName" value="test"></label><br><br>
+    <button type="submit">Connect WebSocket</button>
+</form>
+
+<h2>Output</h2>
+<div id="output"></div>
+
+<script>
+const outputDiv = document.getElementById("output");
+
+// Step 1: Run task
+document.getElementById("runForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    outputDiv.innerHTML = "";
+
+    const agentName = document.getElementById("agentName").value;
+    const name = document.getElementById("runName").value;
+    const cmd = document.getElementById("cmd").value.split(" ");
+
+    const resp = await fetch(`/api/cmd/add?name=${agentName}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, cmd: cmd.join(" ") })
+    });
+     // 调试打印完整响应
+    console.log("Response object:", resp);
+    if (!resp.ok) {
+        outputDiv.innerHTML += "[Run failed]<br>";
+        return;
+    }
+
+    const data = await resp.json();
+    const taskId = data.task_id;
+    document.getElementById("taskId").innerText = taskId;
+    document.getElementById("outTaskId").value = taskId;
+    outputDiv.innerHTML += "[Task started: " + taskId + "]<br>";
+});
+
+// Step 2: Connect WebSocket for output
+document.getElementById("outForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const taskId = document.getElementById("outTaskId").value;
+    const name = document.getElementById("outName").value;
+
+    const wsUrl = `ws://${window.location.host}/api/cmd/out?task_id=${taskId}&name=${name}`;
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => { outputDiv.innerHTML += "[Connected...]\n"; };
+    ws.onmessage = (event) => {
+        outputDiv.innerHTML += event.data + "\n";
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    };
+    ws.onerror = (err) => { outputDiv.innerHTML += "[Error]\n"; };
+    ws.onclose = () => { outputDiv.innerHTML += "[Disconnected]\n"; };
+});
+</script>
+</body>
+</html>
