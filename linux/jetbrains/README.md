@@ -15,7 +15,7 @@
 
 - vscode字体
 1. 'JetBrains Mono', Consolas, 'Courier New', monospace
-2. Fira Code Regular
+2. 'Fira Code Regular'
 3. 'SF Mono', Consolas, 'Courier New', monospace
 
 - vscode字体配置
