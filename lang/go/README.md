@@ -8,3 +8,6 @@
    - upx --best optimizedApp  
 3. 编译优化:  
    - go build -gcflags="all=-l -B" -o optimizedApp 
+
+4. 标准库之外的核心库
+   - https://pkg.go.dev/golang.org/x
