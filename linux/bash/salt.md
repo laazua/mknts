@@ -1,4 +1,4 @@
-# salt
+### salt:zhangsan
 
 - salt加密和解密
 ```bash
