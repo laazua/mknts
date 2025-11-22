@@ -1,15 +1,16 @@
 #!groovy
 
 // @Library('仓库名@分支') _
-@Library('sharelib@btest') _
+@Library('sharedlibs@test') _
 
 
-import com.laazua.lib.Properties
+// import com.laazua.lib.Properties
 
 
 // 加载配置(不同项目加载不同配置)
 // 私密配置不能放入仓库中的配置,从这里读取
-Properties.loadFromFile('show.properties')
+// Properties.loadFromFile('resources/show.properties')
 
 
-LoadPipeline Properties.get('name')
+// LoadPipeline Properties.get('app.name')
+LoadPipeline("app.name")

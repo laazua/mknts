@@ -1,0 +1,4 @@
+
+python:
+  vendor: /opt/app/jenkins/vendor
+  script: /opt/app/jenkins/scripts/req.py

@@ -11,7 +11,8 @@ class Properties {
         // 可以在这里加载默认配置
         loadDefault()
     }
-    
+
+    @NonCPS
     private static void loadDefault() {
         // 设置一些默认值
         properties.setProperty('app.name', 'MyApp')
@@ -20,6 +21,7 @@ class Properties {
     }
     
     // 从文件加载配置（静态方法）
+    @NonCPS
     static void loadFromFile(String filename) {
         try {
             File file = new File(filename)
@@ -39,26 +41,37 @@ class Properties {
     }
     
     // 获取配置值（静态方法）
+    @NonCPS
     static String get(String key, String defaultValue = null) {
         return properties.getProperty(key, defaultValue)
     }
     
     // 获取所有配置键（静态方法）
+    @NonCPS
     static Set<String> getKeys() {
         return properties.stringPropertyNames()
     }
     
     // 检查键是否存在（静态方法）
+    @NonCPS
     static boolean containsKey(String key) {
         return properties.containsKey(key)
     }
     
     // 设置配置值（静态方法）
+    @NonCPS
     static void set(String key, String value) {
-        properties.setProperty(key, value)
+        this.@properties[key] = value  // 使用字段直接访问操作符
+    }
+
+    // 确保setProperty方法也正确实现
+    @NonCPS
+    void setProperty(String key, Object value) {
+        properties[key] = value
     }
     
     // 检查是否已加载配置文件
+    @NonCPS
     static boolean isLoaded() {
         return loaded
     }
