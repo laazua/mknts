@@ -1,0 +1,33 @@
+---
+### 项目配置
+
+app_title: cmdbop
+app_description: cmdbop 后端 API 文档
+app_debug: false
+# fastAPI 实例所在模块位置
+app_instance: app.main:_app
+
+## 接口配置
+api:
+  host: 0.0.0.0
+  port: 8800
+  workers: 5
+  prefix: '/api/v1'
+  reload: true
+
+## 数据库配置
+db:
+  host: 192.168.165.86
+  port: 3306
+  user: root
+  password: root123456
+  name: cmdbop
+  pool_size: 10
+
+## redis 配置
+redis:
+  enabled: true
+  db: 1
+  host: 192.168.165.86
+  port: 4396
+  password: 1x23456
