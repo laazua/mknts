@@ -1,44 +1,51 @@
 """
-用户数据库库操作
+用户仓库模块
 """
-
+from typing import Annotated
 from fastapi import Depends
-import sqlalchemy as sa
-import sqlalchemy.ext.asyncio as sasync
-
-from app.shared import db
 from app.model.user_model import User
 from app.model.user_schema import UserCreate, UserUpdate
+from app.shared.db import DbSession, RepositoryCURD
 
 
-class UserRepository(db.AsyncCRUDBase[User, UserCreate, UserUpdate]):
+class UserRepository(RepositoryCURD[User, UserCreate, UserUpdate, User]):
     """用户数据库操作类"""
-    
     model = User
 
-    def __init__(self, db=Depends(db.get)):
-        self.db = db  # type: ignore
+    def __init__(self, session: DbSession):
+        super().__init__(session, User)
+        self.session = session
 
-    async def get_by_username(
-        self,
-        username: str
-    ) -> User | None:
-        """通过用户名获取用户"""
-        result = await self.db.execute(
-            sa.select(self.model).where(self.model.username == username)
-        )
-        return result.scalars().first()
+    async def create(self, user_create: UserCreate) -> User:
+        """创建用户"""
+        return await super().add(user_create)
+
+    async def delete(self, id_):
+        """删除用户"""
+        return await super().remove(id_)
+
+    async def update(self, id_, user_update: UserUpdate) -> User:
+        """更新用户"""
+        return await super().put(id_, user_update)
+
+    async def get_by_id(self, id_) -> User:
+        """通过ID获取用户"""
+        return await super().get(id_)
+
+    async def get_users(self, skip = 0, limit = 100):
+        """获取用户列表"""
+        return await super().list(skip, limit)
     
-    async def get_by_email(
-        self,
-        email: str
-    ) -> User | None:
-        """通过邮箱获取用户"""
-        result = await self.db.execute(
-            sa.select(self.model).where(self.model.email == email)
-        )
-        return result.scalars().first()
+    def __call__(self, *args, **kwds):
+        return self
 
 
-def get() -> UserRepository:
-    return UserRepository()
+# def get_user_repository(
+#     session: DbSession = DbSession,
+# ) -> UserRepository:
+#     """提供用户仓库实例"""
+#     return UserRepository(session=session)
+
+
+# user_repository 依赖注入
+UserRepositoryDep = Annotated[UserRepository, Depends(UserRepository)]

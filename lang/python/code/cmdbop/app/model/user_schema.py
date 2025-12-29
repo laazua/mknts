@@ -1,27 +1,42 @@
 """
-接口模型定义
+用户数据模型定义
 """
-import typing
+from typing import Optional
+from datetime import datetime
+
 from pydantic import BaseModel
-from pydantic import ConfigDict
 
 
-class UserCreate(BaseModel):
-    """创建用户的接口模型"""
+class UserBase(BaseModel):
+    """"用户基础模型"""
     username: str
     email: str
-    password: str
-    full_name: typing.Optional[str] = None
-    password: str
+    full_name: Optional[str] = None
 
-    model_config = ConfigDict(from_attributes=True)
+
+class UserCreate(UserBase):
+    """"用户创建模型"""
+    password: str  # 创建时需要密码
 
 
 class UserUpdate(BaseModel):
-    """更新用户的接口模型"""
-    email: typing.Optional[str] = None
-    full_name: typing.Optional[str] = None
-    is_active: typing.Optional[bool] = None
-    password: typing.Optional[str] = None
+    """更新用户模型"""
+    username: Optional[str] = None
+    email: Optional[str] = None
+    password: Optional[str] = None
+    full_name: Optional[str] = None
 
-    model_config = ConfigDict(from_attributes=True)
+
+class UserInDB(UserBase):
+    """数据库中的用户模型"""
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class ResponseUser(UserInDB):
+    """响应用户模型"""

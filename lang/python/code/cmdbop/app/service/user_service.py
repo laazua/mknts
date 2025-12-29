@@ -1,22 +1,50 @@
 """
 用户服务模块
 """
+from typing import Annotated
+
 from fastapi import Depends
 
-from app.repository import user_repository as user_repo
-from app.model.user_schema import UserCreate, UserUpdate
+from app.repository.user_repository import UserRepositoryDep
+from app.model.user_schema import UserCreate, UserUpdate, ResponseUser
 
 
 class UserService:
     """用户服务类"""
+    def __init__(self, repository: UserRepositoryDep):
+        self.repository= repository
 
-    def __init__(self, user_repo: user_repo.UserRepository = Depends(user_repo.UserRepository)):
-        self.repository = user_repo
-
-    def add_user(self, in_user: UserCreate) -> user_repo.UserRepository.model:
+    async def add_user(self, in_user: UserCreate) -> ResponseUser:
         """添加新用户"""
-        return self.repository.create(in_user)
+        return await self.repository.create(user_create=in_user)
+
+    async def delete_user(self, id_: int):
+        """删除用户"""
+        return await self.repository.delete(id_)
+
+    async def update_user(self, id_: int, in_user: UserUpdate) -> ResponseUser:
+        """更新用户"""
+        return await self.repository.update(id_, in_user)
+
+    async def get_user_by_id(self, id_: int) -> ResponseUser:
+        """通过ID获取用户"""
+        return await self.repository.get_by_id(id_)
+
+    async def get_users(self, skip: int = 0, limit: int = 100) -> list[ResponseUser]:
+        """获取用户列表"""
+        return await self.repository.get_users(skip, limit)
+
+    def __call__(self, *args, **kwds):
+        return self
 
 
-def get() -> UserService:
-    return UserService(repository=user_repo.get())
+# # 创建依赖注入函数
+# def get_user_service(
+#     repository: UserRepositoryDep,
+# ) -> UserService:
+#     """获取用户服务实例"""
+#     return UserService(repository=repository)
+
+
+# 类型提示（用于 API 路由的依赖注入）
+UserServiceDep = Annotated[UserService, Depends(UserService)]
