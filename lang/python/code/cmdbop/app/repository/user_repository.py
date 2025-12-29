@@ -35,8 +35,9 @@ class UserRepository(RepositoryCURD[User, UserCreate, UserUpdate, User]):
     async def get_users(self, skip = 0, limit = 100):
         """获取用户列表"""
         return await super().list(skip, limit)
-    
+
     def __call__(self, *args, **kwds):
+        """实现可调用类,用于依赖注入"""
         return self
 
 

@@ -35,6 +35,7 @@ class UserService:
         return await self.repository.get_users(skip, limit)
 
     def __call__(self, *args, **kwds):
+        """实现可调用类,用于依赖注入"""
         return self
 
 

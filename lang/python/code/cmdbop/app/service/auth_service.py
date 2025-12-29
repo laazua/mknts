@@ -36,6 +36,7 @@ class AuthService:
         return {"message": "User logged out"}
 
     def __call__(self, *args, **kwds):
+        """实现可调用类,用于依赖注入"""
         return self
 
 
