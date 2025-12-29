@@ -92,6 +92,7 @@ class RepositoryCURD(
         db_obj = self.model(**obj_in_data)
         self.session.add(db_obj)
         await self.session.flush()
+        await self.session.commit()
         await self.session.refresh(db_obj)
         return db_obj
 

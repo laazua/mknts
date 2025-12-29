@@ -1,7 +1,7 @@
 """
 用户数据模型定义
 """
-from typing import Optional
+from typing import Optional, Any
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -17,6 +17,13 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     """"用户创建模型"""
     password: str  # 创建时需要密码
+
+    def model_dump_for_db(self) -> dict[str, Any]:
+        """为数据库准备的数据"""
+        data = self.model_dump(exclude={'password'}, exclude_none=True)
+        if hasattr(self, 'hashed_password'):
+            data['hashed_password'] = self.hashed_password
+        return data
 
 
 class UserUpdate(BaseModel):

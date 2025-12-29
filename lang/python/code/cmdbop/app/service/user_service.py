@@ -16,6 +16,9 @@ class UserService:
 
     async def add_user(self, in_user: UserCreate) -> ResponseUser:
         """添加新用户"""
+        print("xxxxxxxxxx ", in_user)
+        # 用户密码加密
+        # in_user.password = hash_password(in_user.password)
         return await self.repository.create(user_create=in_user)
 
     async def delete_user(self, id_: int):
