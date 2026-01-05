@@ -22,7 +22,6 @@ class Base(DeclarativeBase):
 
 class SessionManager:
     """异步数据库连接管理类"""
-
     def __init__(
         self,
         database_url: str,

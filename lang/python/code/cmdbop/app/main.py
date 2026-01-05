@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
     app.state.db_session = db_session
     app.state.redis_session = redis_session
     yield
-    # 资源清理
+    # 关闭时资源清理
     print("Shutting down application...")
     await db_session.close()
     await redis_session.close()
