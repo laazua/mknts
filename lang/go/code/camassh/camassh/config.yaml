@@ -1,0 +1,21 @@
+---
+## 配置文件
+
+ca:
+  host: 192.168.165.71
+  path: /etc/ssh/ca
+  log_path: /var/log/ssh-ca
+  nets:
+    - 127.0.0.1
+    - 192.168.165.0/24
+  
+
+bastion:
+  host: 192.168.165.72
+  user: zhangsan
+  password: 123456
+
+nodes:
+  - host: 192.168.165.73
+    user: zhangsan
+    password: 123456
