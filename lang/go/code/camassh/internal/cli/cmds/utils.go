@@ -2,6 +2,7 @@ package cmds
 
 import (
 	"bufio"
+	"camassh/internal/sshx"
 	"fmt"
 	"os"
 	"strings"
@@ -68,4 +69,32 @@ func strToInt(s string, defaultVal int) int {
 		return defaultVal
 	}
 	return i
+}
+
+func getSshClient() (*sshx.Client, error) {
+	var name, ipAddress, port string
+	fmt.Print("请输入SSH登录IP地址: ")
+	fmt.Scan(&ipAddress)
+	fmt.Print("请输入SSH登录端口: ")
+	fmt.Scan(&port)
+	fmt.Print("请输入SSH登录用户: ")
+	fmt.Scan(&name)
+	// 安全的输入密码方式
+	password, err := getPassword("请输入SSH登录密码: ")
+	if err != nil {
+		return nil, err
+	}
+	// 配置SSH连接
+	sshConfig := &sshx.Config{
+		Host:     strings.TrimSpace(ipAddress),
+		Port:     strToInt(strings.TrimSpace(port), 22),
+		Username: strings.TrimSpace(name),
+		Password: strings.TrimSpace(password),
+	}
+	// 创建客户端
+	client, err := sshx.NewClient(sshConfig)
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
 }

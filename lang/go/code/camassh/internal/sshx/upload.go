@@ -72,7 +72,7 @@ func (c *Client) UploadFileWithProgress(localPath, remotePath string, callback P
 	}
 
 	// 启动scp命令
-	cmd := fmt.Sprintf("scp -t %s", remotePath)
+	cmd := fmt.Sprintf("sudo scp -t %s", remotePath)
 	if err := session.Start(cmd); err != nil {
 		return fmt.Errorf("start scp command failed: %w", err)
 	}

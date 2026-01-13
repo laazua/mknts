@@ -1,7 +1,6 @@
 package sshx
 
 import (
-	// ... 原有导入
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -11,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 // DownloadFile 从远程主机下载文件到本地
@@ -68,7 +69,7 @@ func (c *Client) DownloadFileWithProgress(remotePath, localPath string, callback
 	}
 
 	// 启动scp命令
-	cmd := fmt.Sprintf("scp -f %s", remotePath)
+	cmd := fmt.Sprintf("sudo scp -f %s", remotePath)
 	if err := session.Start(cmd); err != nil {
 		return fmt.Errorf("start scp command failed: %w", err)
 	}
@@ -110,38 +111,77 @@ func (c *Client) DownloadFileWithProgress(remotePath, localPath string, callback
 	// 下载文件内容
 	var transferred int64
 	buffer := make([]byte, bufferSize)
+	totalRead := int64(0)
 
 	for {
-		n, err := stdout.Read(buffer)
+		// 计算还需要读取的字节数
+		remaining := fileSize - totalRead
+		if remaining <= 0 {
+			break
+		}
+
+		// 调整读取大小以避免超出文件边界
+		readSize := bufferSize
+		if remaining < int64(readSize) {
+			readSize = int(remaining)
+		}
+
+		n, err := stdout.Read(buffer[:readSize])
 		if n > 0 {
-			// 检查是否到达文件结束标记
-			if n >= 1 && buffer[n-1] == 0 {
-				// 写入除了结束标记外的所有数据
-				if n-1 > 0 {
-					if _, err := file.Write(buffer[:n-1]); err != nil {
-						return fmt.Errorf("write to local file failed: %w", err)
+			// 检查是否读到结束标记
+			writeBuffer := buffer[:n]
+			writeSize := n
+
+			// 如果这是最后一块数据，检查是否有结束标记
+			if totalRead+int64(n) >= fileSize {
+				// 检查缓冲区末尾是否有结束标记 (0x00)
+				for i := n - 1; i >= 0; i-- {
+					if buffer[i] == 0 {
+						writeSize = i
+						break
 					}
-					transferred += int64(n - 1)
 				}
-				break
+				writeBuffer = buffer[:writeSize]
 			}
 
 			// 写入数据
-			if _, err := file.Write(buffer[:n]); err != nil {
-				return fmt.Errorf("write to local file failed: %w", err)
+			if writeSize > 0 {
+				if _, err := file.Write(writeBuffer); err != nil {
+					return fmt.Errorf("write to local file failed: %w", err)
+				}
+				transferred += int64(writeSize)
+				totalRead += int64(writeSize)
+
+				// 调用进度回调
+				if callback != nil {
+					progress := &FileTransferProgress{
+						Filename:    filepath.Base(remotePath),
+						TotalSize:   fileSize,
+						Transferred: transferred,
+						Percentage:  float64(transferred) / float64(fileSize) * 100,
+					}
+					callback(progress)
+				}
 			}
 
-			transferred += int64(n)
-
-			// 调用进度回调
-			if callback != nil {
-				progress := &FileTransferProgress{
-					Filename:    filepath.Base(remotePath),
-					TotalSize:   fileSize,
-					Transferred: transferred,
-					Percentage:  float64(transferred) / float64(fileSize) * 100,
+			// 如果文件传输完成，发送最终确认
+			if totalRead >= fileSize {
+				// 发送最终确认信号
+				if _, err := stdin.Write([]byte{0}); err != nil {
+					return fmt.Errorf("send final confirmation failed: %w", err)
 				}
-				callback(progress)
+
+				// 尝试读取可能存在的目录结束标记 'E'
+				go func() {
+					// 短暂延迟后读取可能的额外数据
+					time.Sleep(100 * time.Millisecond)
+					tempBuf := make([]byte, 10)
+					if n, _ := stdout.Read(tempBuf); n > 0 && tempBuf[0] == 'E' {
+						stdin.Write([]byte{0}) // 确认目录结束
+					}
+				}()
+
+				break
 			}
 		}
 
@@ -162,7 +202,38 @@ func (c *Client) DownloadFileWithProgress(remotePath, localPath string, callback
 		}
 	}
 
-	return session.Wait()
+	// 使用带超时的等待机制
+	errChan := make(chan error, 1)
+	go func() {
+		errChan <- session.Wait()
+	}()
+
+	// 设置5秒超时
+	select {
+	case err := <-errChan:
+		if err != nil {
+			// 检查是否是正常的退出错误
+			if exitErr, ok := err.(*ssh.ExitError); ok {
+				// scp 成功执行后通常返回0，如果有错误但文件已下载完整，也认为是成功
+				if exitErr.ExitStatus() == 0 || transferred == fileSize {
+					return nil
+				}
+				return fmt.Errorf("scp failed with exit code %d", exitErr.ExitStatus())
+			}
+			return fmt.Errorf("session wait failed: %w", err)
+		}
+		return nil
+	case <-time.After(5 * time.Second):
+		// 超时后检查文件是否已完整下载
+		if transferred == fileSize {
+			// 文件已完整下载，强制关闭会话并返回成功
+			session.Close()
+			return nil
+		}
+		// 文件未完整下载，返回错误
+		session.Close()
+		return fmt.Errorf("download timeout, downloaded %d/%d bytes", transferred, fileSize)
+	}
 }
 
 // DownloadDirectory 下载整个远程目录到本地
@@ -412,5 +483,18 @@ func (c *Client) resumeDownloadFromOffset(remotePath, localPath string, offset i
 	defer session.Close()
 
 	session.Stdout = file
-	return session.Run(cmd)
+
+	// 同样使用带超时的等待
+	errChan := make(chan error, 1)
+	go func() {
+		errChan <- session.Run(cmd)
+	}()
+
+	select {
+	case err := <-errChan:
+		return err
+	case <-time.After(30 * time.Second): // 断点续传可能需要更长时间
+		session.Close()
+		return fmt.Errorf("resume download timeout after 30 seconds")
+	}
 }

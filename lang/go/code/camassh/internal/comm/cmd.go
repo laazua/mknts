@@ -177,6 +177,12 @@ func (ce *CommandExecutor) RunCommand(cmdStr string, args []string, opts ...*Com
 	return result
 }
 
+// RunMultipleCommands 执行多条命令
+func (ce *CommandExecutor) RunMultipleCommands(cmds []string, opts ...*CommandOptions) *CommandResult {
+	combinedCmd := strings.Join(cmds, " && ")
+	return ce.RunShell(combinedCmd, opts...)
+}
+
 // captureOutput 捕获输出
 func (ce *CommandExecutor) captureOutput(pipe io.ReadCloser, buf *bytes.Buffer, captureFunc func(string)) {
 	reader := bufio.NewReader(pipe)

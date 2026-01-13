@@ -13,13 +13,11 @@ import (
 
 type InitCommand struct {
 	*cli.BaseCommand
-	excutor *comm.CommandExecutor
 }
 
 func NewInitCommand() cli.Command {
 	cmd := &InitCommand{
 		BaseCommand: cli.NewBaseCommand("init", "初始化CA、堡垒机或节点"),
-		excutor:     comm.NewCommandExecutor(),
 	}
 	return cmd
 }
@@ -32,7 +30,7 @@ func (c *InitCommand) Configure(cfg *cli.CommandConfig) {
 	//   camassh init --target bastion
 	//   camassh init --target node
 	// `)
-	// 添加标志
+	// 添加flag
 	c.StringFlag("target", "ca", "目标名称 (必需: ca, bastion, node)")
 }
 
@@ -65,152 +63,172 @@ func (c *InitCommand) Run(ctx cli.Context) error {
 	// ctx.Printf("初始化目标: %s\n", *target)
 	if *target == "ca" {
 		ctx.Printf("初始化CA目标: %s\n", *target)
-		return initCa(ctx, c)
+		return initCa(ctx)
 	}
 	if *target == "bastion" {
 		ctx.Printf("初始化堡垒机目标: %s\n", *target)
-		return initBastion(ctx, c)
+		return initBastion(ctx)
+	}
+	if *target == "node" {
+		ctx.Printf("初始化节点目标: %s\n", *target)
+		return initNode(ctx)
 	}
 	return nil
 }
 
 // 初始化ca
-func initCa(ctx cli.Context, cmd *InitCommand) error {
+func initCa(ctx cli.Context) error {
+	excutor := comm.NewCommandExecutor()
 	// ctx.Printf("%v\n", shellContext)
-	// 创建CA目录结构和密钥对
-	result := cmd.excutor.RunShell(initCaScript)
-	if result.Err != nil {
-		return fmt.Errorf("初始化CA失败: %v", result.Stderr)
+	cmds := []string{
+		fmt.Sprintf("sudo mkdir -p %v", config.Get().CA().Path()),
+		fmt.Sprintf("sudo chmod 700 %v", config.Get().CA().Path()),
+		fmt.Sprintf("sudo ssh-keygen -t ed25519 -f %v/host_ca -C 'OpenSSH Host CA'", config.Get().CA().Path()),
+		fmt.Sprintf("sudo chmod 600 %v/host_ca", config.Get().CA().Path()),
 	}
-	ctx.Printf("CA初始化成功,路径: %s\n", config.Get().CA().Path())
-
-	// 创建用户证书签发脚本
-	result = cmd.excutor.RunShell(issueUserCertScript)
+	result := excutor.RunMultipleCommands(cmds)
 	if result.Err != nil {
-		return fmt.Errorf("初始化用户证书失败: %v", result.Stderr)
+		return fmt.Errorf("初始化CA失败: %v", result.Err)
 	}
-	result = cmd.excutor.RunShell(issueHostCertScript)
-	if result.Err != nil {
-		return fmt.Errorf("初始化主机证书失败: %v", result.Stderr)
-	}
-	result = cmd.excutor.RunShell(revokeCertScript)
-	if result.Err != nil {
-		return fmt.Errorf("初始化吊销证书脚本失败: %v", result.Stderr)
-	}
-	result = cmd.excutor.RunShell(distributeCaPubKeyScript)
-	if result.Err != nil {
-		return fmt.Errorf("初始化分发CA公钥脚本失败: %v", result.Stderr)
-	}
+	ctx.Printf("初始化CA成功,CA路径: %s\n", config.Get().CA().Path())
 	return nil
 }
 
 // 初始化堡垒机
-func initBastion(ctx cli.Context, cmd *InitCommand) error {
-	var name, ipAddress, port string
-	fmt.Print("请输入堡垒机IP地址: ")
-	fmt.Scan(&ipAddress)
-	fmt.Print("请输入堡垒机SSH端口: ")
-	fmt.Scan(&port)
-	fmt.Print("请输入登录堡垒机用户名: ")
-	fmt.Scan(&name)
-	// 安全的输入密码方式
-	password, err := getPassword("请输入堡垒机用户密码: ")
+func initBastion(ctx cli.Context) error {
+	excutor := comm.NewCommandExecutor()
+	client, err := getSshClient()
 	if err != nil {
-		return fmt.Errorf("获取密码失败: %v", err)
-	}
-	// 配置SSH连接
-	sshConfig := &sshx.Config{
-		Host:     strings.TrimSpace(ipAddress),
-		Port:     strToInt(strings.TrimSpace(port), 22),
-		Username: strings.TrimSpace(name),
-		Password: strings.TrimSpace(password),
-	}
-	// 创建客户端
-	client, err := sshx.NewClient(sshConfig)
-	if err != nil {
-		return fmt.Errorf("创建SSH客户端失败: %v", err)
+		return fmt.Errorf("获取SSH登录会话失败")
 	}
 	defer client.Close()
-	var userExist, optUser string
-	fmt.Print("请确认是否存在堡垒机操作用户[yes|no]: ")
-	fmt.Scan(&userExist)
-	if strings.TrimSpace(userExist) != "yes" {
-		return fmt.Errorf("请先创建堡垒机操作用户后再执行此操作")
+	// 拷贝CA 公钥到堡垒机
+	cmds := []string{fmt.Sprintf("sudo test -f %v/host_ca.pub", config.Get().CA().Path())}
+	result := excutor.RunMultipleCommands(cmds)
+	if result.ExitCode != 0 {
+		// 带进度显示的上传
+		progressCallback := func(p *sshx.FileTransferProgress) {
+			fmt.Printf("Uploading %s: %.2f%%\n", p.Filename, p.Percentage)
+		}
+		err = client.UploadFileWithProgress(fmt.Sprintf("%v/host_ca.pub", config.Get().CA().Path()), "/etc/ssh/host_ca.pub", progressCallback)
+		if err != nil {
+			return fmt.Errorf("上传 CA 公钥到堡垒机失败: %v", err.Error())
+		}
 	}
-	fmt.Print("请输入堡垒机操作用户: ")
-	fmt.Scan(&optUser)
-
-	// 生成密钥
-	certCmd := fmt.Sprintf(`ssh-keygen -t rsa -b 4096  -f ~/.ssh/id_rsa -C "%v@client-server" -N ""`, strings.TrimSpace(optUser))
-	catCmd := "cat ~/.ssh/id_rsa.pub"
-	cmds := []string{certCmd, catCmd}
+	// 配置信任主机
+	var nodeIp string
+	fmt.Print("输入信任节点IP: ")
+	fmt.Scan(&nodeIp)
+	cmds = []string{
+		fmt.Sprintf(`echo "@cert-authority %v $(cat /etc/ssh/host_ca.pub)" >/etc/ssh/ssh_known_hosts`, strings.TrimSpace(nodeIp)),
+		// 备份
+		"sudo cp /etc/ssh/ssh_config /etc/ssh/ssh_config.bak-$(date +%Y%m%d)",
+		// 清空文件并逐行写入
+		"sudo echo 'Include /etc/ssh/ssh_config.d/*.conf' >/etc/ssh/ssh_config",
+		fmt.Sprintf(`sudo echo "Host %v" >/etc/ssh/ssh_config`, strings.TrimSpace(nodeIp)),
+		"sudo echo '    StrictHostKeyChecking yes' >/etc/ssh/ssh_config",
+		"sudo echo '    UserKnownHostsFile /etc/ssh/ssh_known_hosts' >/etc/ssh/ssh_config",
+	}
 	_, err = client.RunMultiple(cmds)
 	if err != nil {
-		return fmt.Errorf("执行生成密钥命令失败: %v", err)
+		return fmt.Errorf("配置信任主机失败: %v", err.Error())
 	}
+	ctx.Printf("更新堡垒机sshd成功\n")
 	return nil
 }
 
 // 初始化节点
-func initNode(ctx cli.Context, cmd *InitCommand) error {
-	var name, ipAddress, port string
-	fmt.Print("请输入节点IP地址: ")
-	fmt.Scan(&ipAddress)
-	fmt.Print("请输入节点SSH端口: ")
-	fmt.Scan(&port)
-	fmt.Print("请输入登录节点用户名: ")
-	fmt.Scan(&name)
-	// 安全的输入密码方式
-	password, err := getPassword("请输用户入密码: ")
+func initNode(ctx cli.Context) error {
+	excuter := comm.NewCommandExecutor()
+	client, err := getSshClient()
 	if err != nil {
-		return fmt.Errorf("获取密码失败: %v", err)
-	}
-	// 配置SSH连接
-	sshConfig := &sshx.Config{
-		Host:     strings.TrimSpace(ipAddress),
-		Port:     strToInt(strings.TrimSpace(port), 22),
-		Username: strings.TrimSpace(name),
-		Password: strings.TrimSpace(password),
-	}
-	// 创建客户端
-	client, err := sshx.NewClient(sshConfig)
-	if err != nil {
-		return fmt.Errorf("创建SSH客户端失败: %v", err)
+		return fmt.Errorf("创建SSH登录客户端会话失败")
 	}
 	defer client.Close()
-	// 连接
-	ctx.Printf("连接堡垒机成功\n")
-	err = client.UploadFile(fmt.Sprintf("%v/users/public/user-ca.pub", config.Get().CA().Path()), "/etc/ssh/")
-	if err != nil {
-		return fmt.Errorf("上传CA公钥失败: %v", err)
+	// 登录被管理节点
+	ctx.Printf("连接被管理节点成功\n")
+	var hostnameChaged string
+	fmt.Print("节点是否更改hostname: [yes|no]: ")
+	fmt.Scan(&hostnameChaged)
+	if strings.TrimSpace(hostnameChaged) != "yes" {
+		var hostname string
+		fmt.Print("请输出主机名: ")
+		fmt.Scan(&hostname)
+		cmd := fmt.Sprintf("sudo hostnamectl %v", strings.TrimSpace(hostname))
+		_, err := client.Run(cmd)
+		if err != nil {
+			return fmt.Errorf("设置主机名失败")
+		}
 	}
-	// 配置信任CA
+	var hostname, myip string
+	result, err := client.Run("sudo hostname")
+	if err != nil {
+		return fmt.Errorf("获取主机名失败: %v", err.Error())
+	}
+	hostname = strings.TrimSpace(result.Stdout)
+	result, err = client.Run("sudo hostname -I")
+	if err != nil {
+		return fmt.Errorf("获取主机IP失败: %v", err.Error())
+	}
+	myip = strings.TrimSpace(result.Stdout)
+	// 生成管理节点的主机密钥
+	cmd := "sudo test ! -f /etc/ssh/ssh_host_ed25519_key && sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''"
+	_, err = client.Run(cmd)
+	if err != nil {
+		return fmt.Errorf("创建主机密钥失败")
+	}
+	// 将被管理节点的主机公钥拷贝到CA服务器
+	// err = client.DownloadFile("/etc/ssh/ssh_host_ed25519_key.pub", fmt.Sprintf("%v/%v", config.Get().CA().Path(), hostname))
+	// 带进度显示下载
+	progressCallback := func(p *sshx.FileTransferProgress) {
+		fmt.Printf("Downloading %s: %.2f%%\n", p.Filename, p.Percentage)
+	}
+	err = client.DownloadFileWithProgress("/etc/ssh/ssh_host_ed25519_key.pub", fmt.Sprintf("%v/%v.pub", config.Get().CA().Path(), hostname), progressCallback)
+	if err != nil {
+		return fmt.Errorf("下载主机公钥失败: %v", err.Error())
+	}
+	// 在 CA 上签发证书
+	caPath := config.Get().CA().Path()
 	cmds := []string{
-		"sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup.$(date +%Y%m%d)",
-		`sudo cat >> /etc/ssh/sshd_config << 'EOF'
+		fmt.Sprintf(
+			`sudo ssh-keygen -s %v/host_ca -I "%v-$(date +%%Y%%m%%d)" -h -n "%v,%v"  -V +180d %v/%v.pub`,
+			caPath, hostname, hostname, myip, caPath, hostname),
+	}
+	r := excuter.RunMultipleCommands(cmds)
+	if r.Err != nil {
+		return fmt.Errorf("CA 签发证书失败: %v", r.Err.Error())
+	}
+	// 把证书上传到node节点
+	err = client.UploadFile(fmt.Sprintf("%v/%v-cert.pub", caPath, hostname), "/etc/ssh/ssh_host_ed25519_key-cert.pub")
+	if err != nil {
+		return fmt.Errorf("回传CA颁发的证书失败: %v", err.Error())
+	}
+	// 配置sshd,并重启
+	cmds = []string{
+		// 备份
+		"sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak-$(date +%Y%m%d)",
 
-# === SSH CA 配置 ===
-# 信任的用户 CA
-TrustedUserCAKeys /etc/ssh/user-ca.pub
-
-# 可选：配置吊销列表（如果需要）
-# RevokedKeys /etc/ssh/revoked_keys
-
-# 可选：禁用密码认证（推荐）
+		// 清空文件并逐行写入
+		`sudo sh -c 'cat > /etc/ssh/sshd_config << "ENDSSHDCONFIG"
+Include /etc/ssh/sshd_config.d/*.conf
+Subsystem sftp /usr/libexec/openssh/sftp-server
+PermitRootLogin no
 PasswordAuthentication no
+PermitEmptyPasswords no
+GSSAPIAuthentication no
+UsePAM yes
 ChallengeResponseAuthentication no
+UseDNS no
+AddressFamily inet
+ENDSSHDCONFIG'`,
 
-# 可选：限制只有特定组的用户可以使用证书登录
-# Match User *,!root
-#    AuthenticationMethods publickey
-EOF`,
-		"sudo sshd -t",
-		"sudo systemctl restart sshd || sudo systemctl restart ssh",
+		// 验证并重启
+		"sudo sshd -t && sudo systemctl restart sshd",
 	}
 	_, err = client.RunMultiple(cmds)
 	if err != nil {
-		return fmt.Errorf("配置信任CA失败: %v", err)
+		return fmt.Errorf("配置sshd失败")
 	}
-
+	ctx.Printf("初始化被管理节点成功\n")
 	return nil
 }
