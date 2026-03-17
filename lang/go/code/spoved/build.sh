@@ -23,11 +23,11 @@ if [ "$1" == "release" ];then
     exit
 fi
 
-echo "Building spoved-host..."
-cd spoved-host && go build -o ../bin/hostspoved .
+# echo "Building spoved-host..."
+# cd spoved-host && go build -o ../bin/hostspoved .
 
-echo "Building spoved-k8s..."
-cd ../spoved-k8s && go build -o ../bin/k8sspoved .
+# echo "Building spoved-k8s..."
+# cd ../spoved-k8s && go build -o ../bin/k8sspoved .
 
 echo "Building spoved-user..."
-cd ../spoved-user && go build -o ../bin/userspoved .
+cd spoved-user && go build -o ../bin/userspoved .

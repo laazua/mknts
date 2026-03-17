@@ -14,6 +14,7 @@ filename = "logs/app.log"
 max_size = 100
 max_backups = 3
 max_age = 7
+formatter = "text"
 
 # 数据库配置
 [database]

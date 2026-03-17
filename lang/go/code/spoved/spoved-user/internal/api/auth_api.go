@@ -14,10 +14,14 @@ type AuthHandler struct {
 	service *service.AuthService
 }
 
-func NewAuthHandler() *AuthHandler {
-	return &AuthHandler{
-		service: service.NewAuthService(),
+func NewAuthHandler() (*AuthHandler, error) {
+	service, err := service.NewAuthService()
+	if err != nil {
+		return nil, err
 	}
+	return &AuthHandler{
+		service: service,
+	}, nil
 }
 
 // 密码登录接口

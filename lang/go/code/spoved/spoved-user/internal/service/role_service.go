@@ -1,10 +1,19 @@
 package service
 
+import "spoved-user/internal/repository"
+
 type RoleService struct {
+	repository *repository.RoleRepository
 }
 
-func NewRoleService() *RoleService {
-	return &RoleService{}
+func NewRoleService() (*RoleService, error) {
+	repo, err := repository.NewRoleRepository()
+	if err != nil {
+		return nil, err
+	}
+	return &RoleService{
+		repository: repo,
+	}, nil
 }
 
 // GetRoleByID 根据角色ID获取角色信息

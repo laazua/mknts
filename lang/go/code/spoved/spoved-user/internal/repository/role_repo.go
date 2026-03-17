@@ -1,15 +1,23 @@
 package repository
 
-import "spoved-utils/db"
+import (
+	"spoved-utils/db"
+
+	"gorm.io/gorm"
+)
 
 type RoleRepository struct {
-	dB *db.MySQL
+	db *gorm.DB
 }
 
-func NewRoleRepository() *RoleRepository {
-	return &RoleRepository{
-		dB: db.NewMySQL(),
+func NewRoleRepository() (*RoleRepository, error) {
+	gormDb, err := db.GetDB()
+	if err != nil {
+		return nil, err
 	}
+	return &RoleRepository{
+		db: gormDb,
+	}, nil
 }
 
 // GetRoleByID 根据角色ID获取角色信息

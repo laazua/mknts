@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"time"
 
@@ -17,11 +18,19 @@ type AuthService struct {
 	authRepository *repository.AuthRepository
 }
 
-func NewAuthService() *AuthService {
-	return &AuthService{
-		cache:          cache.NewRedisCache(),
-		authRepository: repository.NewAuthRepository(),
+func NewAuthService() (*AuthService, error) {
+	repo, err := repository.NewAuthRepository()
+	if err != nil {
+		return nil, err
 	}
+	cache, err := cache.NewRedisCache()
+	if err != nil {
+		return nil, err
+	}
+	return &AuthService{
+		cache:          cache,
+		authRepository: repo,
+	}, nil
 }
 
 // PwdLogin 用户登录
@@ -44,11 +53,11 @@ func (s *AuthService) PwdLogin(username, password string) (string, error) {
 }
 
 func (s *AuthService) SmsLogin(phone, code string) (string, error) {
-	storedCode, err := s.cache.Get(phone)
+	storedCode, err := s.cache.Get(context.Background(), phone)
 	if err != nil && storedCode != code {
 		return "", errors.New("invalid verification code")
 	}
-	s.cache.Delete("sms:" + phone) // 删除验证码，防止重复使用
+	s.cache.Delete(context.Background(), "sms:"+phone) // 删除验证码，防止重复使用
 	// 查询数据库
 	userRepo, err := s.authRepository.GetUserByPhone(phone)
 	if err != nil {

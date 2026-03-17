@@ -1,15 +1,23 @@
 package repository
 
-import "spoved-utils/db"
+import (
+	"spoved-utils/db"
+
+	"gorm.io/gorm"
+)
 
 type UserRepository struct {
-	dB *db.MySQL
+	db *gorm.DB
 }
 
-func NewUserRepository() *UserRepository {
-	return &UserRepository{
-		dB: db.NewMySQL(),
+func NewUserRepository() (*UserRepository, error) {
+	gormDB, err := db.GetDB()
+	if err != nil {
+		return nil, err
 	}
+	return &UserRepository{
+		db: gormDB,
+	}, nil
 }
 
 // GetUserByID 根据用户ID获取用户信息

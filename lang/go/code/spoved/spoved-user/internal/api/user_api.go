@@ -11,10 +11,14 @@ type UserHandler struct {
 	userService *service.UserService
 }
 
-func NewUserHandler() *UserHandler {
-	return &UserHandler{
-		userService: service.NewUserService(),
+func NewUserHandler() (*UserHandler, error) {
+	service, err := service.NewUserService()
+	if err != nil {
+		return nil, err
 	}
+	return &UserHandler{
+		userService: service,
+	}, nil
 }
 
 // 获取用户信息接口

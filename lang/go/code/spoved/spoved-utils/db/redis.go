@@ -2,60 +2,36 @@ package db
 
 import (
 	"spoved-utils/config"
+	"sync"
 
 	"github.com/redis/go-redis/v9"
 )
 
-var rds *redis.Client
+var (
+	rds     *redis.Client
+	once    sync.Once
+	initErr error
+)
 
-// 缓存实现
-type Redis struct {
-	Host     string
-	Port     int
-	Password string
-	DB       int
-}
-
-func NewRedis() *Redis {
-	return &Redis{
-		Host:     "",
-		Port:     6379,
-		Password: "",
-		DB:       0,
-	}
-}
-
+// 简化为单例模式
 func InitRedis() error {
-	redisInstance := NewRedis()
-	if err := redisInstance.connect(); err != nil {
-		return err
-	}
-	return nil
+	once.Do(func() {
+		opt, err := redis.ParseURL(config.Get().RdsAddr())
+		if err != nil {
+			initErr = err
+			return
+		}
+		rds = redis.NewClient(opt)
+	})
+	return initErr
 }
 
-// 连接缓存的逻辑
-func (r *Redis) connect() error {
-	opt, err := redis.ParseURL(config.Get().RdsAddr())
-	if err != nil {
-		panic(err)
-	}
-	rds = redis.NewClient(opt)
-	return nil
-}
-
-// 获取缓存连接
-func (r *Redis) Operate() *redis.Client {
-	if rds != nil {
-		return rds
-	}
-	err := r.connect()
-	if err != nil {
-		return nil
-	}
+// 获取客户端
+func GetRedis() *redis.Client {
 	return rds
 }
 
-// 关闭缓存连接
+// 关闭连接
 func CloseRedis() error {
 	if rds != nil {
 		return rds.Close()

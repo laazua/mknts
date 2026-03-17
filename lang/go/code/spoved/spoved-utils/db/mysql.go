@@ -1,8 +1,8 @@
-// 数据库实现
 package db
 
 import (
 	"database/sql"
+	"sync"
 	"time"
 
 	"spoved-utils/config"
@@ -12,8 +12,9 @@ import (
 )
 
 var (
-	sqlDB  *sql.DB
-	gormDB *gorm.DB
+	dbInstance *MySQL
+	dbOnce     sync.Once
+	dbInitErr  error
 )
 
 type MySQL struct {
@@ -22,6 +23,9 @@ type MySQL struct {
 	user     string
 	password string
 	dbName   string
+	gormDB   *gorm.DB
+	sqlDB    *sql.DB
+	mu       sync.RWMutex // 用于保护内部连接
 }
 
 func NewMySQL() *MySQL {
@@ -35,21 +39,24 @@ func NewMySQL() *MySQL {
 }
 
 func InitMySQL() error {
-	mysqlInstance := NewMySQL()
-	if err := mysqlInstance.connect(); err != nil {
-		return err
-	}
-	return nil
+	dbOnce.Do(func() {
+		dbInstance = NewMySQL()
+		dbInitErr = dbInstance.connect()
+	})
+	return dbInitErr
 }
 
-// 连接数据库的逻辑
 func (m *MySQL) connect() error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	if m.gormDB != nil {
+		return nil
+	}
+
 	gormDB, err := gorm.Open(mysql.New(mysql.Config{
-		DSN:                       config.Get().DbDSN(),
-		SkipInitializeWithVersion: false,
-	}), &gorm.Config{
-		// Logger: logger.Default.LogMode(logger.Info),
-	})
+		DSN: config.Get().DbDSN(),
+	}), &gorm.Config{})
 	if err != nil {
 		return err
 	}
@@ -58,45 +65,90 @@ func (m *MySQL) connect() error {
 	if err != nil {
 		return err
 	}
-	// 设置连接池参数
-	sqlDB.SetMaxIdleConns(100)                 // 最大空闲连接数
-	sqlDB.SetMaxOpenConns(50)                  // 最大打开连接数
-	sqlDB.SetConnMaxLifetime(5 * time.Second)  // 连接的最大存活时间
-	sqlDB.SetConnMaxIdleTime(30 * time.Second) // 最大空闲连接时间
-	// Ping 数据库检查连接是否正常
+
+	// 调整连接池参数
+	sqlDB.SetMaxIdleConns(25)                 // 空闲连接数建议小于最大连接数
+	sqlDB.SetMaxOpenConns(50)                 // 最大打开连接数
+	sqlDB.SetConnMaxLifetime(5 * time.Minute) // 增加存活时间
+	sqlDB.SetConnMaxIdleTime(30 * time.Minute)
+
 	if err := sqlDB.Ping(); err != nil {
 		return err
 	}
+
+	m.gormDB = gormDB
+	m.sqlDB = sqlDB
 	return nil
 }
 
-// 数据库操作方法
-func (m *MySQL) Operate() *gorm.DB {
-	if gormDB != nil {
-		return gormDB
+func (m *MySQL) Operate() (*gorm.DB, error) {
+	m.mu.RLock()
+	if m.gormDB != nil {
+		defer m.mu.RUnlock()
+		return m.gormDB, nil
 	}
+	m.mu.RUnlock()
+
+	// 尝试重新连接
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	if m.gormDB != nil {
+		return m.gormDB, nil
+	}
+
 	err := m.connect()
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	return gormDB
+	return m.gormDB, nil
 }
 
-func SqlOpt() *gorm.DB {
-	if gormDB != nil {
-		return gormDB
+// 获取默认实例（单例）
+func GetDB() (*gorm.DB, error) {
+	if dbInstance == nil {
+		if err := InitMySQL(); err != nil {
+			return nil, err
+		}
+	}
+	return dbInstance.Operate()
+}
+
+func MergeTable(tables ...interface{}) error {
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	for _, table := range tables {
+		// 创建表
+		if !db.Migrator().HasTable(table) {
+			if err := db.Migrator().CreateTable(table); err != nil {
+				return err
+			}
+		}
+		// 自动迁移 - 直接传递 table，而不是 &table
+		if err := db.AutoMigrate(table); err != nil {
+			return err
+		}
 	}
 	return nil
 }
 
-// 关闭数据库连接
 func CloseMySQL() error {
-	if sqlDB != nil {
-		if err := sqlDB.Close(); err != nil {
+	if dbInstance == nil {
+		return nil
+	}
+
+	dbInstance.mu.Lock()
+	defer dbInstance.mu.Unlock()
+
+	if dbInstance.sqlDB != nil {
+		if err := dbInstance.sqlDB.Close(); err != nil {
 			return err
-		} else {
-			return nil
 		}
+		dbInstance.gormDB = nil
+		dbInstance.sqlDB = nil
 	}
 	return nil
 }

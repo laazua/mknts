@@ -33,7 +33,7 @@ func AuthMiddleware(jwtSecret []byte) gin.HandlerFunc {
 		}
 
 		// 解析token
-		token, err := jwt.Parse(parts[1], func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.Parse(parts[1], func(token *jwt.Token) (any, error) {
 			return jwtSecret, nil
 		})
 

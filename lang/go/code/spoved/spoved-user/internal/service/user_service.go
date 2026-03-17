@@ -6,10 +6,14 @@ type UserService struct {
 	repository *repository.UserRepository
 }
 
-func NewUserService() *UserService {
-	return &UserService{
-		repository: repository.NewUserRepository(),
+func NewUserService() (*UserService, error) {
+	repo, err := repository.NewUserRepository()
+	if err != nil {
+		return nil, err
 	}
+	return &UserService{
+		repository: repo,
+	}, nil
 }
 
 // GetUserInfo 获取用户信息

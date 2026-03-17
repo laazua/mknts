@@ -24,10 +24,18 @@ func New() *gin.Engine {
 }
 
 // registerRoutes 定义所有的路由和对应的处理函数
-func registerRoutes(r *gin.Engine) {
+func registerRoutes(r *gin.Engine) error {
 	// 实例化接口处理器
-	authHandler := api.NewAuthHandler()
-	userHandler := api.NewUserHandler()
+	authHandler, err := api.NewAuthHandler()
+	if err != nil {
+		xlog.Error("实例化认证接口失败", "Error", err.Error())
+		return nil
+	}
+	userHandler, err := api.NewUserHandler()
+	if err != nil {
+		xlog.Error("实例化用户接口失败", "Error", err.Error())
+		return nil
+	}
 	roleHandler := api.NewRoleHandler()
 	// 设置Gin模式
 	gin.SetMode(config.Get().Server.Mode)
@@ -62,4 +70,5 @@ func registerRoutes(r *gin.Engine) {
 		roleGroup.DELETE("/:id", roleHandler.DeleteRole)
 		roleGroup.GET("/", roleHandler.ListRoles)
 	}
+	return nil
 }

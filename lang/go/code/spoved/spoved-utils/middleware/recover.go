@@ -11,7 +11,7 @@ func Recover() gin.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				xlog.Errorf(
-					"panic path=%s err=%v",
+					"panic path=%v err=%v",
 					c.Request.URL.Path,
 					err,
 				)
