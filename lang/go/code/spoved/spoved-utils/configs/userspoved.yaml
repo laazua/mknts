@@ -1,0 +1,38 @@
+# 服务器配置
+server:
+  port: 9088
+  mode: release
+  read_timeout: 60s
+  write_timeout: 60s
+  jwt_secret: spoved_secret_key
+  token_expire_time: 1h
+  cert_crt_file:
+  cert_key_file:
+
+# 日志配置
+log:
+  level: info
+  filename: logs/app.log
+  max_size: 100
+  max_backups: 3
+  max_age: 7
+  formatter: text
+
+# 数据库配置
+database:
+  driver: mysql
+  host: 192.168.165.88
+  port: 3306
+  username: root
+  password: abc123456
+  dbname: spoved
+  charset: utf8mb4
+  max_idle: 10
+  max_open: 100
+
+# Redis配置
+redis:
+  host: 192.168.165.88
+  port: 6379
+  password: ""
+  db: 0

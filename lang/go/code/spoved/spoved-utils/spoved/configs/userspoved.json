@@ -1,0 +1,35 @@
+{
+  "server": {
+    "port": 9080,
+    "mode": "release",
+    "read_timeout": 60,
+    "write_timeout": 60,
+    "cert_crt_file": "",
+    "cert_key_file": ""
+  },
+  "log": {
+    "level": "info",
+    "filename": "logs/app.log",
+    "max_size": 100,
+    "max_backups": 3,
+    "max_age": 7,
+    "formatter": "text"
+  },
+  "database": {
+    "driver": "mysql",
+    "host": "192.168.165.88",
+    "port": 3306,
+    "username": "root",
+    "password": "abc123456",
+    "dbname": "spoved",
+    "charset": "utf8mb4",
+    "max_idle": 10,
+    "max_open": 100
+  },
+  "redis": {
+    "host": "192.168.165.88",
+    "port": 6379,
+    "password": "",
+    "db": 0
+  }
+}
