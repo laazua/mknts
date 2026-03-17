@@ -1,0 +1,8 @@
+go 1.25.3
+
+use (
+	./spoved-host
+	./spoved-k8s
+	./spoved-user
+	./spoved-utils
+)
