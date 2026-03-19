@@ -1,0 +1,97 @@
+{"time":"2026-03-12T10:18:32.617424415+08:00","level":"INFO","msg":"服务启动中addr:9088tlsfalse"}
+{"time":"2026-03-12T10:24:06.55514074+08:00","level":"INFO","msg":"服务启动中addr:9088tlsfalse"}
+{"time":"2026-03-12T10:26:05.464695929+08:00","level":"INFO","msg":"服务启动中addr:9088tlsfalse"}
+{"time":"2026-03-12T10:27:30.351920482+08:00","level":"INFO","msg":"method=POST path=/api/auth/log status=404 latency=10.354µs ip=192.168.165.89"}
+{"time":"2026-03-12T10:27:39.402235056+08:00","level":"INFO","msg":"method=POST path=/api/auth/login status=200 latency=413.123µs ip=192.168.165.89"}
+{"time":"2026-03-12T10:29:29.819208683+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+{"time":"2026-03-12T10:31:39.137162414+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+{"time":"2026-03-12T10:36:41.253154349+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+{"time":"2026-03-12T10:37:35.970933685+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+{"time":"2026-03-12T10:53:02.88924728+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+time=2026-03-12T10:53:10.785+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T10:53:10.786+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T10:53:10.787+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T10:53:48.810+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T10:53:48.810+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T10:53:48.811+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+{"time":"2026-03-12T10:55:20.163193966+08:00","level":"INFO","msg":"初始化数据库成功 ..."}
+{"time":"2026-03-12T10:55:20.163987443+08:00","level":"INFO","msg":"初始化Redis成功 ..."}
+{"time":"2026-03-12T10:55:20.165022694+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+{"time":"2026-03-12T10:56:12.478609164+08:00","level":"INFO","msg":"初始化数据库成功 ..."}
+{"time":"2026-03-12T10:56:12.479169624+08:00","level":"INFO","msg":"初始化Redis成功 ..."}
+{"time":"2026-03-12T10:56:12.48019798+08:00","level":"INFO","msg":"服务器正在监听 addr=:9088 tls=false"}
+time=2026-03-12T10:57:59.405+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T10:57:59.406+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T10:57:59.408+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:02:58.563+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:02:58.564+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:02:58.566+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:10:08.566+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:10:08.567+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:10:08.569+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:10:51.226+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:10:51.227+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:10:51.228+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:11:44.758+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:11:44.763+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:11:44.764+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:12:01.326+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:12:01.331+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:12:01.331+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:13:37.139+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:13:37.144+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:13:37.145+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:36:29.198+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:36:29.203+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:36:29.203+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:36:45.228+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:36:45.233+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:36:45.235+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T11:48:18.045+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T11:48:18.051+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T11:48:18.052+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T13:46:17.109+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T13:46:17.114+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T13:46:17.114+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T14:39:47.193+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T14:39:47.199+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T14:39:47.200+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T14:41:53.212+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T14:41:53.217+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T14:41:53.220+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T15:10:00.397+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-12T15:10:00.402+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-12T15:10:00.403+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-12T15:10:03.859+08:00 level=INFO msg="method=%s path=%s status=%d latency=%s ip=%s" POST=/api/auth/login !BADKEY=404 !BADKEY=10.286µs !BADKEY=192.168.165.89
+time=2026-03-12T15:10:15.130+08:00 level=INFO msg="method=%s path=%s status=%d latency=%s ip=%s" POST=/api/auth/pwd !BADKEY=200 !BADKEY=392.851µs !BADKEY=192.168.165.89
+time=2026-03-12T15:10:27.551+08:00 level=INFO msg="method=%s path=%s status=%d latency=%s ip=%s" POST=/api/auth/pwd !BADKEY=200 !BADKEY=480.405µs !BADKEY=192.168.165.89
+time=2026-03-17T11:14:44.864+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:14:44.864+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:14:44.865+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-17T11:24:54.398+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:24:54.398+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:24:54.399+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-17T11:46:50.534+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:46:50.534+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:46:50.535+08:00 level=INFO msg="服务器正在监听 addr=:9080 tls=false"
+time=2026-03-17T11:46:55.432+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:46:55.432+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:46:55.433+08:00 level=INFO msg="服务器正在监听 addr=:9080 tls=false"
+time=2026-03-17T11:50:04.477+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:50:04.477+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:50:04.478+08:00 level=INFO msg="服务器正在监听 addr=:9080 tls=false"
+time=2026-03-17T11:50:10.489+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T11:50:10.489+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T11:50:10.490+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-17T16:21:08.475+08:00 level=INFO msg="初始化日志成功 ..."
+time=2026-03-17T16:21:08.475+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T16:21:08.476+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T16:21:08.477+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-17T16:21:35.147+08:00 level=INFO msg="初始化日志成功 ..."
+time=2026-03-17T16:21:35.147+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T16:21:35.147+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T16:21:35.147+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"
+time=2026-03-17T16:22:16.387+08:00 level=INFO msg="初始化日志成功 ..."
+time=2026-03-17T16:22:16.388+08:00 level=INFO msg="初始化Redis成功 ..."
+time=2026-03-17T16:22:16.388+08:00 level=INFO msg="初始化数据库成功 ..."
+time=2026-03-17T16:22:16.389+08:00 level=INFO msg="服务器正在监听 addr=:9088 tls=false"

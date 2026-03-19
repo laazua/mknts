@@ -19,7 +19,10 @@ func New() *gin.Engine {
 		middleware.Logger(),
 		middleware.Recover(),
 	)
-	registerRoutes(router)
+	if err := registerRoutes(router); err != nil {
+		xlog.Error("注册路由失败", "Error", err.Error())
+		return nil
+	}
 	return router
 }
 
@@ -28,13 +31,11 @@ func registerRoutes(r *gin.Engine) error {
 	// 实例化接口处理器
 	authHandler, err := api.NewAuthHandler()
 	if err != nil {
-		xlog.Error("实例化认证接口失败", "Error", err.Error())
-		return nil
+		return err
 	}
 	userHandler, err := api.NewUserHandler()
 	if err != nil {
-		xlog.Error("实例化用户接口失败", "Error", err.Error())
-		return nil
+		return err
 	}
 	roleHandler := api.NewRoleHandler()
 	// 设置Gin模式

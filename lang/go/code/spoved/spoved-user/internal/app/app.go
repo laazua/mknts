@@ -23,6 +23,7 @@ type App struct {
 func New() (*App, error) {
 	// 初始化日志系统
 	xlog.Init()
+	xlog.Info("初始化日志成功 ...")
 	// 初始化Redis连接
 	if err := db.InitRedis(); err != nil {
 		// return nil, errors.New("初始化Redis失败: " + err.Error())
@@ -36,6 +37,9 @@ func New() (*App, error) {
 	}
 	xlog.Info("初始化数据库成功 ...")
 	router := router.New()
+	if router == nil {
+		return nil, errors.New("实例化路由引擎失败")
+	}
 	// 实例化服务器
 	server := &http.Server{
 		Handler:      router,
