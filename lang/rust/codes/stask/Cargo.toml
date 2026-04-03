@@ -1,0 +1,73 @@
+[package]
+name = "stask"
+version = "0.1.0"
+edition = "2021"
+description = "高性能TCP网络框架，支持客户端和服务端"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+repository = "https://github.com/yourname/stask"
+readme = "README.md"
+
+[lib]
+name = "stask"
+path = "src/lib.rs"
+
+[[bin]]
+name = "stask-server"
+path = "src/bin/server.rs"
+
+[[bin]]
+name = "stask-client"
+path = "src/bin/client.rs"
+
+[dependencies]
+# 异步运行时
+tokio = { version = "1.35", features = ["full", "tracing", "rt-multi-thread"] }
+# 优雅关闭
+tokio-util = "0.7"
+# 日志和追踪
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"], optional = true }
+# 错误处理
+anyhow = "1.0"
+thiserror = "1.0"
+# 序列化
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# 配置管理
+config = "0.14"
+# 异步锁
+async-lock = "3.0"
+# 重试机制
+backoff = { version = "0.4", features = ["tokio"] }
+# 随机和负载均衡
+rand = "0.8"
+# 指标收集
+prometheus = { version = "0.13", optional = true }
+lazy_static = "1.4"
+# 时间处理
+chrono = "0.4"
+# 原子操作
+arc-swap = "1.6"
+# 连接管理
+dashmap = "5.5"
+# 信号处理
+signal-hook = "0.3"
+signal-hook-tokio = { version = "0.3", features = ["futures-v0_3"] }
+# 速率限制
+governor = "0.6"
+# 字节操作
+bytes = "1.5"
+# 异步trait
+async-trait = "0.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = { version = "0.5", features = ["html_reports"] }
+tempfile = "3.8"
+
+[features]
+default = []
+full = ["metrics", "tracing"]
+metrics = ["dep:prometheus"]
+tracing = ["dep:tracing-subscriber"]

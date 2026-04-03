@@ -1,0 +1,11 @@
+# server.toml
+bind_addr = "0.0.0.0:7878"
+max_connections = 10000
+worker_threads = 4
+enable_metrics = true
+
+[connection]
+connect_timeout_secs = 10
+read_timeout_secs = 30
+write_timeout_secs = 30
+max_message_size = 10485760
