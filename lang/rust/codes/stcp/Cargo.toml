@@ -1,0 +1,23 @@
+[package]
+name = "stcp"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/bin/client.rs"
+
+[[bin]]
+name = "test_sticky"
+path = "src/bin/test_sticky.rs"
+
+[dev-dependencies]
+# 用于测试中的超时控制
+# 可选，如果没有可以注释掉相关测试代码
+
+[features]
+default = []
