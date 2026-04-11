@@ -6,6 +6,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -121,7 +122,8 @@ func NewSupervisorManage(config *SupervisorConfig) *SupervisorManage {
 
 	// 加载所有程序配置
 	if err := manager.loadAllPrograms(); err != nil {
-		fmt.Printf("Warning: failed to load programs: %v\n", err)
+		// fmt.Printf("Warning: failed to load programs: %v\n", err)
+		slog.Warn("failed to load programs", "error", err)
 	}
 
 	return manager
@@ -137,7 +139,8 @@ func (c *SupervisorManage) loadAllPrograms() error {
 	for _, file := range files {
 		programConfig, err := c.parseProgramConfig(file)
 		if err != nil {
-			fmt.Printf("Warning: failed to parse %s: %v\n", file, err)
+			// fmt.Printf("Warning: failed to parse %s: %v\n", file, err)
+			slog.Warn("failed to parse program config", "file", file, "error", err)
 			continue
 		}
 
@@ -145,9 +148,11 @@ func (c *SupervisorManage) loadAllPrograms() error {
 		c.programs[programConfig.ProgramName] = programConfig
 		c.programsMu.Unlock()
 
-		fmt.Printf("Loaded program: %s (config: %s, current: %d, min: %d, max: %d)\n",
-			programConfig.ProgramName, file, programConfig.CurrentCount,
-			programConfig.MinCount, programConfig.MaxCount)
+		// fmt.Printf("Loaded program: %s (config: %s, current: %d, min: %d, max: %d)\n",
+		// 	programConfig.ProgramName, file, programConfig.CurrentCount,
+		// 	programConfig.MinCount, programConfig.MaxCount)
+		slog.Info("Loaded program", "name", programConfig.ProgramName, "config", file,
+			"current", programConfig.CurrentCount, "min", programConfig.MinCount, "max", programConfig.MaxCount)
 	}
 
 	return nil
