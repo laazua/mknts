@@ -30,6 +30,7 @@ type MQMetricsConfig struct {
 	MaxRetries int           // 最大重试次数
 	RetryDelay time.Duration // 重试延迟
 	UseSSL     bool          // 是否使用SSL
+	Consumers  []any
 }
 
 type MQMetrics struct {
@@ -112,7 +113,7 @@ func (m *MQMetrics) GetQueueStats(vhost, queueName string) (*QueueStats, error) 
 	if err := json.NewDecoder(resp.Body).Decode(&stats); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
-
+	fmt.Println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 	return &stats, nil
 }
 

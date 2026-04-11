@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -45,6 +46,7 @@ func main() {
 		MaxRetries: comm.Env().Int("MQ_MAX_RETRIES", 3),
 		RetryDelay: comm.Env().Duration("MQ_RETRY_DELAY", 1*time.Second),
 		UseSSL:     comm.Env().Bool("MQ_USE_SSL", false),
+		Consumers:  comm.Env().List("CONSUMER_QUEUES"),
 	}
 
 	// 调度器配置
@@ -152,4 +154,10 @@ func printConfig(schedulerConfig *core.SchedulerConfig, mqConfig *core.MQMetrics
 	slog.Info("Resource Monitor Enabled", "resource_monitor_enabled", schedulerConfig.EnableResourceMonitor)
 	slog.Info("MQ Host", "mq_host", mqConfig.Host)
 	slog.Info("Supervisor Config Dir", "supervisor_config_dir", supervisorConfig.ConfigDir)
+
+	// 测试列表
+	for _, queue := range comm.Env().List("CONSUMER_QUEUES") {
+		q := queue.(map[string]any)
+		fmt.Println(q)
+	}
 }

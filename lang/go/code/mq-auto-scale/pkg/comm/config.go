@@ -64,8 +64,9 @@ func (c *Config) parseReader(reader io.Reader) error {
 	var currentKey string
 	var currentValue strings.Builder
 	var inMultiline bool
-	var multilineType string // "list" or "object"
-	var bracketCount int
+	var multilineType string   // "list" or "object"
+	var squareBracketCount int // 专门用于跟踪方括号
+	var braceCount int         // 专门用于跟踪花括号
 	lineNum := 0
 
 	for scanner.Scan() {
@@ -74,35 +75,34 @@ func (c *Config) parseReader(reader io.Reader) error {
 
 		// 处理多行值
 		if inMultiline {
-			currentValue.WriteString("\n")
+			// 添加换行符（除了第一行）
+			if currentValue.Len() > 0 {
+				currentValue.WriteString("\n")
+			}
 			currentValue.WriteString(line)
 
+			// 更新括号计数
+			squareBracketCount += strings.Count(line, "[") - strings.Count(line, "]")
+			braceCount += strings.Count(line, "{") - strings.Count(line, "}")
+
 			// 检查是否结束
-			trimmedLine := strings.TrimSpace(line)
-			if multilineType == "list" && strings.Contains(trimmedLine, "]") {
-				// 检查括号是否匹配
-				bracketCount += strings.Count(line, "[") - strings.Count(line, "]")
-				if bracketCount == 0 {
-					inMultiline = false
-					// 解析完整的值
-					fullValue := currentValue.String()
-					parsedValue, err := c.parseValue(fullValue)
-					if err != nil {
-						return fmt.Errorf("line %d: failed to parse multiline value for key '%s': %v", lineNum, currentKey, err)
-					}
-					c.data[currentKey] = parsedValue
+			if multilineType == "list" && squareBracketCount == 0 && braceCount == 0 {
+				// 列表结束，且没有未闭合的花括号
+				inMultiline = false
+				fullValue := currentValue.String()
+				parsedValue, err := c.parseValue(fullValue)
+				if err != nil {
+					return fmt.Errorf("line %d: failed to parse multiline value for key '%s': %v", lineNum, currentKey, err)
 				}
-			} else if multilineType == "object" && strings.Contains(trimmedLine, "}") {
-				bracketCount += strings.Count(line, "{") - strings.Count(line, "}")
-				if bracketCount == 0 {
-					inMultiline = false
-					fullValue := currentValue.String()
-					parsedValue, err := c.parseValue(fullValue)
-					if err != nil {
-						return fmt.Errorf("line %d: failed to parse multiline value for key '%s': %v", lineNum, currentKey, err)
-					}
-					c.data[currentKey] = parsedValue
+				c.data[currentKey] = parsedValue
+			} else if multilineType == "object" && braceCount == 0 {
+				inMultiline = false
+				fullValue := currentValue.String()
+				parsedValue, err := c.parseValue(fullValue)
+				if err != nil {
+					return fmt.Errorf("line %d: failed to parse multiline value for key '%s': %v", lineNum, currentKey, err)
 				}
+				c.data[currentKey] = parsedValue
 			}
 			continue
 		}
@@ -129,20 +129,34 @@ func (c *Config) parseReader(reader io.Reader) error {
 		}
 
 		// 检查是否是多行值的开始
-		if (strings.HasPrefix(value, "[") && !strings.Contains(value, "]")) ||
-			(strings.HasPrefix(value, "{") && !strings.Contains(value, "}")) {
+		// 情况1: 以 [ 开头但没有匹配的 ]
+		// 情况2: 以 { 开头但没有匹配的 }
+		// 情况3: 以 [ 开头且后面跟着换行（value为空或只是[）
+		if strings.HasPrefix(value, "[") && !strings.HasSuffix(value, "]") {
 			inMultiline = true
 			currentKey = key
 			currentValue.Reset()
 			currentValue.WriteString(value)
-
-			if strings.HasPrefix(value, "[") {
-				multilineType = "list"
-				bracketCount = strings.Count(value, "[") - strings.Count(value, "]")
-			} else {
-				multilineType = "object"
-				bracketCount = strings.Count(value, "{") - strings.Count(value, "}")
+			multilineType = "list"
+			squareBracketCount = strings.Count(value, "[") - strings.Count(value, "]")
+			braceCount = strings.Count(value, "{") - strings.Count(value, "}")
+			continue
+		} else if strings.HasPrefix(value, "{") && !strings.HasSuffix(value, "}") {
+			inMultiline = true
+			currentKey = key
+			currentValue.Reset()
+			currentValue.WriteString(value)
+			multilineType = "object"
+			squareBracketCount = strings.Count(value, "[") - strings.Count(value, "]")
+			braceCount = strings.Count(value, "{") - strings.Count(value, "}")
+			continue
+		} else if strings.HasPrefix(value, "[") && strings.HasSuffix(value, "]") {
+			// 单行列表，直接解析
+			parsedValue, err := c.parseValue(value)
+			if err != nil {
+				return fmt.Errorf("line %d: %v", lineNum, err)
 			}
+			c.data[key] = parsedValue
 			continue
 		}
 
@@ -290,7 +304,7 @@ func (c *Config) parseObject(objStr string) (map[string]interface{}, error) {
 	return obj, nil
 }
 
-// splitByComma 智能分割字符串，考虑括号和引号
+// splitByComma 智能分割字符串，考虑括号和引号（增强版）
 func (c *Config) splitByComma(s string) []string {
 	var result []string
 	var current strings.Builder

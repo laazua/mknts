@@ -3,6 +3,7 @@ package core
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"sync"
 	"time"
@@ -79,6 +80,7 @@ func NewScheduler(config *SchedulerConfig, mqConfig *MQMetricsConfig, supervisor
 	}
 
 	// 初始化所有队列监控器
+	fmt.Println("Q############################------", len(config.Queues))
 	for _, queueConfig := range config.Queues {
 		monitor := &QueueMonitor{
 			config:      queueConfig,
@@ -317,7 +319,9 @@ func (m *QueueMonitor) calculateTargetCount(current int, isScaleUp bool, queueDe
 
 // ensureMinConsumers 确保最小消费者数量
 func (s *Scheduler) ensureMinConsumers() {
+	fmt.Println("#################################################", len(s.monitors))
 	for _, monitor := range s.monitors {
+		fmt.Println(monitor.currentSize, "ppppppppppppppppppppppppp")
 		current, err := s.supervisor.GetRunningConsumerCount(monitor.config.ProgramName)
 		if err != nil {
 			slog.Error("Failed to get consumer count",

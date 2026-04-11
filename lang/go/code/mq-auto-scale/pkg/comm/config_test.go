@@ -452,66 +452,373 @@ func TestTypeConversion(t *testing.T) {
 	}
 }
 
-func BenchmarkConfigGet(b *testing.B) {
-	cfg := NewConfig()
-	cfg.Set("bench_key", "bench_value")
+// TestMultilineListWithObjects 测试多行列表包含对象
+func TestMultilineListWithObjects(t *testing.T) {
+	envContent := `# 队列配置 - 多行格式
+QUEUES=[
+    {},
+    {},
+]
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		cfg.Str("bench_key")
-	}
-}
+# 带字段的对象列表
+USERS=[
+    {name: "Alice", age: 30, active: true},
+    {name: "Bob", age: 25, active: false},
+    {name: "Charlie", age: 35, active: true},
+]
 
-func BenchmarkConfigParse(b *testing.B) {
-	envContent := `APP_NAME=TestApp
-PORT=8080
-DEBUG=true
-TIMEOUT=30.5
-STR_LIST=["a", "b", "c"]
-DB_CONFIG={host: "localhost", port: 5432}
+# 嵌套结构的列表
+COMPLEX_LIST=[
+    {id: 1, data: {x: 10, y: 20}},
+    {id: 2, data: {x: 30, y: 40}},
+]
+
+# 混合类型的列表
+MIXED_LIST=[
+    1,
+    "string",
+    {key: "value"},
+    [1, 2, 3],
+]
+
+# 空列表
+EMPTY_LIST=[
+]
+
+# 单行列表（保持兼容）
+SINGLE_LINE_LIST=[1, 2, 3]
 `
 
-	tmpFile, err := os.CreateTemp(".", "bench*.env")
+	tmpFile, err := os.CreateTemp(".", "test*.env")
 	if err != nil {
-		b.Fatal(err)
+		t.Fatal(err)
 	}
 	defer os.Remove(tmpFile.Name())
 	defer tmpFile.Close()
 
 	if _, err := tmpFile.WriteString(envContent); err != nil {
-		b.Fatal(err)
+		t.Fatal(err)
 	}
 	tmpFile.Close()
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		cfg := NewConfig()
-		cfg.LoadEnv(tmpFile.Name())
-	}
-}
-
-// 测试并发安全（注意：当前实现不是并发安全的，这个测试会失败）
-// 如果需要并发安全，需要添加互斥锁
-func TestConcurrentAccess(t *testing.T) {
 	cfg := NewConfig()
-	cfg.Set("test_key", "test_value")
-
-	// 并发读取
-	done := make(chan bool)
-	for i := 0; i < 100; i++ {
-		go func() {
-			_ = cfg.Str("test_key")
-			done <- true
-		}()
+	if err := cfg.LoadEnv(tmpFile.Name()); err != nil {
+		t.Fatalf("LoadEnv failed: %v", err)
 	}
 
-	for i := 0; i < 100; i++ {
-		<-done
+	// 测试空对象列表
+	queues := cfg.List("QUEUES")
+	if len(queues) != 2 {
+		t.Errorf("QUEUES length: expected 2, got %d", len(queues))
 	}
-	// 如果没有panic，测试通过
+
+	for i, queue := range queues {
+		if obj, ok := queue.(map[string]interface{}); ok {
+			if len(obj) != 0 {
+				t.Errorf("QUEUES[%d]: expected empty object, got %v", i, obj)
+			}
+		} else {
+			t.Errorf("QUEUES[%d]: expected map, got %T", i, queue)
+		}
+	}
+
+	// 测试带字段的对象列表
+	users := cfg.List("USERS")
+	if len(users) != 3 {
+		t.Errorf("USERS length: expected 3, got %d", len(users))
+	}
+
+	expectedUsers := []map[string]interface{}{
+		{"name": "Alice", "age": 30, "active": true},
+		{"name": "Bob", "age": 25, "active": false},
+		{"name": "Charlie", "age": 35, "active": true},
+	}
+
+	for i, expected := range expectedUsers {
+		if user, ok := users[i].(map[string]interface{}); ok {
+			for key, expectedVal := range expected {
+				if user[key] != expectedVal {
+					t.Errorf("USERS[%d].%s: expected %v, got %v", i, key, expectedVal, user[key])
+				}
+			}
+		} else {
+			t.Errorf("USERS[%d]: expected map, got %T", i, users[i])
+		}
+	}
+
+	// 测试嵌套结构
+	complexList := cfg.List("COMPLEX_LIST")
+	if len(complexList) != 2 {
+		t.Errorf("COMPLEX_LIST length: expected 2, got %d", len(complexList))
+	}
+
+	if item, ok := complexList[0].(map[string]interface{}); ok {
+		if item["id"] != 1 {
+			t.Errorf("COMPLEX_LIST[0].id: expected 1, got %v", item["id"])
+		}
+		if data, ok := item["data"].(map[string]interface{}); ok {
+			if data["x"] != 10 || data["y"] != 20 {
+				t.Errorf("COMPLEX_LIST[0].data: expected {x:10, y:20}, got %v", data)
+			}
+		} else {
+			t.Errorf("COMPLEX_LIST[0].data: expected map, got %T", item["data"])
+		}
+	}
+
+	// 测试混合类型列表
+	mixedList := cfg.List("MIXED_LIST")
+	if len(mixedList) != 4 {
+		t.Errorf("MIXED_LIST length: expected 4, got %d", len(mixedList))
+	}
+
+	// 验证类型
+	if mixedList[0] != 1 {
+		t.Errorf("MIXED_LIST[0]: expected 1, got %v", mixedList[0])
+	}
+	if mixedList[1] != "string" {
+		t.Errorf("MIXED_LIST[1]: expected 'string', got %v", mixedList[1])
+	}
+	if _, ok := mixedList[2].(map[string]interface{}); !ok {
+		t.Errorf("MIXED_LIST[2]: expected map, got %T", mixedList[2])
+	}
+	if _, ok := mixedList[3].([]interface{}); !ok {
+		t.Errorf("MIXED_LIST[3]: expected list, got %T", mixedList[3])
+	}
+
+	// 测试空列表
+	emptyList := cfg.List("EMPTY_LIST")
+	if len(emptyList) != 0 {
+		t.Errorf("EMPTY_LIST: expected empty list, got length %d", len(emptyList))
+	}
+
+	// 测试单行列表兼容性
+	singleLineList := cfg.List("SINGLE_LINE_LIST")
+	if len(singleLineList) != 3 {
+		t.Errorf("SINGLE_LINE_LIST length: expected 3, got %d", len(singleLineList))
+	}
 }
 
-// 测试 Duration 类型
+// TestComplexNestedStructures 测试复杂的嵌套结构
+func TestComplexNestedStructures(t *testing.T) {
+	envContent := `# 深度嵌套
+DEEP_NESTED=[
+    {
+        level1: {
+            level2: {
+                level3: "deep value"
+            }
+        }
+    },
+    {
+        items: [
+            {id: 1, name: "item1"},
+            {id: 2, name: "item2"}
+        ]
+    }
+]
+
+# 带空对象的复杂结构
+CONFIG={
+    enabled: true,
+    queues: [
+        {},
+        {name: "queue1", workers: 5},
+        {name: "queue2", workers: 3}
+    ],
+    settings: {
+        timeout: 30,
+        retry: true
+    }
+}
+`
+
+	tmpFile, err := os.CreateTemp(".", "test*.env")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(tmpFile.Name())
+	defer tmpFile.Close()
+
+	if _, err := tmpFile.WriteString(envContent); err != nil {
+		t.Fatal(err)
+	}
+	tmpFile.Close()
+
+	cfg := NewConfig()
+	if err := cfg.LoadEnv(tmpFile.Name()); err != nil {
+		t.Fatalf("LoadEnv failed: %v", err)
+	}
+
+	// 测试深度嵌套
+	deepNested := cfg.List("DEEP_NESTED")
+	if len(deepNested) != 2 {
+		t.Errorf("DEEP_NESTED length: expected 2, got %d", len(deepNested))
+	}
+
+	// 验证第一项的深度嵌套
+	if item1, ok := deepNested[0].(map[string]interface{}); ok {
+		if level1, ok := item1["level1"].(map[string]interface{}); ok {
+			if level2, ok := level1["level2"].(map[string]interface{}); ok {
+				if level2["level3"] != "deep value" {
+					t.Errorf("DEEP_NESTED[0].level1.level2.level3: expected 'deep value', got %v", level2["level3"])
+				}
+			}
+		}
+	}
+
+	// 验证第二项的列表
+	if item2, ok := deepNested[1].(map[string]interface{}); ok {
+		if items, ok := item2["items"].([]interface{}); ok {
+			if len(items) != 2 {
+				t.Errorf("items length: expected 2, got %d", len(items))
+			}
+		}
+	}
+
+	// 测试复杂对象
+	config := cfg.Obj("CONFIG")
+	if config["enabled"] != true {
+		t.Errorf("CONFIG.enabled: expected true, got %v", config["enabled"])
+	}
+
+	if queues, ok := config["queues"].([]interface{}); ok {
+		if len(queues) != 3 {
+			t.Errorf("CONFIG.queues length: expected 3, got %d", len(queues))
+		}
+		// 检查空对象
+		if queue0, ok := queues[0].(map[string]interface{}); ok {
+			if len(queue0) != 0 {
+				t.Errorf("CONFIG.queues[0]: expected empty object, got %v", queue0)
+			}
+		}
+		// 检查带字段的对象
+		if queue1, ok := queues[1].(map[string]interface{}); ok {
+			if queue1["name"] != "queue1" || queue1["workers"] != 5 {
+				t.Errorf("CONFIG.queues[1]: expected {name:queue1, workers:5}, got %v", queue1)
+			}
+		}
+	}
+}
+
+// TestRealWorldScenario 测试实际场景
+func TestRealWorldScenario(t *testing.T) {
+	envContent := `# 实际应用配置示例
+APP_NAME=QueueWorker
+APP_ENV=production
+LOG_LEVEL=info
+
+# 队列配置
+QUEUES=[
+    {
+        name: "high_priority",
+        workers: 10,
+        retry: true,
+        timeout: 30
+    },
+    {
+        name: "low_priority",
+        workers: 3,
+        retry: false,
+        timeout: 60
+    },
+    {
+        name: "email_queue",
+        workers: 5,
+        retry: true,
+        timeout: 120,
+        config: {
+            smtp_host: "smtp.example.com",
+            smtp_port: 587
+        }
+    }
+]
+
+# Redis配置
+REDIS_CONFIG={
+    host: "localhost",
+    port: 6379,
+    pools: [
+        {name: "default", max: 10},
+        {name: "cache", max: 20}
+    ]
+}
+
+# 空队列
+EMPTY_QUEUE=[
+]
+
+# 单元素队列
+SINGLE_QUEUE=[
+    {id: 1, name: "single"}
+]
+`
+
+	tmpFile, err := os.CreateTemp(".", "test*.env")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(tmpFile.Name())
+	defer tmpFile.Close()
+
+	if _, err := tmpFile.WriteString(envContent); err != nil {
+		t.Fatal(err)
+	}
+	tmpFile.Close()
+
+	cfg := NewConfig()
+	if err := cfg.LoadEnv(tmpFile.Name()); err != nil {
+		t.Fatalf("LoadEnv failed: %v", err)
+	}
+
+	// 验证基本配置
+	if cfg.Str("APP_NAME") != "QueueWorker" {
+		t.Errorf("APP_NAME: expected QueueWorker, got %s", cfg.Str("APP_NAME"))
+	}
+
+	// 验证队列配置
+	queues := cfg.List("QUEUES")
+	if len(queues) != 3 {
+		t.Errorf("QUEUES length: expected 3, got %d", len(queues))
+	}
+
+	// 验证具体队列内容
+	queue1 := queues[0].(map[string]interface{})
+	if queue1["name"] != "high_priority" || queue1["workers"] != 10 {
+		t.Errorf("First queue: expected high_priority/10, got %v", queue1)
+	}
+
+	queue3 := queues[2].(map[string]interface{})
+	if config, ok := queue3["config"].(map[string]interface{}); ok {
+		if config["smtp_host"] != "smtp.example.com" {
+			t.Errorf("Email queue SMTP host: expected smtp.example.com, got %v", config["smtp_host"])
+		}
+	}
+
+	// 验证Redis配置
+	redisConfig := cfg.Obj("REDIS_CONFIG")
+	if redisConfig["host"] != "localhost" {
+		t.Errorf("REDIS_CONFIG.host: expected localhost, got %v", redisConfig["host"])
+	}
+
+	if pools, ok := redisConfig["pools"].([]interface{}); ok {
+		if len(pools) != 2 {
+			t.Errorf("REDIS_CONFIG.pools length: expected 2, got %d", len(pools))
+		}
+	}
+
+	// 验证空队列
+	emptyQueue := cfg.List("EMPTY_QUEUE")
+	if len(emptyQueue) != 0 {
+		t.Errorf("EMPTY_QUEUE: expected empty, got length %d", len(emptyQueue))
+	}
+
+	// 验证单元素队列
+	singleQueue := cfg.List("SINGLE_QUEUE")
+	if len(singleQueue) != 1 {
+		t.Errorf("SINGLE_QUEUE length: expected 1, got %d", len(singleQueue))
+	}
+}
+
 func TestConfigDuration(t *testing.T) {
 	envContent := `TIMEOUT=30
 REQUEST_TIMEOUT=5.5
@@ -644,5 +951,116 @@ func TestConfigDurationErrors(t *testing.T) {
 	durationWithDefault := cfg.Duration("INVALID_DURATION", 15*time.Second)
 	if durationWithDefault != 15*time.Second {
 		t.Errorf("Invalid duration with default should return 15s, got %v", durationWithDefault)
+	}
+}
+
+// 测试并发安全（注意：当前实现不是并发安全的，这个测试会失败）
+// 如果需要并发安全，需要添加互斥锁
+func TestConcurrentAccess(t *testing.T) {
+	cfg := NewConfig()
+	cfg.Set("test_key", "test_value")
+
+	// 并发读取
+	done := make(chan bool)
+	for i := 0; i < 100; i++ {
+		go func() {
+			_ = cfg.Str("test_key")
+			done <- true
+		}()
+	}
+
+	for i := 0; i < 100; i++ {
+		<-done
+	}
+	// 如果没有panic，测试通过
+}
+
+func BenchmarkConfigGet(b *testing.B) {
+	cfg := NewConfig()
+	cfg.Set("bench_key", "bench_value")
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cfg.Str("bench_key")
+	}
+}
+
+func BenchmarkConfigParse(b *testing.B) {
+	envContent := `APP_NAME=TestApp
+PORT=8080
+DEBUG=true
+TIMEOUT=30.5
+STR_LIST=["a", "b", "c"]
+DB_CONFIG={host: "localhost", port: 5432}
+`
+
+	tmpFile, err := os.CreateTemp(".", "bench*.env")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer os.Remove(tmpFile.Name())
+	defer tmpFile.Close()
+
+	if _, err := tmpFile.WriteString(envContent); err != nil {
+		b.Fatal(err)
+	}
+	tmpFile.Close()
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cfg := NewConfig()
+		cfg.LoadEnv(tmpFile.Name())
+	}
+}
+
+// 性能测试：多行解析
+func BenchmarkMultilineParse(b *testing.B) {
+	envContent := `QUEUES=[
+    {name: "queue1", workers: 10},
+    {name: "queue2", workers: 20},
+    {name: "queue3", workers: 30},
+    {name: "queue4", workers: 40},
+    {name: "queue5", workers: 50},
+]
+USERS=[
+    {id: 1, name: "user1", active: true},
+    {id: 2, name: "user2", active: false},
+    {id: 3, name: "user3", active: true},
+    {id: 4, name: "user4", active: false},
+    {id: 5, name: "user5", active: true},
+]
+`
+
+	tmpFile, err := os.CreateTemp(".", "bench*.env")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer os.Remove(tmpFile.Name())
+	defer tmpFile.Close()
+
+	if _, err := tmpFile.WriteString(envContent); err != nil {
+		b.Fatal(err)
+	}
+	tmpFile.Close()
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cfg := NewConfig()
+		cfg.LoadEnv(tmpFile.Name())
+		_ = cfg.List("QUEUES")
+		_ = cfg.List("USERS")
+	}
+	cfg := NewConfig()
+	cfg.LoadEnv(tmpFile.Name())
+	for _, queue := range cfg.List("QUEUES") {
+		q := queue.(map[string]any)
+		_ = q["name"]
+		_ = q["workers"]
+	}
+	for _, user := range cfg.List("USERS") {
+		u := user.(map[string]any)
+		_ = u["id"]
+		_ = u["name"]
+		_ = u["active"]
 	}
 }
