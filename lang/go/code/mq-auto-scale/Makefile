@@ -17,7 +17,7 @@ py-lib:
 
 py-producer:
 	@echo "正在运行生产者生成数据..."
-	export PYTHONPATH=$(PYPATH)/lib &&  python3 -sP $(PYPATH)/producer.py 20000
+	export PYTHONPATH=$(PYPATH)/lib &&  python3 -sP $(PYPATH)/producer.py 100000
 
 py-consumer:
 	@echo "正在运行消费者消费数据..."
@@ -25,10 +25,11 @@ py-consumer:
 
 help:
 	@echo "使用以下命令:"
+	@echo "  make help         显示此帮助信息"
 	@echo "  make build        构建 Go 可执行文件"
 	@echo "  make clean        清理构建产物"
 	@echo "  make py-lib       安装 Python 依赖库"
 	@echo "  make py-producer  运行生产者生成数据"
 	@echo "  make py-consumer  运行消费者消费数据"
 
-.PHONY: build clean py-lib py-producer py-consumer
+.PHONY: build clean py-lib py-producer py-consumer help

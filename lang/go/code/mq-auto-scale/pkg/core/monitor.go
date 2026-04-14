@@ -1,346 +1,217 @@
-// 主机资源监控
 package core
 
 import (
 	"fmt"
+	"log"
 	"log/slog"
-	"sync"
+	"math"
+	"runtime"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/shirou/gopsutil/v3/load"
 	"github.com/shirou/gopsutil/v3/mem"
 )
 
-// HostMonitorConfig 主机监控配置
-type HostMonitorConfig struct {
-	Enable            bool          // 是否启用资源监控
-	CPUThreshold      float64       // CPU使用率阈值（百分比），超过则禁止扩容
-	MemThreshold      float64       // 内存使用率阈值（百分比），超过则禁止扩容
-	DiskThreshold     float64       // 磁盘使用率阈值（百分比）
-	LoadThreshold     float64       // 系统负载阈值
-	CheckInterval     time.Duration // 检查间隔
-	ScaleUpBlockWait  time.Duration // 资源不足时阻塞扩容的最大等待时间
-	EnableAutoRecover bool          // 是否启用自动恢复
+// HostMetrics 存储主机指标
+type HostMetrics struct {
+	CPUUsagePercent    float64 // CPU 使用率百分比 (0-100)
+	MemoryUsagePercent float64 // 内存使用率百分比 (0-100)
+	LoadAvg1min        float64 // 1分钟平均负载
+	LoadAvg5min        float64 // 5分钟平均负载
+	LoadAvg15min       float64 // 15分钟平均负载
+	CPUCores           int     // CPU 核心数
 }
 
-// HostResourceStats 主机资源统计
-type HostResourceStats struct {
-	CPUUsage     float64 // CPU使用率百分比
-	MemUsage     float64 // 内存使用率百分比
-	MemAvailable uint64  // 可用内存（字节）
-	MemTotal     uint64  // 总内存（字节）
-	DiskUsage    float64 // 磁盘使用率百分比
-	LoadAvg1     float64 // 1分钟平均负载
-	LoadAvg5     float64 // 5分钟平均负载
-	LoadAvg15    float64 // 15分钟平均负载
-	Timestamp    time.Time
+// TaskSuitability 任务启动适宜性结果
+type TaskSuitability struct {
+	CanStart bool        // 是否可以启动任务
+	Reason   string      // 主要原因
+	Details  []string    // 详细原因列表
+	Metrics  HostMetrics // 当前指标快照
+	Score    float64     // 适宜性评分 (0-100, 越高越适合)
 }
 
-// ScaleUpRequest 扩容请求
-type ScaleUpRequest struct {
-	QueueName string
-	RequestID string
-	CreatedAt time.Time
-	Callback  chan bool
+// MonitorConfig 监控器配置
+type MonitorConfig struct {
+	MaxCPUUsagePercent    float64       // 最大允许 CPU 使用率 (%)
+	MaxMemoryUsagePercent float64       // 最大允许内存使用率 (%)
+	MaxLoadPerCore        float64       // 每核心最大负载阈值
+	CheckInterval         time.Duration // 检查间隔
+	ConsecutiveChecks     int           // 需要连续满足条件的次数
+}
+
+// DefaultMonitorConfig 默认配置
+func DefaultMonitorConfig() MonitorConfig {
+	return MonitorConfig{
+		MaxCPUUsagePercent:    70.0,
+		MaxMemoryUsagePercent: 80.0,
+		MaxLoadPerCore:        1.0,
+		CheckInterval:         5 * time.Second,
+		ConsecutiveChecks:     3,
+	}
 }
 
 // HostMonitor 主机监控器
 type HostMonitor struct {
-	config         *HostMonitorConfig
-	currentStats   *HostResourceStats
-	mu             sync.RWMutex
-	stopChan       chan struct{}
-	pendingReqs    map[string]*ScaleUpRequest
-	pendingMu      sync.Mutex
-	alertCallbacks []func(stats *HostResourceStats)
+	config      *MonitorConfig
+	consecutive int
 }
 
 // NewHostMonitor 创建主机监控器
-func NewHostMonitor(config *HostMonitorConfig) *HostMonitor {
-	if config == nil {
-		config = &HostMonitorConfig{
-			Enable:            false,
-			CPUThreshold:      80.0,
-			MemThreshold:      85.0,
-			DiskThreshold:     90.0,
-			LoadThreshold:     10.0,
-			CheckInterval:     5 * time.Second,
-			ScaleUpBlockWait:  30 * time.Second,
-			EnableAutoRecover: true,
-		}
-	}
-
-	monitor := &HostMonitor{
+func NewHostMonitor(config *MonitorConfig) *HostMonitor {
+	return &HostMonitor{
 		config:      config,
-		pendingReqs: make(map[string]*ScaleUpRequest),
-		stopChan:    make(chan struct{}),
-	}
-
-	if config.Enable {
-		go monitor.startMonitoring()
-		slog.Info("Host monitor started",
-			slog.Float64("cpu_threshold", config.CPUThreshold),
-			slog.Float64("mem_threshold", config.MemThreshold),
-			slog.Duration("check_interval", config.CheckInterval),
-		)
-	}
-
-	return monitor
-}
-
-// startMonitoring 启动资源监控
-func (m *HostMonitor) startMonitoring() {
-	ticker := time.NewTicker(m.config.CheckInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-m.stopChan:
-			slog.Info("Host monitor stopped")
-			return
-		case <-ticker.C:
-			m.collectStats()
-		}
+		consecutive: 0,
 	}
 }
 
-// collectStats 收集资源统计信息
-func (m *HostMonitor) collectStats() {
-	stats := &HostResourceStats{
-		Timestamp: time.Now(),
-	}
+// CollectMetrics 收集主机指标
+func (m *HostMonitor) CollectMetrics() (*HostMetrics, error) {
+	metrics := &HostMetrics{}
 
-	// 获取CPU使用率
-	cpuPercent, err := cpu.Percent(0, false)
+	// 获取 CPU 核心数
+	metrics.CPUCores = runtime.NumCPU()
+
+	// 获取 CPU 使用率
+	cpuPercent, err := cpu.Percent(time.Second, false)
 	if err != nil {
-		slog.Warn("Failed to get CPU usage", "error", err)
-	} else if len(cpuPercent) > 0 {
-		stats.CPUUsage = cpuPercent[0]
+		return nil, fmt.Errorf("获取 CPU 使用率失败: %v", err)
+	}
+	if len(cpuPercent) > 0 {
+		metrics.CPUUsagePercent = cpuPercent[0]
 	}
 
 	// 获取内存使用率
 	memInfo, err := mem.VirtualMemory()
 	if err != nil {
-		slog.Warn("Failed to get memory info", "error", err)
-	} else {
-		stats.MemUsage = memInfo.UsedPercent
-		stats.MemAvailable = memInfo.Available
-		stats.MemTotal = memInfo.Total
+		return nil, fmt.Errorf("获取内存信息失败: %v", err)
 	}
-
-	// 获取磁盘使用率（根分区）
-	diskInfo, err := disk.Usage("/")
-	if err != nil {
-		slog.Warn("Failed to get disk info", "error", err)
-	} else {
-		stats.DiskUsage = diskInfo.UsedPercent
-	}
+	metrics.MemoryUsagePercent = memInfo.UsedPercent
 
 	// 获取系统负载
 	loadAvg, err := load.Avg()
 	if err != nil {
-		slog.Warn("Failed to get load average", "error", err)
+		return nil, fmt.Errorf("获取系统负载失败: %v", err)
+	}
+	metrics.LoadAvg1min = loadAvg.Load1
+	metrics.LoadAvg5min = loadAvg.Load5
+	metrics.LoadAvg15min = loadAvg.Load15
+
+	return metrics, nil
+}
+
+// CheckSuitability 检查是否适合启动任务
+func (m *HostMonitor) CheckSuitability() (*TaskSuitability, error) {
+	metrics, err := m.CollectMetrics()
+	if err != nil {
+		return nil, err
+	}
+
+	suitability := &TaskSuitability{
+		CanStart: true,
+		Metrics:  *metrics,
+		Details:  []string{},
+	}
+
+	// 计算负载阈值（考虑核心数）
+	maxLoad := float64(metrics.CPUCores) * m.config.MaxLoadPerCore
+	loadCheck := metrics.LoadAvg1min <= maxLoad
+
+	// 检查各项指标
+	if metrics.CPUUsagePercent > m.config.MaxCPUUsagePercent {
+		suitability.CanStart = false
+		suitability.Details = append(suitability.Details,
+			fmt.Sprintf("CPU 使用率过高: %.2f%% > %.0f%%",
+				metrics.CPUUsagePercent, m.config.MaxCPUUsagePercent))
+	}
+
+	if metrics.MemoryUsagePercent > m.config.MaxMemoryUsagePercent {
+		suitability.CanStart = false
+		suitability.Details = append(suitability.Details,
+			fmt.Sprintf("内存使用率过高: %.2f%% > %.0f%%",
+				metrics.MemoryUsagePercent, m.config.MaxMemoryUsagePercent))
+	}
+
+	if !loadCheck {
+		suitability.CanStart = false
+		suitability.Details = append(suitability.Details,
+			fmt.Sprintf("系统负载过高: %.2f > %.2f (核心数: %d, 阈值每核心: %.1f)",
+				metrics.LoadAvg1min, maxLoad, metrics.CPUCores, m.config.MaxLoadPerCore))
+	}
+
+	// 计算适宜性评分
+	suitability.Score = m.calculateScore(metrics)
+
+	// 设置主要原因
+	if suitability.CanStart {
+		suitability.Reason = "主机资源充足，适合启动任务"
 	} else {
-		stats.LoadAvg1 = loadAvg.Load1
-		stats.LoadAvg5 = loadAvg.Load5
-		stats.LoadAvg15 = loadAvg.Load15
-	}
-
-	m.mu.Lock()
-	oldStats := m.currentStats
-	m.currentStats = stats
-	m.mu.Unlock()
-
-	// 检查资源是否恢复正常
-	if oldStats != nil && m.isResourceExhausted() && !m.isResourceExhaustedWithStats(oldStats) {
-		slog.Info("Resource recovered",
-			slog.Float64("cpu_usage", stats.CPUUsage),
-			slog.Float64("mem_usage", stats.MemUsage),
-		)
-		m.notifyWaitingRequests()
-	}
-
-	// 触发告警回调
-	if m.isResourceExhausted() {
-		m.triggerAlerts(stats)
-	}
-
-	slog.Debug("Host resource stats",
-		slog.Float64("cpu_usage", stats.CPUUsage),
-		slog.Float64("mem_usage", stats.MemUsage),
-		slog.Float64("disk_usage", stats.DiskUsage),
-		slog.Float64("load_avg_1", stats.LoadAvg1),
-	)
-}
-
-// isResourceExhausted 检查资源是否耗尽（禁止扩容）
-func (m *HostMonitor) isResourceExhausted() bool {
-	m.mu.RLock()
-	defer m.mu.RUnlock()
-	return m.isResourceExhaustedWithStats(m.currentStats)
-}
-
-// isResourceExhaustedWithStats 使用给定的统计信息检查资源是否耗尽
-func (m *HostMonitor) isResourceExhaustedWithStats(stats *HostResourceStats) bool {
-	if !m.config.Enable || stats == nil {
-		return false
-	}
-
-	if stats.CPUUsage >= m.config.CPUThreshold {
-		return true
-	}
-
-	if stats.MemUsage >= m.config.MemThreshold {
-		return true
-	}
-
-	if stats.DiskUsage >= m.config.DiskThreshold {
-		return true
-	}
-
-	// 检查系统负载
-	if stats.LoadAvg1 >= m.config.LoadThreshold {
-		return true
-	}
-
-	return false
-}
-
-// CanScaleUp 检查是否可以扩容
-func (m *HostMonitor) CanScaleUp() bool {
-	return !m.isResourceExhausted()
-}
-
-// GetCurrentStats 获取当前资源统计
-func (m *HostMonitor) GetCurrentStats() *HostResourceStats {
-	m.mu.RLock()
-	defer m.mu.RUnlock()
-
-	if m.currentStats == nil {
-		return nil
-	}
-
-	// 返回副本
-	stats := *m.currentStats
-	return &stats
-}
-
-// RequestScaleUp 请求扩容（非阻塞）
-func (m *HostMonitor) RequestScaleUp(queueName, requestID string) <-chan bool {
-	ch := make(chan bool, 1)
-
-	if m.CanScaleUp() {
-		ch <- true
-		return ch
-	}
-
-	// 加入等待队列
-	req := &ScaleUpRequest{
-		QueueName: queueName,
-		RequestID: requestID,
-		CreatedAt: time.Now(),
-		Callback:  ch,
-	}
-
-	m.pendingMu.Lock()
-	m.pendingReqs[requestID] = req
-	m.pendingMu.Unlock()
-
-	// 设置超时
-	go func() {
-		time.Sleep(m.config.ScaleUpBlockWait)
-		m.pendingMu.Lock()
-		if req, exists := m.pendingReqs[requestID]; exists {
-			delete(m.pendingReqs, requestID)
-			req.Callback <- false
-			close(req.Callback)
+		suitability.Reason = "主机资源不足，不适合启动任务"
+		if len(suitability.Details) > 0 {
+			suitability.Reason = suitability.Details[0]
 		}
-		m.pendingMu.Unlock()
-	}()
-
-	return ch
-}
-
-// WaitForScaleUp 等待直到可以扩容（阻塞）
-func (m *HostMonitor) WaitForScaleUp(queueName string, timeout time.Duration) bool {
-	if !m.config.Enable || m.CanScaleUp() {
-		return true
 	}
 
-	slog.Info("Waiting for resources to scale up",
-		slog.String("queue", queueName),
-		slog.Duration("timeout", timeout),
-	)
+	return suitability, nil
+}
 
-	requestID := fmt.Sprintf("%s-%d", queueName, time.Now().UnixNano())
-	ch := m.RequestScaleUp(queueName, requestID)
+// calculateScore 计算适宜性评分 (0-100)
+func (m *HostMonitor) calculateScore(metrics *HostMetrics) float64 {
+	// 各指标权重
+	cpuWeight := 0.4
+	memWeight := 0.3
+	loadWeight := 0.3
 
-	select {
-	case result := <-ch:
-		if result {
-			slog.Info("Resource recovered, proceeding with scale up", "queue", queueName)
+	// CPU 得分 (使用率越低得分越高)
+	cpuScore := math.Max(0, 100*(1-metrics.CPUUsagePercent/100))
+
+	// 内存得分
+	memScore := math.Max(0, 100*(1-metrics.MemoryUsagePercent/100))
+
+	// 负载得分
+	maxLoad := float64(metrics.CPUCores) * m.config.MaxLoadPerCore
+	loadRatio := math.Min(1.0, metrics.LoadAvg1min/maxLoad)
+	loadScore := math.Max(0, 100*(1-loadRatio))
+
+	// 加权总分
+	totalScore := cpuScore*cpuWeight + memScore*memWeight + loadScore*loadWeight
+
+	return math.Min(100, math.Max(0, totalScore))
+}
+
+// WaitForSuitable 等待直到适合启动任务（带连续检查）
+func (m *HostMonitor) WaitForSuitable() (*TaskSuitability, error) {
+	ticker := time.NewTicker(m.config.CheckInterval)
+	defer ticker.Stop()
+
+	for {
+		suitability, err := m.CheckSuitability()
+		if err != nil {
+			return nil, err
+		}
+
+		if suitability.CanStart {
+			m.consecutive++
+			if m.consecutive >= m.config.ConsecutiveChecks {
+				slog.Info("[monitor] 可以启动任务", "节点健康度检查次数", m.consecutive)
+				return suitability, nil
+			}
+			log.Printf("[monitor] 检查通过 (%d/%d): CPU=%.1f%%, 内存=%.1f%%, 负载=%.2f",
+				m.consecutive, m.config.ConsecutiveChecks,
+				suitability.Metrics.CPUUsagePercent,
+				suitability.Metrics.MemoryUsagePercent,
+				suitability.Metrics.LoadAvg1min)
 		} else {
-			slog.Warn("Scale up timeout due to resource constraints", "queue", queueName)
+			m.consecutive = 0
+			log.Printf("[monitor] 检查失败: %s", suitability.Reason)
 		}
-		return result
-	case <-time.After(timeout):
-		slog.Warn("Scale up timeout", "queue", queueName, "timeout", timeout)
-		return false
+
+		<-ticker.C
 	}
 }
 
-// notifyWaitingRequests 通知所有等待的扩容请求
-func (m *HostMonitor) notifyWaitingRequests() {
-	m.pendingMu.Lock()
-	defer m.pendingMu.Unlock()
-
-	for id, req := range m.pendingReqs {
-		select {
-		case req.Callback <- true:
-			close(req.Callback)
-			delete(m.pendingReqs, id)
-			slog.Info("Notified waiting scale up request",
-				slog.String("request_id", id),
-				slog.String("queue", req.QueueName),
-			)
-		default:
-		}
-	}
-}
-
-// RegisterAlertCallback 注册告警回调
-func (m *HostMonitor) RegisterAlertCallback(callback func(stats *HostResourceStats)) {
-	m.alertCallbacks = append(m.alertCallbacks, callback)
-}
-
-// triggerAlerts 触发告警
-func (m *HostMonitor) triggerAlerts(stats *HostResourceStats) {
-	for _, callback := range m.alertCallbacks {
-		go callback(stats)
-	}
-}
-
-// GetResourceStatus 获取资源状态描述
-func (m *HostMonitor) GetResourceStatus() string {
-	if !m.config.Enable {
-		return "disabled"
-	}
-
-	stats := m.GetCurrentStats()
-	if stats == nil {
-		return "unknown"
-	}
-
-	if m.isResourceExhausted() {
-		return fmt.Sprintf("exhausted (CPU: %.1f%%, MEM: %.1f%%)", stats.CPUUsage, stats.MemUsage)
-	}
-
-	return fmt.Sprintf("healthy (CPU: %.1f%%, MEM: %.1f%%)", stats.CPUUsage, stats.MemUsage)
-}
-
-// Stop 停止监控
-func (m *HostMonitor) Stop() {
-	close(m.stopChan)
+// MonitorAndDecide 监控并决定是否启动任务（单次检查）
+func (m *HostMonitor) MonitorAndDecide() (*TaskSuitability, error) {
+	return m.CheckSuitability()
 }

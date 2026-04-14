@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 
@@ -14,150 +12,114 @@ import (
 )
 
 func main() {
-	// 配置日志
-	setupLogging()
-
-	// 验证必要配置
-	if err := validateConfig(); err != nil {
-		slog.Error("Configuration validation failed", "error", err)
-		return
+	// 加载配置
+	if err := comm.LoadConfig(); err != nil {
+		panic(err)
 	}
-	if err := comm.LoadDefaultEnv(); err != nil {
-		slog.Error("加载配置失败", "error", err)
-		return
+	// 加载日志设置
+	if err := comm.SetupLog(); err != nil {
+		panic(err)
+	}
+	// Rabbitmq 配置
+	mqConfig := &core.RabbitMQConfig{
+		Host:     comm.Config().Mq.Host,
+		Port:     comm.Config().Mq.Port,
+		Username: comm.Config().Mq.Username,
+		Password: comm.Config().Mq.Password,
+		Vhost:    comm.Config().Mq.Vhost,
 	}
 	// supervisor配置
 	supervisorConfig := &core.SupervisorConfig{
-		URL:       comm.Env().Str("SUPERVISOR_URL", "http://localhost:9001/RPC2"),
-		Username:  comm.Env().Str("SUPERVISOR_USER", ""),
-		Password:  comm.Env().Str("SUPERVISOR_PASSWORD", ""),
-		Timeout:   comm.Env().Duration("SUPERVISOR_TIMEOUT", 10*time.Second),
-		ConfigDir: comm.Env().Str("SUPERVISOR_CONFIG_DIR", "/etc/supervisord.d/"),
+		URL:       comm.Config().Supervisor.Url,
+		Username:  comm.Config().Supervisor.User,
+		Password:  comm.Config().Supervisor.Pass,
+		Timeout:   comm.Config().Supervisor.TimeOut, // 增加到120秒，与OpTimeout一致
+		OpTimeout: comm.Config().Supervisor.OpTimeOut,
+		ConfigDir: comm.Config().Supervisor.ConfigPath,
 	}
-
-	// mq配置
-	mqConfig := &core.MQMetricsConfig{
-		Host:       comm.Env().Str("MQ_HOST", ""),
-		Port:       comm.Env().Int("MQ_PORT", 5672),
-		User:       comm.Env().Str("MQ_USER", "guest"),
-		Password:   comm.Env().Str("MQ_PASSWD", "123456"),
-		Vhost:      comm.Env().Str("MQ_VHOST", "/"),
-		Timeout:    comm.Env().Duration("MQ_TIMEOUT", 5*time.Second),
-		MaxRetries: comm.Env().Int("MQ_MAX_RETRIES", 3),
-		RetryDelay: comm.Env().Duration("MQ_RETRY_DELAY", 1*time.Second),
-		UseSSL:     comm.Env().Bool("MQ_USE_SSL", false),
-		Consumers:  comm.Env().List("CONSUMER_QUEUES"),
+	// 主机监控配置
+	nodeMonitorConfig := &core.MonitorConfig{
+		MaxCPUUsagePercent:    80.0,
+		MaxMemoryUsagePercent: 70.0,
+		MaxLoadPerCore:        1.0,
+		CheckInterval:         5 * time.Second,
+		ConsecutiveChecks:     3,
 	}
-
-	// 调度器配置
+	// 3. 配置调度器
 	schedulerConfig := &core.SchedulerConfig{
-		CheckInterval:         comm.Env().Duration("CHECK_INTERVAL", 5*time.Second),
-		CooldownPeriod:        comm.Env().Duration("COOLDOWN_PERIOD", 30*time.Second),
-		EnableResourceMonitor: comm.Env().Bool("ENABLE_RESOURCE_MONITOR", true),
-		CPUThreshold:          comm.Env().Float("CPU_THRESHOLD", 80.0),
-		MemThreshold:          comm.Env().Float("MEM_THRESHOLD", 85.0),
-		ResourceCheckInterval: comm.Env().Duration("RESOURCE_CHECK_INTERVAL", 5*time.Second),
-		ScaleUpBlockWait:      comm.Env().Duration("SCALE_UP_BLOCK_WAIT", 30*time.Second),
-		Queues:                loadQueueConfigs(), // 从环境变量加载队列配置
+		RabbitMQConfig:      mqConfig,
+		SupervisorConfig:    supervisorConfig,
+		MonitorConfig:       nodeMonitorConfig,
+		CheckInterval:       comm.Config().ScheduleInterval,
+		QueueProgramMapping: comm.Config().ScheduleQueueProgramMapping,
+		ScaleUpConfig: core.ScaleConfig{
+			MessageBacklogThreshold:      comm.Config().ScheduleScaleUpConfigScaleThreshold,               // 消息积压超过500触发扩容
+			ConsumerUtilisationThreshold: comm.Config().ScheduleScaleUpConfigConsumerUtilisationThreshold, // 消费者利用率超过60%
+			ScaleUpStep:                  comm.Config().ScheduleScaleUpConfigScaleUpStep,                  // 每次增加2个进程
+			ScaleDownStep:                comm.Config().ScheduleScaleUpConfigScaleDownStep,                // 每次减少1个进程
+			MinProcesses:                 comm.Config().Supervisor.MinProcess,                             // 最少1个进程
+			MaxProcesses:                 comm.Config().Supervisor.MaxProcess,                             // 最多20个进程
+		},
+		ScaleDownConfig: core.ScaleConfig{
+			MessageBacklogThreshold:      comm.Config().ScheduleScaleDownConfigScaleThreshold,               // 消息积压低于50触发缩容
+			ConsumerUtilisationThreshold: comm.Config().ScheduleScaleDownConfigConsumerUtilisationThreshold, // 消费者利用率低于20%
+			ScaleDownStep:                comm.Config().ScheduleScaleDownConfigScaleDownStep,
+			MinProcesses:                 comm.Config().Supervisor.MinProcess,
+			MaxProcesses:                 comm.Config().Supervisor.MaxProcess,
+		},
+		EnableAutoScaleDown: true,
+		ScaleUpCooldown:     2 * time.Minute, // 扩容冷却2分钟
+		ScaleDownCooldown:   5 * time.Minute, // 缩容冷却5分钟
 	}
 
-	// 打印配置信息
-	printConfig(schedulerConfig, mqConfig, supervisorConfig)
+	// 4. 创建调度器
+	scheduler, err := core.NewScheduler(schedulerConfig)
+	if err != nil {
+		slog.Error("创建调度器失败", "error", err)
+		os.Exit(1)
+	}
 
-	// 创建调度器
-	scheduler := core.NewScheduler(schedulerConfig, mqConfig, supervisorConfig)
+	// 5. 启动调度器
+	if err := scheduler.Start(); err != nil {
+		slog.Error("启动调度器失败", "error", err)
+		os.Exit(1)
+	}
 
-	// 设置信号处理
+	// 6. 等待退出信号
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-
-	// 启动调度器
-	go scheduler.Start()
-
-	// 等待信号
+	go printInfo(scheduler)
 	<-sigChan
-	slog.Info("Shutting down...")
+	// 8. 停止调度器
 	scheduler.Stop()
-	time.Sleep(5 * time.Second)
-	slog.Info("Shutdown complete")
 }
 
-// loadQueueConfigs 加载队列配置
-func loadQueueConfigs() []core.QueueConfig {
-	queues := []core.QueueConfig{}
+func printInfo(scheduler *core.Scheduler) {
+	ticker := time.NewTicker(1 * time.Minute)
+	defer ticker.Stop()
 
-	// 方式1：从环境变量读取队列列表
-	queueNames := comm.Env().Str("QUEUE_NAMES", "")
-	if queueNames != "" {
-		for queueName := range strings.SplitSeq(queueNames, ",") {
-			queueName = strings.TrimSpace(queueName)
-			programName := comm.Env().Str(queueName+"_PROGRAM", queueName)
+	for range ticker.C {
+		stats := scheduler.GetStats()
+		slog.Info("调度器状态",
+			"调度次数", stats.TotalChecks,
+			"扩容次数", stats.TotalScaleUp,
+			"缩容次数", stats.TotalScaleDown,
+			"失败操作", stats.FailedOperations)
 
-			queue := core.QueueConfig{
-				Name:               queueName,
-				ProgramName:        programName,
-				MinConsumers:       comm.Env().Int(queueName+"_MIN_CONSUMER", 1),
-				MaxConsumers:       comm.Env().Int(queueName+"_MAX_CONSUMER", 5),
-				ScaleUpThreshold:   comm.Env().Int(queueName+"_SCALE_UP_THRESHOLD", 10),
-				ScaleDownThreshold: comm.Env().Int(queueName+"_SCALE_DOWN_THRESHOLD", 2),
-			}
-			queues = append(queues, queue)
+		// 打印所有队列状态
+		statuses, err := scheduler.GetAllQueueStatus()
+		if err != nil {
+			slog.Error("获取队列状态失败", "error", err)
+			continue
 		}
-	}
 
-	// 方式2：如果没有配置队列列表，尝试自动发现 Supervisor 配置
-	if len(queues) == 0 {
-		slog.Info("No queue names configured, will auto-discover from Supervisor")
-		// 可以在运行时自动发现
-	}
-
-	return queues
-}
-
-func setupLogging() {
-	logLevel := slog.LevelInfo
-	if comm.Env().Bool("DEBUG", false) {
-		logLevel = slog.LevelDebug
-	}
-
-	jsonHandler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-		Level: logLevel,
-	})
-	textHandler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: logLevel,
-	})
-	if comm.Env().Str("LOG_FORMAT", "text") == "json" {
-		slog.SetDefault(slog.New(jsonHandler))
-	} else {
-		slog.SetDefault(slog.New(textHandler))
-	}
-}
-
-func validateConfig() error {
-	// 验证必要配置
-	if comm.Env().Str("QUEUE_NAMES", "") == "" {
-		slog.Warn("QUEUE_NAMES not set, will auto-discover programs")
-	}
-	return nil
-}
-
-func printConfig(schedulerConfig *core.SchedulerConfig, mqConfig *core.MQMetricsConfig, supervisorConfig *core.SupervisorConfig) {
-	// slog.Info("Configuration loaded",
-	// 	slog.Int("queue_count", len(schedulerConfig.Queues)),
-	// 	slog.Duration("check_interval", schedulerConfig.CheckInterval),
-	// 	slog.Bool("resource_monitor_enabled", schedulerConfig.EnableResourceMonitor),
-	// 	slog.String("mq_host", mqConfig.Host),
-	// 	slog.String("supervisor_config_dir", supervisorConfig.ConfigDir),
-	// )
-	slog.Info("Queue Count", "queue_count", len(schedulerConfig.Queues))
-	slog.Info("Check Interval", "check_interval", schedulerConfig.CheckInterval)
-	slog.Info("Resource Monitor Enabled", "resource_monitor_enabled", schedulerConfig.EnableResourceMonitor)
-	slog.Info("MQ Host", "mq_host", mqConfig.Host)
-	slog.Info("Supervisor Config Dir", "supervisor_config_dir", supervisorConfig.ConfigDir)
-
-	// 测试列表
-	for _, queue := range comm.Env().List("CONSUMER_QUEUES") {
-		q := queue.(map[string]any)
-		fmt.Println(q)
+		for queue, status := range statuses {
+			slog.Info("队列详细信息",
+				"队列名", queue,
+				"就绪消息数量", status.MessagesReady,
+				"消费者数量", status.Consumers,
+				"当前进程数量", status.CurrentProcesses,
+				"目标进程数量", status.TargetProcesses)
+		}
 	}
 }
