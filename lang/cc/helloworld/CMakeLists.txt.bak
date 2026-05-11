@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.14)
+project(GreeterServer)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 指定查找路径（关键修改）
+list(APPEND CMAKE_PREFIX_PATH /usr/local)
+set(Protobuf_USE_STATIC_LIBS ON)  # 使用静态库
+set(gRPC_USE_STATIC_LIBS ON)      # 使用静态库
+
+# 首先查找 protobuf
+find_package(Protobuf REQUIRED CONFIG)
+
+# 然后查找 gRPC（会依赖上面找到的 protobuf）
+find_package(gRPC REQUIRED CONFIG)
+
+# 添加可执行文件
+add_executable(client
+    client.cc
+    protos/apis/helloworld.pb.cc
+    protos/apis/helloworld.grpc.pb.cc
+)
+
+# 包含头文件目录
+target_include_directories(client PRIVATE
+    protos/apis
+    ${Protobuf_INCLUDE_DIRS}
+)
+
+# 链接库
+target_link_libraries(client
+    gRPC::grpc++
+    gRPC::grpc++_reflection
+    protobuf::libprotobuf
+    Threads::Threads
+)

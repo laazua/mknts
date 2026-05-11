@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+// 定义服务包名
+package helloworld;
+
+// 定义服务：包含两个 RPC 方法
+service Greeter {
+  // 1. 一元 RPC：客户端发送请求，服务端返回响应
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  
+  // 2. 服务端流式 RPC：客户端发送请求，服务端返回数据流
+  rpc SayHelloStream (HelloRequest) returns (stream HelloReply) {}
+}
+
+// 请求消息结构
+message HelloRequest {
+  string name = 1;
+}
+
+// 响应消息结构
+message HelloReply {
+  string message = 1;
+}
